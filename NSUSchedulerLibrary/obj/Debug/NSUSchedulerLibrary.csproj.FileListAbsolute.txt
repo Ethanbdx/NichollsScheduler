@@ -1,0 +1,12 @@
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\bin\Debug\NSUSchedulerLibrary.exe.config
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\bin\Debug\NSUSchedulerLibrary.exe
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\bin\Debug\NSUSchedulerLibrary.pdb
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\bin\Debug\WebDriver.dll
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\bin\Debug\WebDriver.Support.dll
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\bin\Debug\WebDriver.xml
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\bin\Debug\WebDriver.Support.xml
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\obj\Debug\NSUSchedulerLibrary.csprojAssemblyReference.cache
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\obj\Debug\NSUSchedulerLibrary.csproj.CoreCompileInputs.cache
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\obj\Debug\NSUSchedulerLibrary.csproj.CopyComplete
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\obj\Debug\NSUSchedulerLibrary.exe
+E:\source\repos\NichollsScheduler\NSUSchedulerLibrary\obj\Debug\NSUSchedulerLibrary.pdb
