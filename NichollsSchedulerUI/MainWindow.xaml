@@ -6,7 +6,9 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"              
         xmlns:local="clr-namespace:NichollsSchedulerUI"
         mc:Ignorable="d"
-        Title="Nicholls State University Auto-Scheduler Tool">
+        Title="Nicholls State University Auto-Scheduler Tool"
+        Height="{Binding MainContent.Height}"
+        Width="{Binding MainContent.Width}">
     <Grid Loaded="LoadLoginPage">
         <Frame x:Name="MainContent" x:FieldModifier="public" NavigationUIVisibility="Hidden"/>
     </Grid>

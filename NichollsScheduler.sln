@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NichollsScheduler", "NichollsSchedulerUI\NichollsScheduler.csproj", "{FEF41857-AACF-4BCA-AE50-FFF0557017E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NichollsScheduler", "NichollsScheduler\NichollsScheduler.csproj", "{712C43E2-4F80-4E38-A941-16CB4C457CB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FEF41857-AACF-4BCA-AE50-FFF0557017E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEF41857-AACF-4BCA-AE50-FFF0557017E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEF41857-AACF-4BCA-AE50-FFF0557017E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEF41857-AACF-4BCA-AE50-FFF0557017E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{712C43E2-4F80-4E38-A941-16CB4C457CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{712C43E2-4F80-4E38-A941-16CB4C457CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{712C43E2-4F80-4E38-A941-16CB4C457CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{712C43E2-4F80-4E38-A941-16CB4C457CB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7A8364A8-DD77-4071-B282-D264E9B9493E}
+		SolutionGuid = {10FFA9FD-D83B-42D9-B543-B2FCCDC606A3}
 	EndGlobalSection
 EndGlobal

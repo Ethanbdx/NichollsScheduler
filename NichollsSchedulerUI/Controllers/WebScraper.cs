@@ -25,6 +25,10 @@ namespace NSUSchedulerLibrary
                 return instance;
             }
         }
+        public void shutDown ()
+        {
+            webDriver.Close();
+        }
         public bool loggedIn { get; set; }
         public ArrayList availableTerms = new ArrayList();
         public ArrayList registeredCourses = new ArrayList();
@@ -35,40 +39,62 @@ namespace NSUSchedulerLibrary
             service.HideCommandPromptWindow = true;
 
             var options = new ChromeOptions();
-            options.AddArgument("headless");
+            //options.AddArgument("headless");
 
             return (service, options);
         }
         public void loginToBanner(string username, string pin)
         {
             webDriver.Navigate().GoToUrl("https://banner.nicholls.edu/PROD/twbkwbis.P_WWWLogin");
-            IWebElement userBox = webDriver.FindElement(By.Name("sid"));
-            IWebElement pinBox = webDriver.FindElement(By.Name("PIN"));
-            userBox.SendKeys(username);
-            pinBox.SendKeys(pin);
-            IWebElement loginButton = webDriver.FindElement(By.XPath("/html/body/div[3]/form/p/input[1]"));
-            loginButton.Click();
-            if (webDriver.Url == "https://banner.nicholls.edu/PROD/twbkwbis.P_ValLogin")
+            try
             {
-                Console.WriteLine("Login Failed");
-                loggedIn = false;
+                IWebElement userBox = webDriver.FindElement(By.Name("sid"));
+                IWebElement pinBox = webDriver.FindElement(By.Name("PIN"));
+                userBox.SendKeys(username);
+                pinBox.SendKeys(pin);
+                IWebElement loginButton = webDriver.FindElement(By.XPath("/html/body/div[3]/form/p/input[1]"));
+                loginButton.Click();
+                if (webDriver.Url == "https://banner.nicholls.edu/PROD/twbkwbis.P_ValLogin")
+                {
+                    Console.WriteLine("Login Failed");
+                    loggedIn = false;
+                }
+                else
+                {
+                    Console.WriteLine("Login Successful");
+                    loggedIn = true;
+                }
             }
-            else
+            catch (NoSuchElementException)
             {
-                Console.WriteLine("Login Successful");
-                loggedIn = true;
+                Console.WriteLine("Connection to Banner Failed");
+                loggedIn = false;
+
             }
         }
         public ArrayList getAvailableTerms()
         {
-            webDriver.Navigate().GoToUrl("https://banner.nicholls.edu/PROD/bwskfreg.P_AltPin");
-            IWebElement termDropDown = webDriver.FindElement(By.Id("term_id"));
-            var terms = termDropDown.FindElements(By.TagName("option"));
-            foreach (IWebElement i in terms)
+                webDriver.Navigate().GoToUrl("https://banner.nicholls.edu/PROD/bwskfreg.P_AltPin");
+            try
             {
-                availableTerms.Add(i.Text);
+                IWebElement termDropDown = webDriver.FindElement(By.Id("term_id"));
+                var terms = termDropDown.FindElements(By.TagName("option"));
+                foreach (IWebElement i in terms)
+                {
+                    availableTerms.Add(i.Text);
+                }
+                return availableTerms;
             }
-            return availableTerms;
+            /*
+             * This will be throw in the event that there are no terms availabe for registration on Banner. 
+             * The WebDriver is closed and the application is exited on the UI side.
+             */
+            catch (NoSuchElementException)
+            {
+                webDriver.Close();
+                return availableTerms;
+            }
+            
         }
         public void selectTerm(int index)
         {

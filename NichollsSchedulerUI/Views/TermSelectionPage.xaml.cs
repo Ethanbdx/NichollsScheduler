@@ -29,6 +29,11 @@ namespace NichollsSchedulerUI.Views
             InitializeComponent();
             var availableTerms = webScraper.getAvailableTerms();
             termComboBox.ItemsSource = availableTerms;
+            if (!termComboBox.HasItems)
+            {
+                MessageBox.Show("There are no courses available for registration right now. This application will now close.");
+                System.Windows.Application.Current.Shutdown();
+            }
         }
 
         private void SelectButton_Click(object sender, RoutedEventArgs e)

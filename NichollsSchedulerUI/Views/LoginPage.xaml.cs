@@ -36,6 +36,11 @@ namespace NichollsSchedulerUI
             if(!webScraper.loggedIn)
             {
                 loginFailedMessage.Text = "Login Failed";
+                if(System.DateTime.Now.DayOfWeek == DayOfWeek.Thursday && System.DateTime.Now.Hour > 20)
+                {
+                    loginFailedMessage.Text = "Login Failed; Banner is down for routine Thursday Maintence.";
+                    webScraper.shutDown();
+                }
             } else
             {
                 this.NavigationService.Navigate(new TermSelectionPage());
