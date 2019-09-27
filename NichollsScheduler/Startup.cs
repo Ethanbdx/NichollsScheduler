@@ -21,7 +21,6 @@ namespace NichollsScheduler
         {
             Configuration = configuration;
         }
-        public static readonly WebScraper webScraper = new WebScraper();
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -33,8 +32,11 @@ namespace NichollsScheduler
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -50,7 +52,7 @@ namespace NichollsScheduler
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
