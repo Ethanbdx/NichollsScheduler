@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NichollsScheduler.Data;
 using NichollsScheduler.Logic;
 
 namespace NichollsScheduler
@@ -36,7 +37,7 @@ namespace NichollsScheduler
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
-            
+            services.AddTransient<ICourseSelection, CourseSelectionOptions>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

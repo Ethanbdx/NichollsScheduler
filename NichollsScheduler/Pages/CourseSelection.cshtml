@@ -12,75 +12,76 @@
             <h2 style="text-align:center">Time to add some courses.</h2>
             <br />
         </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <select class="form-control form-control-lg" id="sel_subj">
-                        <option value="ACCT">Accounting</option>
-                        <option value="AHSC">Allied Health Science</option>
-                        <option value="ART">Art</option>
-                        <option value="ASTR">Astronomy</option>
-                        <option value="ATTR">Athletic Training</option>
-                        <option value="BIOL">Biology</option>
-                        <option value="BSAD">Business Administration</option>
-                        <option value="CHEM">Chemistry</option>
-                        <option value="COMD">Communicative Disorders</option>
-                        <option value="CIS">Computer Information Systems</option>
-                        <option value="CMPS">Computer Science</option>
-                        <option value="COUN">Counseling</option>
-                        <option value="CRJU">Criminal Justice</option>
-                        <option value="XERP">Cross Enrolled River Parishes</option>
-                        <option value="CULA">Culinary Arts</option>
-                        <option value="DIET">Dietetics</option>
-                        <option value="ECON">Economics</option>
-                        <option value="EDCI">Educ Curr and Instruction</option>
-                        <option value="EDFR">Educ Foundations and Research</option>
-                        <option value="EDTL">Educ Tech Leadership</option>
-                        <option value="EDUC">Education</option>
-                        <option value="EDLE">Education Leadership</option>
-                        <option value="EGSC">Engineering Science</option>
-                        <option value="ENGL">English</option>
-                        <option value="FCED">Family and Consumer Sci Educ</option>
-                        <option value="FINC">Finance</option>
-                        <option value="FREN">French</option>
-                        <option value="GEOG">Geography</option>
-                        <option value="GEOL">Geology</option>
-                        <option value="GEOM">Geomatics</option>
-                        <option value="GOVT">Government</option>
-                        <option value="HPED">Health and Physical Education</option>
-                        <option value="HEAD">Higher Education Admnistration</option>
-                        <option value="HIST">History</option>
-                        <option value="HONR">Honors Program</option>
-                        <option value="HUMA">Humanities</option>
-                        <option value="IDST">Interdisciplinary Studies</option>
-                        <option value="LDST">Leadership Studies</option>
-                        <option value="MNGT">Management</option>
-                        <option value="MKTG">Marketing</option>
-                        <option value="MACO">Mass Communication</option>
-                        <option value="MATH">Mathematics</option>
-                        <option value="MUS">Music</option>
-                        <option value="MUED">Music Education</option>
-                        <option value="NURS">Nursing</option>
-                        <option value="OIS">Office Information Systems</option>
-                        <option value="PSET">Petroleum Services Technology</option>
-                        <option value="PHIL">Philosophy</option>
-                        <option value="PHSC">Physical Science</option>
-                        <option value="PHYS">Physics</option>
-                        <option value="PSYC">Psychology</option>
-                        <option value="QBA">Quantitative Business Analysis</option>
-                        <option value="SATC">Safety Technology</option>
-                        <option value="SOCI">Sociology</option>
-                        <option value="SPAN">Spanish</option>
-                        <option value="SPCH">Speech</option>
-                        <option value="UNIV">University Studies</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <input type="text" id="crseNum" class="form-control form-control-lg" placeholder="Course Number" />
-                </div>
-                <div class="form-group col-md-2">
-                    <button type="submit" onclick="addCourse()" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp;Add Course</button>
-                </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <select class="form-control form-control-lg" id="subj" asp-for="subject">
+                    <option value="" selected>Select a Subject</option>
+                    <option value="ACCT">Accounting</option>
+                    <option value="AHSC">Allied Health Science</option>
+                    <option value="ART">Art</option>
+                    <option value="ASTR">Astronomy</option>
+                    <option value="ATTR">Athletic Training</option>
+                    <option value="BIOL">Biology</option>
+                    <option value="BSAD">Business Administration</option>
+                    <option value="CHEM">Chemistry</option>
+                    <option value="COMD">Communicative Disorders</option>
+                    <option value="CIS">Computer Information Systems</option>
+                    <option value="CMPS">Computer Science</option>
+                    <option value="COUN">Counseling</option>
+                    <option value="CRJU">Criminal Justice</option>
+                    <option value="XERP">Cross Enrolled River Parishes</option>
+                    <option value="CULA">Culinary Arts</option>
+                    <option value="DIET">Dietetics</option>
+                    <option value="ECON">Economics</option>
+                    <option value="EDCI">Educ Curr and Instruction</option>
+                    <option value="EDFR">Educ Foundations and Research</option>
+                    <option value="EDTL">Educ Tech Leadership</option>
+                    <option value="EDUC">Education</option>
+                    <option value="EDLE">Education Leadership</option>
+                    <option value="EGSC">Engineering Science</option>
+                    <option value="ENGL">English</option>
+                    <option value="FCED">Family and Consumer Sci Educ</option>
+                    <option value="FINC">Finance</option>
+                    <option value="FREN">French</option>
+                    <option value="GEOG">Geography</option>
+                    <option value="GEOL">Geology</option>
+                    <option value="GEOM">Geomatics</option>
+                    <option value="GOVT">Government</option>
+                    <option value="HPED">Health and Physical Education</option>
+                    <option value="HEAD">Higher Education Admnistration</option>
+                    <option value="HIST">History</option>
+                    <option value="HONR">Honors Program</option>
+                    <option value="HUMA">Humanities</option>
+                    <option value="IDST">Interdisciplinary Studies</option>
+                    <option value="LDST">Leadership Studies</option>
+                    <option value="MNGT">Management</option>
+                    <option value="MKTG">Marketing</option>
+                    <option value="MACO">Mass Communication</option>
+                    <option value="MATH">Mathematics</option>
+                    <option value="MUS">Music</option>
+                    <option value="MUED">Music Education</option>
+                    <option value="NURS">Nursing</option>
+                    <option value="OIS">Office Information Systems</option>
+                    <option value="PSET">Petroleum Services Technology</option>
+                    <option value="PHIL">Philosophy</option>
+                    <option value="PHSC">Physical Science</option>
+                    <option value="PHYS">Physics</option>
+                    <option value="PSYC">Psychology</option>
+                    <option value="QBA">Quantitative Business Analysis</option>
+                    <option value="SATC">Safety Technology</option>
+                    <option value="SOCI">Sociology</option>
+                    <option value="SPAN">Spanish</option>
+                    <option value="SPCH">Speech</option>
+                    <option value="UNIV">University Studies</option>
+                </select>
             </div>
+            <div class="form-group col-md-4">
+                <select asp-for="courseNum" class="form-control form-control-lg" id="cnum"></select>
+            </div>
+            <div class="form-group col-md-2">
+                <button type="submit" onclick="addCourse()" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp;Add Course</button>
+            </div>
+        </div>
         <br />
         <br />
         <div class="container">
@@ -93,11 +94,26 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody id="courseTable">
-
-                </tbody>
+                <tbody id="courseTable"></tbody>
             </table>
         </div>
     </div>
 
 </div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $("#subj").on("change", function () {
+                var subject = $(this).val();
+                $("#cnum").empty();
+                $("#cnum").append("<option value=''>Select Course Number</option>");
+                $.getJSON(`?handler=CourseSelections&Subject=${subject}`, (data) => {
+                    $.each(data, function (i, item) {
+                        $("#cnum").append(`<option value="${item.courseNum}">${item.courseNum}</option>`);
+                    });
+                });
+            });
+        });
+    </script>
+}
