@@ -29,7 +29,8 @@ namespace NichollsScheduler.Pages
         {
             var courses = JsonConvert.SerializeObject(selCourses);
             HttpContext.Session.SetString("selectedCourses", courses);
-            return RedirectToPage("Availability");
+            //TODO - Add search results page.
+            return RedirectToPage("CouseResults");
         }
 
         public JsonResult OnGetCourseSelections()
