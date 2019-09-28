@@ -13,9 +13,9 @@
             <br />
         </div>
         <div class="form-row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
                 <select class="form-control form-control-lg" id="subj" asp-for="subject">
-                    <option value="" selected>Select a Subject</option>
+                    <option value="" selected>Select Subject</option>
                     <option value="ACCT">Accounting</option>
                     <option value="AHSC">Allied Health Science</option>
                     <option value="ART">Art</option>
@@ -75,27 +75,33 @@
                     <option value="UNIV">University Studies</option>
                 </select>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
                 <select asp-for="courseNum" class="form-control form-control-lg" id="cnum"></select>
             </div>
             <div class="form-group col-md-2">
-                <button type="submit" onclick="addCourse()" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp;Add Course</button>
+                <button type="submit" class="btn btn-success" id="add"><i class="fas fa-plus"></i>&nbsp;Add Course</button>
             </div>
         </div>
         <br />
         <br />
-        <div class="container">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Subject</th>
-                        <th scope="col">Course Number</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody id="courseTable"></tbody>
-            </table>
+        <div class="container col-md-12">
+            <form id="selCourses" method="post">
+                <table class="table table-striped" id="courseTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Course Number</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <br />
+                <hr class="my-4" />
+                <div class="form-group col-md-12" style="text-align:center">
+                    <input type="submit" id="submit" value="Generate Schedule" class="btn btn-lg btn-primary" />
+                </div>
+            </form>
         </div>
     </div>
 
@@ -113,6 +119,29 @@
                         $("#cnum").append(`<option value="${item.courseNum}">${item.courseNum}</option>`);
                     });
                 });
+            });
+        });
+        $(document).ready(function () {
+            var i = 0;
+            $("#add").click(function (e) {
+                if (i > 0) {
+                    $(`#row${i - 1}`).find(`#${i-1}`).remove();
+                }
+                var subjectText = $("#subj option:selected").text();
+                var subjectVal = $("#subj").val();
+                var courseNumVal = $("#cnum").val();
+                if (subjectVal == "" || courseNumVal == "") {
+                    return;
+                }
+                e.preventDefault();
+                $("#courseTable").append(`<tr id="row${i}"><td><div class="col-md-8"><p>${subjectText}</p><input type="hidden" name="selCourses[${i}].subject" value="${subjectVal}"/></div ></td ><td><div class="col-md-8"><p>${courseNumVal}</p><input type="hidden" name="selCourses[${i}].courseNum" value="${courseNumVal}" /></div></td><td><div class="removebtn"><button type="button" class="btn btn-danger btn_remove" id="${i}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr > `);
+                i++;
+            });
+            $(document).on('click', '.btn_remove', function () {
+                var button_id = $(this).attr("id");
+                $("#row" + button_id + '').remove();
+                i--
+                $(`#row${i - 1}`).find(".removebtn").append(`<button type="button" class="btn btn-danger btn_remove" id="${i-1}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button>`);
             });
         });
     </script>

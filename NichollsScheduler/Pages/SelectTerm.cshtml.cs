@@ -24,6 +24,10 @@ namespace NichollsScheduler.Pages
         [HttpPost]
         public IActionResult OnPost(string termId)
         {
+            if (termId == null)
+            {
+                return Page();
+            }
             if(termId.Length < 0)
             {
                 return Page();
