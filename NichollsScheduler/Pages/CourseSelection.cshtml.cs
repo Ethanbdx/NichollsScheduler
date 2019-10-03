@@ -15,7 +15,7 @@ namespace NichollsScheduler.Pages
         private ICourseSelection options;
         public CourseSelectionModel(ICourseSelection options) => this.options = options;
 
-        [BindProperty(SupportsGet =true)]
+        [BindProperty(SupportsGet = true)]
         public string subject { get; set; }
         public string courseNum { get; set; }
 

@@ -94,7 +94,7 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody id="selCourseTable"></tbody>
                 </table>
                 <br />
                 <hr class="my-4" />
@@ -121,12 +121,10 @@
                 });
             });
         });
+
         $(document).ready(function () {
             var i = 0;
             $("#add").click(function (e) {
-                if (i > 0) {
-                    $(`#row${i - 1}`).find(`#${i-1}`).remove();
-                }
                 var subjectText = $("#subj option:selected").text();
                 var subjectVal = $("#subj").val();
                 var courseNumVal = $("#cnum").val();
@@ -134,14 +132,26 @@
                     return;
                 }
                 e.preventDefault();
-                $("#courseTable").append(`<tr id="row${i}"><td><div class="col-md-8"><p>${subjectText}</p><input type="hidden" name="selCourses[${i}].subject" value="${subjectVal}"/></div ></td ><td><div class="col-md-8"><p>${courseNumVal}</p><input type="hidden" name="selCourses[${i}].courseNum" value="${courseNumVal}" /></div></td><td><div class="removebtn"><button type="button" class="btn btn-danger btn_remove" id="${i}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr > `);
+                $("#courseTable").append(`<tr id="row${i}"><td><div class="col-md-8 subjTxt"><p>${subjectText}</p><input type="hidden" name="selCourses[${i}].subject" value="${subjectVal}"/></div ></td ><td><div class="col-md-8 cnumTxt"><p>${courseNumVal}</p><input type="hidden" name="selCourses[${i}].courseNum" value="${courseNumVal}" /></div></td><td><div class="removebtn"><button type="button" class="btn btn-danger btn_remove" id="${i}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr > `);
                 i++;
             });
             $(document).on('click', '.btn_remove', function () {
+                var table = $("#selCourseTable").find("tr").toArray();
                 var button_id = $(this).attr("id");
-                $("#row" + button_id + '').remove();
+                $(`#row${button_id}`).remove();
                 i--
-                $(`#row${i - 1}`).find(".removebtn").append(`<button type="button" class="btn btn-danger btn_remove" id="${i-1}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button>`);
+                if (table.length == Number(button_id)+1) {
+                    return;
+                }
+                var c = Number(button_id) + 1;
+                for (c; c < table.length; c++)
+                {
+                    var newIndex = c - 1;
+                    table[c].setAttribute("id", `row${newIndex}`);
+                    table[c].querySelector(".subjTxt").querySelector("input").setAttribute("name", `selCourses[${newIndex}]`);
+                    table[c].querySelector(".cnumTxt").querySelector("input").setAttribute("name", `selCourses[${newIndex}]`);
+                    table[c].querySelector(".btn_remove").setAttribute("id", `${newIndex}`);
+                }
             });
         });
     </script>
