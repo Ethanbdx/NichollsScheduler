@@ -1,0 +1,12 @@
+﻿@page
+@model NichollsScheduler.Pages.CourseResultsModel
+@{
+    ViewData["Title"] = "CourseResults";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>CourseResults</h2>
+@foreach(var c in CourseResultsModel.courseResults)
+{
+    <p>@c.subject @c.courseNumber - @c.title</p>
+}

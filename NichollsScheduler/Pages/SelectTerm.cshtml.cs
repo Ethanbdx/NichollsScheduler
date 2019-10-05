@@ -32,7 +32,7 @@ namespace NichollsScheduler.Pages
             {
                 return Page();
             }
-            HttpContext.Session.SetString("TermId", termId);
+            HttpContext.Session.SetString("termId", termId);
             return RedirectToPage("CourseSelection");
         }
     }

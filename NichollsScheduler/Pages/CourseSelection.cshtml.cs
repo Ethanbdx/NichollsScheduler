@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using NichollsScheduler.Data;
+using NichollsScheduler.Logic;
 
 namespace NichollsScheduler.Pages
 {
@@ -21,16 +22,17 @@ namespace NichollsScheduler.Pages
 
         public void OnGet()
         {
-           
+            
         }
 
         [HttpPost]
-        public IActionResult OnPost(List<Course> selCourses)
+        public async Task<IActionResult> OnPost(List<Course> selCourses, BannerService client)
         {
+            var courseResults = JsonConvert.SerializeObject(await client.GetCourseResults(selCourses, HttpContext.Session.GetString("termId")));
             var courses = JsonConvert.SerializeObject(selCourses);
-            HttpContext.Session.SetString("selectedCourses", courses);
-            //TODO - Add search results page.
-            return RedirectToPage("CouseResults");
+            HttpContext.Session.SetString("courseResults", courseResults);
+            HttpContext.Session.SetString("courseSelections", courses);
+            return RedirectToPage("CourseResults");
         }
 
         public JsonResult OnGetCourseSelections()
