@@ -1,12 +1,44 @@
 ﻿@page
 @model NichollsScheduler.Pages.CourseResultsModel
 @{
-    ViewData["Title"] = "CourseResults";
+    ViewData["Title"] = "Course Results";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+    //TODO - Display Courses...Maybe w/ bootstrap cards.
 }
 
 <h2>CourseResults</h2>
-@foreach(var c in CourseResultsModel.courseResults)
-{
-    <p>@c.subject @c.courseNumber - @c.title</p>
+<div class="container">
+    @foreach (var c in CourseResultsModel.courseResults)
+    {
+        <div class="row">
+        <div class="card">
+            <div class="card-header">
+                <h1>@c[0].subject @c[0].courseNumber - @c[0].title</h1>
+            </div>
+            <div class="card-body">
+                @foreach (var a in c)
+                {
+                    @foreach (string inst in a.instructor)
+                    {
+                        <p>@inst</p>
+                    }
+                    @foreach (string loc in a.location)
+                    {
+                        <p>@loc</p>
+                    }
+                    @foreach (string time in a.time)
+                    {
+                        <p>@time</p>
+                    }
+                    @foreach (string days in a.days)
+                    {
+                        <p>@days</p>
+                    }
+                    <p>@a.creditHours</p>
+                    <p>@a.section</p>
+                }
+            </div>
+        </div>
+    </div>
 }
+</div>

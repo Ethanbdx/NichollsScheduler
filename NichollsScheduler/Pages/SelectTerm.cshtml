@@ -1,7 +1,7 @@
 ﻿@page
 @model NichollsScheduler.Pages.SelectTermModel
 @{
-    ViewData["Title"] = "SelectTerm";
+    ViewData["Title"] = "Select Term";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 @if (SelectTermModel.availableTerms.Count == 0)
@@ -14,15 +14,14 @@
 else
 {
     <div class="container">
-        <div class="col-xs-8 col-xs-offset-2">
+        <div class="container col-10 offset-1">
             <br />
-            <h2 class="text-red">Select a term to register for.</h2>
+            <h2 class="mx-auto">Select a term to register for.</h2>
             <br />
             <br />
             <form method="post">
-                <div class="form-row">
-                    <div class="form-group-lg">
-                        <select asp-for="termId" id="selectedTerm" class="form-control">
+                    <div class="form-group">
+                        <select asp-for="termId" id="selectedTerm" class="form-control form-control-lg">
                             @foreach (KeyValuePair<string, string> pair in SelectTermModel.availableTerms)
                             {
 
@@ -30,7 +29,6 @@ else
                             }
                         </select>
                     </div>
-                </div>
                 <div class="form-row">
                     <div class="form-group-lg">
                         <input type="submit" class="btn btn-red btn-lg" style="margin-top: 10px" value="Select Term" />

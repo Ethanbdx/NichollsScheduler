@@ -14,16 +14,14 @@ namespace NichollsScheduler.Pages
     public class CourseResultsModel : PageModel
     {
 
-        public static List<CourseResult> courseResults;
-        public static List<Course> courseSelections;
+        public static List<List<CourseResult>> courseResults;
+        
         public void OnGet()
         {
-            string courseSel = HttpContext.Session.GetString("courseSelections");
             string courseRes = HttpContext.Session.GetString("courseResults");
-            var results = JsonConvert.DeserializeObject<List<CourseResult>>(courseRes);
-            var selections = JsonConvert.DeserializeObject<List<Course>>(courseSel);
+            var results = JsonConvert.DeserializeObject<List<List<CourseResult>>>(courseRes);
             courseResults = results;
-            courseSelections = selections;
+            
         }
     }
 }

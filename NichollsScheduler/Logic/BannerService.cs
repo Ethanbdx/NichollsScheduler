@@ -34,11 +34,12 @@ namespace NichollsScheduler.Logic
             return selection;
 
         }
-        public async Task<List<CourseResult>> GetCourseResults(List<Course> courses, string termId)
+        public async Task<List<List<CourseResult>>> GetCourseResults(List<Course> courses, string termId)
         {
-            List<CourseResult> courseResults = new List<CourseResult>();
+            List<List<CourseResult>> courseResults = new List<List<CourseResult>>();
             foreach(Course c in courses)
             {
+                List<CourseResult> courseRes = new List<CourseResult>();
                 List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("term_in", termId),
@@ -96,7 +97,7 @@ namespace NichollsScheduler.Logic
                             inst.Add(crseDetails[7].Replace("(P)", ""));
                             schedType.Add(crseDetails[6].Trim());
                         }
-                        courseResults.Add(new CourseResult
+                        courseRes.Add(new CourseResult
                         {
                             title = courseInfo[0].Trim('\n', ' '),
                             courseRegistrationNum = courseInfo[1].Trim(),
@@ -112,10 +113,16 @@ namespace NichollsScheduler.Logic
                         });
                         i++;
                     }
+                    courseResults.Add(courseRes);
                 }
                 catch
                 {
-                    
+                    courseRes.Add(new CourseResult
+                    {
+                        subject = c.subject,
+                        courseNumber = c.courseNum
+                    });
+                    courseResults.Add(courseRes);
                 }
                 
             }
