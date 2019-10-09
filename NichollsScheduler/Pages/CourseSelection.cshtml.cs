@@ -19,10 +19,20 @@ namespace NichollsScheduler.Pages
         [BindProperty(SupportsGet = true)]
         public string subject { get; set; }
         public string courseNum { get; set; }
+        public static List<Course> selectedCourses;
 
         public void OnGet()
         {
-            
+            try
+            {
+                var jsonstring = HttpContext.Session.GetString("selectedCourses");
+                selectedCourses = JsonConvert.DeserializeObject<List<Course>>(jsonstring);
+            }
+            catch
+            {
+                selectedCourses = new List<Course>();
+                return; 
+            }
         }
 
         [HttpPost]
@@ -32,7 +42,9 @@ namespace NichollsScheduler.Pages
             {
                 return Page();
             }
+            var selectedCourses = JsonConvert.SerializeObject(selCourses);
             var courseResults = JsonConvert.SerializeObject(await client.GetCourseResults(selCourses, HttpContext.Session.GetString("termId")));
+            HttpContext.Session.SetString("selectedCourses", selectedCourses);
             HttpContext.Session.SetString("courseResults", courseResults);
             return RedirectToPage("CourseResults");
         }

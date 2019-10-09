@@ -9,5 +9,6 @@ namespace NichollsScheduler.Data
     {
         public string subject { get; set; }
         public string courseNum { get; set; }
+        public string fullSubject { get; set; }
     }
 }

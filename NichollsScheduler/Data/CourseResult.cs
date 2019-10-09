@@ -18,5 +18,9 @@ namespace NichollsScheduler.Data
         public string creditHours { get; set; }
         public string title { get; set; }
         public List<string> scheduleType { get; set; }
+        public int seatCap { get; set; }
+        public int seatActual { get; set; }
+        public int waitListCap {get; set;}
+        public int waitListActual { get; set; }
     }
 }

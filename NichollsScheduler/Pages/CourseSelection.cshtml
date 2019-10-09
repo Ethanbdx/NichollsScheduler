@@ -8,8 +8,8 @@
 
 <div class="container">
     <div class="container" style="padding-top: 2em">
-            <h2>Time to add some courses.</h2>
-            <br />
+        <h2>Time to add some courses.</h2>
+        <br />
         <div class="form-row">
             <div class="form-group col-xl-5">
                 <select class="form-control form-control-lg" id="subj" asp-for="subject">
@@ -92,12 +92,20 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody id="selCourseTable"></tbody>
+                    <tbody id="selCourseTable">
+                        @if (CourseSelectionModel.selectedCourses.Count > 0)
+                        {
+                            for (int i = 0; i < CourseSelectionModel.selectedCourses.Count; i++)
+                            {
+                                <tr id="row@(i)" class="course"><td><div class="subjTxt"><p>@(CourseSelectionModel.selectedCourses[i].fullSubject)</p><input type="hidden" name="selCourses[@(i)].fullSubject" value="@(CourseSelectionModel.selectedCourses[i].fullSubject)" /><input type="hidden" name="selCourses[@(i)].subject" value="@(CourseSelectionModel.selectedCourses[i].subject)" /></div></td><td><div class="cnumTxt"><p>@(CourseSelectionModel.selectedCourses[i].courseNum)</p><input type="hidden" name="selCourses[@(i)].courseNum" value="@(CourseSelectionModel.selectedCourses[i].courseNum)" /></div></td><td><div class="removebtn float-right"><button type="button" class="btn btn-danger btn_remove" id="@(i)" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr>
+                            }
+                        }
+                    </tbody>
                 </table>
                 <br />
-                <hr class="my-4"/>
+                <hr class="my-4" />
                 <div class="form-group" style="text-align:center">
-                    <input type="submit" id="submit" value="Generate Schedule" class="btn btn-lg btn-primary" />
+                    <input type="submit" id="submit" value="Search for Courses" class="btn btn-lg btn-primary" />
                 </div>
             </form>
         </div>
@@ -107,7 +115,6 @@
 
 @section scripts{
     <script>
-        //TODO - Allow only selecting a course once.
         $(document).ready(function () {
             $("#subj").on("change", function () {
                 var subject = $(this).val();
@@ -119,16 +126,28 @@
                     });
                 });
             });
-            var i = 0;
+            var i = $("#selCourseTable").children().length;
             $("#add").click(function (e) {
                 var subjectText = $("#subj option:selected").text();
                 var subjectVal = $("#subj").val();
                 var courseNumVal = $("#cnum").val();
+                var courseExist = false;
                 if (subjectVal == "" || courseNumVal == "") {
                     return;
                 }
+                $(".course").each(function () {
+                    var existSub = $(this).find('.subjTxt p').text();
+                    var existNum = $(this).find('.cnumTxt p').text();
+                    if (subjectText == existSub && courseNumVal == existNum) {
+                        alert("You have already added this course.");
+                        courseExist = true;
+                    }
+                });
+                if (courseExist) {
+                    return;
+                }
                 e.preventDefault();
-                $("#courseTable").append(`<tr id="row${i}"><td><div class="subjTxt"><p>${subjectText}</p><input type="hidden" name="selCourses[${i}].subject" value="${subjectVal}"/></div ></td ><td><div class="cnumTxt"><p>${courseNumVal}</p><input type="hidden" name="selCourses[${i}].courseNum" value="${courseNumVal}" /></div></td><td><div class="removebtn float-right"><button type="button" class="btn btn-danger btn_remove" id="${i}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr >`);
+                $("#courseTable").append(`<tr id="row${i}" class="course"><td><div class="subjTxt"><p>${subjectText}</p><input type="hidden" name="selCourses[${i}].fullSubject" value="${subjectText}"/><input type="hidden" name="selCourses[${i}].subject" value="${subjectVal}"/></div></td><td><div class="cnumTxt"><p>${courseNumVal}</p><input type="hidden" name="selCourses[${i}].courseNum" value="${courseNumVal}" /></div></td><td><div class="removebtn float-right"><button type="button" class="btn btn-danger btn_remove" id="${i}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr>`);
                 i++;
             });
             $(document).on('click', '.btn_remove', function () {
@@ -136,16 +155,16 @@
                 var button_id = $(this).attr("id");
                 $(`#row${button_id}`).remove();
                 i--
-                if (table.length == Number(button_id)+1) {
+                if (table.length == Number(button_id) + 1) {
                     return;
                 }
                 var c = Number(button_id) + 1;
-                for (c; c < table.length; c++)
-                {
+                for (c; c < table.length; c++) {
                     var newIndex = c - 1;
                     table[c].setAttribute("id", `row${newIndex}`);
-                    table[c].querySelector(".subjTxt").querySelector("input").setAttribute("name", `selCourses[${newIndex}]`);
-                    table[c].querySelector(".cnumTxt").querySelector("input").setAttribute("name", `selCourses[${newIndex}]`);
+                    table[c].querySelector(".subjTxt").querySelectorAll("input")[0].setAttribute("name", `selCourses[${newIndex}].fullSubject`);
+                    table[c].querySelector(".subjTxt").querySelectorAll("input")[1].setAttribute("name", `selCourses[${newIndex}].subject`);
+                    table[c].querySelector(".cnumTxt").querySelector("input").setAttribute("name", `selCourses[${newIndex}].courseNum`);
                     table[c].querySelector(".btn_remove").setAttribute("id", `${newIndex}`);
                 }
             });

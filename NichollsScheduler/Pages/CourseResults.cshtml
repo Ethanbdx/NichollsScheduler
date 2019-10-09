@@ -6,39 +6,106 @@
     //TODO - Display Courses...Maybe w/ bootstrap cards.
 }
 
-<h2>CourseResults</h2>
-<div class="container">
-    @foreach (var c in CourseResultsModel.courseResults)
+
+<div class="container" style="margin-top: 1em">
+    @if (CourseResultsModel.courseResults.Count == 1)
     {
-        <div class="row">
-        <div class="card">
-            <div class="card-header">
-                <h1>@c[0].subject @c[0].courseNumber - @c[0].title</h1>
+        <h2>Select a course to register for.</h2>
+    }
+    else
+    {
+        <h2>Select courses to register for.</h2>
+    }
+
+    @foreach (var courseList in CourseResultsModel.courseResults)
+    {
+        <div class="card" style="margin-top: 1em">
+            <div class="card-header text-white btn-red">
+                @if (courseList[0].title != null)
+                {
+                    <h4>@courseList[0].subject @courseList[0].courseNumber - @courseList[0].title</h4>
+                }
+                else
+                {
+                    <h4>@courseList[0].subject @courseList[0].courseNumber - No Courses Found</h4>
+                }
+
             </div>
             <div class="card-body">
-                @foreach (var a in c)
-                {
-                    @foreach (string inst in a.instructor)
+                <table class="table table-sm table-responsive-md table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Days</th>
+                            <th scope="col">Times</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Instructor</th>
+                            <th scope="col">Credits</th>
+                            <th scope="col">Remaining Seats</th>
+                        </tr>
+                    </thead>
+                    @foreach (var course in courseList)
                     {
-                        <p>@inst</p>
+                        @if (course.title != null)
+                        {
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>@course.section</td>
+                                @if (course.days.Count == 1)
+                                {
+                                    <td>@course.days[0]</td>
+                                    <td>@course.time[0]</td>
+                                    <td>@course.location[0]</td>
+                                    <td>@course.scheduleType[0]</td>
+                                    <td>@course.instructor[0]</td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        @for (int i = 0; i < course.days.Count; i++)
+                                        {
+                                            <p>@course.days[i]</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @for (int i = 0; i < course.time.Count; i++)
+                                        {
+                                            <p>@course.time[i]</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @for (int i = 0; i < course.location.Count; i++)
+                                        {
+                                            <p>@course.location[i]</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @for (int i = 0; i < course.scheduleType.Count; i++)
+                                        {
+                                            <p>@course.scheduleType[i]</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @for (int i = 0; i < course.instructor.Count; i++)
+                                        {
+                                            <p>@course.instructor[i]</p>
+                                        }
+                                    </td>
+                                }
+                                <td>@course.creditHours</td>
+                                <td style="text-align:center">@(course.seatCap - course.seatActual)</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr></tr>
+                        }
                     }
-                    @foreach (string loc in a.location)
-                    {
-                        <p>@loc</p>
-                    }
-                    @foreach (string time in a.time)
-                    {
-                        <p>@time</p>
-                    }
-                    @foreach (string days in a.days)
-                    {
-                        <p>@days</p>
-                    }
-                    <p>@a.creditHours</p>
-                    <p>@a.section</p>
-                }
+                </table>
             </div>
         </div>
-    </div>
-}
+    }
+
 </div>

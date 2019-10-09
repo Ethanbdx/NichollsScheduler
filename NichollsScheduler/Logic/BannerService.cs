@@ -13,7 +13,7 @@ namespace NichollsScheduler.Logic
     public class BannerService
     {
         public BannerService() { }
-       
+
         private static readonly HttpClientHandler handler = new HttpClientHandler()
         {
             SslProtocols = System.Security.Authentication.SslProtocols.Tls,
@@ -37,7 +37,7 @@ namespace NichollsScheduler.Logic
         public async Task<List<List<CourseResult>>> GetCourseResults(List<Course> courses, string termId)
         {
             List<List<CourseResult>> courseResults = new List<List<CourseResult>>();
-            foreach(Course c in courses)
+            foreach (Course c in courses)
             {
                 List<CourseResult> courseRes = new List<CourseResult>();
                 List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
@@ -80,37 +80,9 @@ namespace NichollsScheduler.Logic
                     var trows = tbody.Elements("tr");
                     for (int i = 0; i < trows.Count(); i++)
                     {
-                        var courseInfo = trows.ElementAt(i).InnerText.Split('-');
-                        var creditHoursHtml = trows.ElementAt(i + 1).Element("td").InnerText.Split('\n').Where(s => s.Contains("Credits")).ElementAt(0).Trim();
-                        var courseDetails = trows.ElementAt(i + 1).Element("td").Element("table").Elements("tr");
-                        List<string> time = new List<string>();
-                        List<string> inst = new List<string>();
-                        List<string> days = new List<string>();
-                        List<string> location = new List<string>();
-                        List<string> schedType = new List<string>();
-                        for (int x = 1; x < courseDetails.Count(); x++)
-                        {
-                            string[] crseDetails = courseDetails.ElementAt(x).InnerText.Split('\n');
-                            time.Add(crseDetails[2]);
-                            days.Add(crseDetails[3]);
-                            location.Add(crseDetails[4]);
-                            inst.Add(crseDetails[7].Replace("(P)", ""));
-                            schedType.Add(crseDetails[6].Trim());
-                        }
-                        courseRes.Add(new CourseResult
-                        {
-                            title = courseInfo[0].Trim('\n', ' '),
-                            courseRegistrationNum = courseInfo[1].Trim(),
-                            subject = c.subject,
-                            courseNumber = c.courseNum,
-                            section = courseInfo[3].Trim('\n', ' '),
-                            time = time,
-                            days = days,
-                            location = location,
-                            instructor = inst,
-                            creditHours = creditHoursHtml,
-                            scheduleType = schedType
-                        });
+                        CourseResult course = parseCourseResultHtml(trows, i, c);
+                        course = getSeatCapacities(course, termId).Result;
+                        courseRes.Add(course);
                         i++;
                     }
                     courseResults.Add(courseRes);
@@ -124,9 +96,71 @@ namespace NichollsScheduler.Logic
                     });
                     courseResults.Add(courseRes);
                 }
-                
             }
             return courseResults;
+        }
+        private CourseResult parseCourseResultHtml(IEnumerable<HtmlNode> html, int i, Course c)
+        {
+            var courseInfo = html.ElementAt(i).InnerText.Split('-').ToList();
+            if (courseInfo.Count > 4)
+            {
+                for (int p = 0; p < courseInfo.Count - 3; p++)
+                {
+                    courseInfo[0] = courseInfo[0] + "-" + courseInfo[1];
+                    courseInfo.RemoveAt(1);
+                }
+            }
+            var creditHoursHtml = html.ElementAt(i + 1).Element("td").InnerText.Split('\n').Where(s => s.Contains("Credits")).ElementAt(0).Trim();
+            creditHoursHtml = creditHoursHtml.Remove(5);
+            var courseDetails = html.ElementAt(i + 1).Element("td").Element("table").Elements("tr");
+            List<string> time = new List<string>();
+            List<string> inst = new List<string>();
+            List<string> days = new List<string>();
+            List<string> location = new List<string>();
+            List<string> schedType = new List<string>();
+            for (int x = 1; x < courseDetails.Count(); x++)
+            {
+                string[] crseDetails = courseDetails.ElementAt(x).InnerText.Split('\n');
+                time.Add(crseDetails[2]);
+                if (crseDetails[3] == "&nbsp;")
+                {
+                    crseDetails[3] = "N/A";
+                }
+                days.Add(crseDetails[3]);
+                location.Add(crseDetails[4]);
+                inst.Add(crseDetails[7].Replace("(P)", ""));
+                schedType.Add(crseDetails[6].Trim());
+            }
+            return new CourseResult
+            {
+                title = courseInfo[0].Trim('\n', ' '),
+                courseRegistrationNum = courseInfo[1].Trim(),
+                subject = c.subject,
+                courseNumber = c.courseNum,
+                section = courseInfo[3].Trim('\n', ' '),
+                time = time,
+                days = days,
+                location = location,
+                instructor = inst,
+                creditHours = creditHoursHtml,
+                scheduleType = schedType
+            };
+        }
+        private async Task<CourseResult> getSeatCapacities(CourseResult course, string termId)
+        {
+            HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={course.courseRegistrationNum}");
+            string html = await httpmsg.Content.ReadAsStringAsync();
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+            var seatCap = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]/tr[2]/td/table/tr[2]/td[1]").InnerText;
+            var seatActual = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]/tr[2]/td/table/tr[2]/td[2]").InnerText;
+            var waitListCap = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]/tr[2]/td/table/tr[3]/td[1]").InnerText;
+            var waitListActual = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]/tr[2]/td/table/tr[3]/td[2]").InnerText;
+            course.seatCap = Int32.Parse(seatCap);
+            course.seatActual = Int32.Parse(seatActual);
+            course.waitListCap = Int32.Parse(waitListCap);
+            course.waitListActual = Int32.Parse(waitListActual);
+            return course;
         }
     }
 }
