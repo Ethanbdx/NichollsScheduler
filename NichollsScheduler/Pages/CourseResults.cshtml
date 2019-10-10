@@ -16,96 +16,101 @@
     {
         <h2>Select courses to register for.</h2>
     }
-
-    @foreach (var courseList in CourseResultsModel.courseResults)
-    {
-        <div class="card" style="margin-top: 1em">
-            <div class="card-header text-white btn-red">
-                @if (courseList[0].title != null)
-                {
-                    <h4>@courseList[0].subject @courseList[0].courseNumber - @courseList[0].title</h4>
-                }
-                else
-                {
-                    <h4>@courseList[0].subject @courseList[0].courseNumber - No Courses Found</h4>
-                }
-
-            </div>
-            <div class="card-body">
-                <table class="table table-sm table-responsive-md table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Section</th>
-                            <th scope="col">Days</th>
-                            <th scope="col">Times</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Instructor</th>
-                            <th scope="col">Credits</th>
-                            <th scope="col">Remaining Seats</th>
-                        </tr>
-                    </thead>
-                    @foreach (var course in courseList)
+    <form method="post" id="regsCourse">
+        @foreach (var courseList in CourseResultsModel.courseResults)
+        {
+            <div class="card" style="margin-top: 1em">
+                <div class="card-header text-white btn-red">
+                    @if (courseList[0].title != null)
                     {
-                        @if (course.title != null)
-                        {
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>@course.section</td>
-                                @if (course.days.Count == 1)
-                                {
-                                    <td>@course.days[0]</td>
-                                    <td>@course.time[0]</td>
-                                    <td>@course.location[0]</td>
-                                    <td>@course.scheduleType[0]</td>
-                                    <td>@course.instructor[0]</td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        @for (int i = 0; i < course.days.Count; i++)
-                                        {
-                                            <p>@course.days[i]</p>
-                                        }
-                                    </td>
-                                    <td>
-                                        @for (int i = 0; i < course.time.Count; i++)
-                                        {
-                                            <p>@course.time[i]</p>
-                                        }
-                                    </td>
-                                    <td>
-                                        @for (int i = 0; i < course.location.Count; i++)
-                                        {
-                                            <p>@course.location[i]</p>
-                                        }
-                                    </td>
-                                    <td>
-                                        @for (int i = 0; i < course.scheduleType.Count; i++)
-                                        {
-                                            <p>@course.scheduleType[i]</p>
-                                        }
-                                    </td>
-                                    <td>
-                                        @for (int i = 0; i < course.instructor.Count; i++)
-                                        {
-                                            <p>@course.instructor[i]</p>
-                                        }
-                                    </td>
-                                }
-                                <td>@course.creditHours</td>
-                                <td style="text-align:center">@(course.seatCap - course.seatActual)</td>
-                            </tr>
-                        }
-                        else
-                        {
-                            <tr></tr>
-                        }
+                        <h4>@courseList[0].subject @courseList[0].courseNumber - @courseList[0].title</h4>
                     }
-                </table>
+                    else
+                    {
+                        <h4>@courseList[0].subject @courseList[0].courseNumber - No Courses Found</h4>
+                    }
+
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-responsive-md table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Section</th>
+                                <th scope="col">Days</th>
+                                <th scope="col">Times</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Instructor</th>
+                                <th scope="col">Credits</th>
+                                <th scope="col">Remaining Seats</th>
+                            </tr>
+                        </thead>
+                        @foreach (var course in courseList)
+                        {
+                            @if (course.title != null)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" value="@course.courseRegistrationNum" /></td>
+                                    <td>@course.section</td>
+                                    @if (course.days.Count == 1)
+                                    {
+                                        <td>@course.days[0]</td>
+                                        <td>@course.time[0]</td>
+                                        <td>@course.location[0]</td>
+                                        <td>@course.scheduleType[0]</td>
+                                        <td>@course.instructor[0]</td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @for (int i = 0; i < course.days.Count; i++)
+                                            {
+                                                <p>@course.days[i]</p>
+                                            }
+                                        </td>
+                                        <td>
+                                            @for (int i = 0; i < course.time.Count; i++)
+                                            {
+                                                <p>@course.time[i]</p>
+                                            }
+                                        </td>
+                                        <td>
+                                            @for (int i = 0; i < course.location.Count; i++)
+                                            {
+                                                <p>@course.location[i]</p>
+                                            }
+                                        </td>
+                                        <td>
+                                            @for (int i = 0; i < course.scheduleType.Count; i++)
+                                            {
+                                                <p>@course.scheduleType[i]</p>
+                                            }
+                                        </td>
+                                        <td>
+                                            @for (int i = 0; i < course.instructor.Count; i++)
+                                            {
+                                                <p>@course.instructor[i]</p>
+                                            }
+                                        </td>
+                                    }
+                                    <td>@course.creditHours</td>
+                                    <td style="text-align:center">@(course.seatCap - course.seatActual)</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr></tr>
+                            }
+                        }
+                    </table>
+                </div>
             </div>
-        </div>
-    }
+        }
+    </form>
+    <br />
+    <div class="col-6 offset-3" style="text-align:center">
+        <input type="submit" id="submit" value="Register" class="btn btn-lg btn-success btn-block" />
+    </div>
 
 </div>

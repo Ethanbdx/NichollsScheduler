@@ -23,5 +23,9 @@ namespace NichollsScheduler.Pages
             courseResults = results;
             
         }
+        public void OnPost()
+        {
+
+        }
     }
 }
