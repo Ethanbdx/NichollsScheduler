@@ -15,17 +15,17 @@ namespace NichollsScheduler.Pages
     {
 
         public static List<List<CourseResult>> courseResults;
-        
+
         public void OnGet()
         {
             string courseRes = HttpContext.Session.GetString("courseResults");
             var results = JsonConvert.DeserializeObject<List<List<CourseResult>>>(courseRes);
             courseResults = results;
-            
+
         }
         public void OnPost()
         {
-
+            //TODO - Checking for overlapping schedules...done here or maybe within view?
         }
     }
 }

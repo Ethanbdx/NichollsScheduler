@@ -24,14 +24,21 @@ namespace NichollsScheduler.Logic
         };
         public async Task<Dictionary<string, string>> getTerms()
         {
-            HttpResponseMessage terms = await client.GetAsync("bwckschd.p_disp_dyn_sched");
-            string htmlDocument = await terms.Content.ReadAsStringAsync();
-            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
-            htmlDoc.LoadHtml(htmlDocument);
-            var selection = htmlDoc.DocumentNode.Descendants("option").ToDictionary(t => t.InnerText, t => t.GetAttributeValue("value", "0"));
-            List<string> toDelete = selection.Keys.Where(k => k.Contains("View only") || k.Contains("None")).ToList();
-            //toDelete.ForEach(k => selection.Remove(k));
-            return selection;
+            try
+            {
+                HttpResponseMessage terms = await client.GetAsync("bwckschd.p_disp_dyn_sched");
+                string htmlDocument = await terms.Content.ReadAsStringAsync();
+                var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+                htmlDoc.LoadHtml(htmlDocument);
+                var selection = htmlDoc.DocumentNode.Descendants("option").ToDictionary(t => t.InnerText, t => t.GetAttributeValue("value", "0"));
+                List<string> toDelete = selection.Keys.Where(k => k.Contains("View only") || k.Contains("None")).ToList();
+                //toDelete.ForEach(k => selection.Remove(k));
+                return selection;
+            }
+            catch
+            {
+                return null;
+            }
 
         }
         public async Task<List<List<CourseResult>>> GetCourseResults(List<Course> courses, string termId)
