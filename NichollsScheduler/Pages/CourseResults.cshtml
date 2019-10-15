@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Course Results";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+    
     //TODO - Check if courses are selected prior to "Registration" click
     //TODO - Don't allow same section
 }
@@ -49,8 +50,12 @@
                         </thead>
                         @foreach (var course in courseList)
                         {
+                           
+                            
                             @if (course.title != null)
                             {
+                                
+                              
                                 <tr class="courseRow">
                                     <td>
                                         @if ((course.seatCap - course.seatActual) < 0)
@@ -64,11 +69,11 @@
                                             {
                                                 if (CourseResultsModel.prevSelectedCourses.Contains(course.courseRegistrationNum))
                                                 {
-                                                    <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" checked name="selectedCourse[@(CourseResultsModel.prevSelectedCourses.IndexOf(course.courseRegistrationNum))]"/>
+                                                    <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" checked name="selectedCourse[@(CourseResultsModel.prevSelectedCourses.IndexOf(course.courseRegistrationNum))]" />
                                                 }
                                                 else
                                                 {
-                                                    <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" disabled />
+                                                    <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" />
                                                 }
                                             }
                                             else
@@ -145,6 +150,17 @@
     <script>
         $(document).ready(function () {
             var i = $("[type='checkbox']:checked").length;
+            var selectedCheckBoxes = $("[type='checkbox']:checked").each(function () {
+                var inputs = $(this.parentElement.parentElement.parentElement.parentNode).find("tr>td>input").each(function () {
+                    if (this.checked) {
+                        console.log("checked")
+                        return;
+                    } 
+                        $(this).prop('disabled', 'true');
+                    });
+            });
+            
+                
             $("#register").click(function (e) {
                 if (i == 0) {
                     alert("You must select a course first.");
@@ -153,7 +169,6 @@
             $(".courseCheckbox").change(function () {
                 var selectedCheckBox = this;
                 if (this.checked) {
-
                     var inputs = $(this.parentElement.parentElement.parentElement.parentNode).find("tr>td>input").each(function () {
                         if (this == selectedCheckBox) {
                             return;
