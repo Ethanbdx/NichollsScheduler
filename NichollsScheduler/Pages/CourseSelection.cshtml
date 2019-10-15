@@ -1,4 +1,4 @@
-﻿@page
+﻿ @page
 @model NichollsScheduler.Pages.CourseSelectionModel
 @{
     ViewData["Title"] = "Course Selection";
@@ -115,6 +115,7 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            $("#subj").prop("selectedIndex", 0);
             $("#subj").on("change", function () {
                 var subject = $(this).val();
                 $("#cnum").empty();

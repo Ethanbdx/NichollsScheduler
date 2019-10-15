@@ -138,6 +138,28 @@ namespace NichollsScheduler.Logic
                 inst.Add(crseDetails[7].Replace("(P)", ""));
                 schedType.Add(crseDetails[6].Trim());
             }
+            if(c.subject == "ENGL")
+            {
+                if(c.courseNum == "215" || c.courseNum == "216" || c.courseNum == "217")
+                {
+                    var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
+                    return new CourseResult
+                    {
+                        title = fulltitle[0],
+                        topic = fulltitle[1],
+                        courseRegistrationNum = courseInfo[1].Trim(),
+                        subject = c.subject,
+                        courseNumber = c.courseNum,
+                        section = courseInfo[3].Trim('\n', ' '),
+                        time = time,
+                        days = days,
+                        location = location,
+                        instructor = inst,
+                        creditHours = creditHoursHtml,
+                        scheduleType = schedType
+                    };
+                }
+            }
             return new CourseResult
             {
                 title = courseInfo[0].Trim('\n', ' '),

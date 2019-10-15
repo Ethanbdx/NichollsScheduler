@@ -38,6 +38,14 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col"></th>
+                                @if (courseList.Exists(c => c.subject == "ENGL"))
+                                {
+                                    @if (courseList.Exists(c => c.courseNumber == "215" || c.courseNumber == "216" || c.courseNumber == "217"))
+                                    {
+                                        <th scope="col">Topic</th>
+                                    }
+                                }
+
                                 <th scope="col">Section</th>
                                 <th scope="col">Days</th>
                                 <th scope="col">Times</th>
@@ -83,6 +91,10 @@
                                         }
 
                                     </td>
+                                    @if(course.topic != null)
+                                    {
+                                    <td><h6>@course.topic</h6></td>
+                                    }
                                     <td class="section">@course.section</td>
                                     @if (course.days.Count == 1)
                                     {

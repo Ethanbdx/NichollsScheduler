@@ -15,6 +15,8 @@ namespace NichollsScheduler.Data
 
         public string section { get; set; }
 
+        public string topic { get; set; }
+
         public List<string> location { get; set; }
 
         public List<string> instructor { get; set; }
