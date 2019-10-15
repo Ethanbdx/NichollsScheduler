@@ -22,9 +22,6 @@ namespace NichollsScheduler.Pages
             {
                 return RedirectToPage("CourseResults");
             }
-            {
-
-            }
             termName = HttpContext.Session.GetString("termName");
             selectedCourses = JsonConvert.DeserializeObject<List<CourseResult>>(HttpContext.Session.GetString("selectedCourseResults"));
             return Page();

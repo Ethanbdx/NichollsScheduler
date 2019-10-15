@@ -19,6 +19,7 @@ namespace NichollsScheduler.Pages
         public async Task<IActionResult> OnGetAsync(BannerService client)
         { 
             availableTerms = await client.getTerms();
+            
             return Page();
         }
 
