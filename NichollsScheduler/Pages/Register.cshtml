@@ -1,0 +1,51 @@
+﻿@page
+@model NichollsScheduler.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <br />
+    <h2>Select how you'd like to register.</h2>
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header btn-red" style="text-align:center"><h5>Automatically Through Banner</h5></div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Provide your Banner credentials.</li>
+                            <li>The system registers will register for you.</li>
+                            <li>Get a confirmation when it's complete.</li>
+                        </ul>
+                        <br />
+                        <br />
+                        <div class="card-footer" style="background:inherit;">
+                            <a asp-page="BannerRegister" class="btn btn-lg btn-block btn-red disabled">Work In Progress</a>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header btn-red" style="text-align:center"><h5>Mannually Through Banner</h5></div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Recieve the course registration numbers of the courses chosen.</li>
+                            <li>Login to Banner.</li>
+                            <li>Manually enter the CRNs to register.</li>
+                        </ul>
+                        <br />
+                        <div class="card-footer" style="background:inherit;">
+                            <a asp-page="ManualRegister" class="btn btn-lg btn-block btn-red">Select Manual</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,42 @@
+﻿@page
+@model NichollsScheduler.Pages.ManualRegisterModel
+@{
+    ViewData["Title"] = "ManualRegister";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <br />
+    <h2>Use these CRNs to register your courses.</h2>
+    <br />
+    <div class="card" style="margin-top: 1em">
+        <div class="card-header text-white btn-red">
+            <h4>@ManualRegisterModel.termName - Schedule</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-responsive-md table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        @foreach(var course in ManualRegisterModel.selectedCourses)
+                        {
+                            <th>@course.subject @course.courseNumber</th>
+                        }
+                    </tr>
+                </thead>
+                <tr>
+                @foreach (var course in ManualRegisterModel.selectedCourses)
+                {
+                    
+                        <td><h5>@course.courseRegistrationNum</h5></td>
+                }
+                  </tr>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="col-4 offset-4">
+            <a target="_blank" rel="noopener noreferrer" href="https://banner.nicholls.edu/PROD/twbkwbis.P_WWWLogin" class="btn btn-lg btn-block btn-red">Go to Banner</a>
+        </div>
+        </div>
+    </div>
+</div>
+
