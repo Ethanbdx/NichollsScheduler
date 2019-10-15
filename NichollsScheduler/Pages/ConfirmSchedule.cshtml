@@ -1,0 +1,86 @@
+﻿@page
+@model NichollsScheduler.Pages.ConfirmScheduleModel
+@{
+    ViewData["Title"] = "ConfirmSchedule";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <br />
+    <h2>Confirm your schedule before proceeding.</h2>
+    <br />
+    <div class="card" style="margin-top: 1em">
+        <div class="card-header text-white btn-red">
+            <h4>@ConfirmScheduleModel.termName - Schedule</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-responsive-md table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Course</th>
+                        <th scope="col">Section</th>
+                        <th scope="col">Days</th>
+                        <th scope="col">Times</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Instructor</th>
+                        <th scope="col">Credits</th>
+                    </tr>
+                </thead>
+                @foreach (var course in ConfirmScheduleModel.selectedCourses)
+                {
+                    <tr>
+                        <td><h6>@course.subject @course.courseNumber</h6></td>
+                        <td><h6>@course.section</h6></td>
+                        @if (course.days.Count == 1)
+                        {
+                        <td><h6>@course.days[0]</h6></td>
+                        <td><h6>@course.time[0]</h6></td>
+                        <td><h6>@course.location[0]</h6></td>
+                        <td><h6>@course.scheduleType[0]</h6></td>
+                        <td><h6>@course.instructor[0]</h6></td>
+                        }
+                        else
+                        {
+                            <td>
+                                @for (int i = 0; i < course.days.Count; i++)
+                                {
+                                <p><h6>@course.days[i]</h6></p>
+                                }
+                            </td>
+                            <td>
+                                @for (int i = 0; i < course.time.Count; i++)
+                                {
+                                <p><h6>@course.time[i]</h6></p>
+                                }
+                            </td>
+                            <td>
+                                @for (int i = 0; i < course.location.Count; i++)
+                                {
+                                <p><h6>@course.location[i]</h6></p>
+                                }
+                            </td>
+                            <td>
+                                @for (int i = 0; i < course.scheduleType.Count; i++)
+                                {
+                                <p><h6>@course.scheduleType[i]</h6></p>
+                                }
+                            </td>
+                            <td>
+                                @for (int i = 0; i < course.instructor.Count; i++)
+                                {
+                                <p><h6>@course.instructor[i]</h6></p>
+                                }
+                            </td>
+                        }
+                            <td><h6>@course.creditHours</h6></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col-6 offset-3" style="text-align:center">
+            <a href="@RedirectToPage("Register")" class="btn btn-lg btn-block btn-red">Confirm Schedule</a>
+            <br />
+        </div>
+    </div>
+</div>

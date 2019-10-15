@@ -3,9 +3,8 @@
 @{
     ViewData["Title"] = "Course Results";
     Layout = "~/Pages/Shared/_Layout.cshtml";
-    //TODO - Only able to select one section per course
-    //TODO - Registration Post Method & button
-    //TODO - Preview Schedule Page? Or additional Table?
+    //TODO - Check if courses are selected prior to "Registration" click
+    //TODO - Don't allow same section
 }
 
 
@@ -34,7 +33,7 @@
 
                 </div>
                 <div class="card-body">
-                    <table class="table table-sm table-responsive-md table-striped">
+                    <table class="table table-sm table-responsive-md table-striped courseTable">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col"></th>
@@ -52,9 +51,34 @@
                         {
                             @if (course.title != null)
                             {
-                                <tr>
-                                    <td><input type="checkbox" value="@course.courseRegistrationNum" /></td>
-                                    <td>@course.section</td>
+                                <tr class="courseRow">
+                                    <td>
+                                        @if ((course.seatCap - course.seatActual) < 0)
+                                        {
+                                            <input type="checkbox" disabled value="@course.courseRegistrationNum" />
+                                        }
+                                        else
+                                        {
+
+                                            @if (CourseResultsModel.prevSelectedCourses.Count > 0)
+                                            {
+                                                if (CourseResultsModel.prevSelectedCourses.Contains(course.courseRegistrationNum))
+                                                {
+                                                    <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" checked name="selectedCourse[@(CourseResultsModel.prevSelectedCourses.IndexOf(course.courseRegistrationNum))]"/>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" disabled />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" />
+                                            }
+                                        }
+
+                                    </td>
+                                    <td class="section">@course.section</td>
                                     @if (course.days.Count == 1)
                                     {
                                         <td>@course.days[0]</td>
@@ -108,11 +132,45 @@
                     </table>
                 </div>
             </div>
+            <br />
         }
-    </form>
-    <br />
-    <div class="col-6 offset-3" style="text-align:center">
-        <input type="submit" id="submit" value="Register" class="btn btn-lg btn-success btn-block" />
-    </div>
 
+        <div class="col-6 offset-3" style="text-align:center">
+            <input type="submit" id="register" value="Register" class="btn btn-lg btn-success btn-block" />
+        </div>
+    </form>
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var i = $("[type='checkbox']:checked").length;
+            $("#register").click(function (e) {
+                if (i == 0) {
+                    alert("You must select a course first.");
+                }
+            });
+            $(".courseCheckbox").change(function () {
+                var selectedCheckBox = this;
+                if (this.checked) {
+
+                    var inputs = $(this.parentElement.parentElement.parentElement.parentNode).find("tr>td>input").each(function () {
+                        if (this == selectedCheckBox) {
+                            return;
+                        }
+                        $(this).prop('disabled', 'true');
+                    });
+                    this.setAttribute("name", `selectedCourse[${i}]`)
+                    i++
+                }
+                else {
+                    var inputs = $(this.parentElement.parentElement.parentElement.parentNode).find("tr>td>input").each(function () {
+                        $(this).removeAttr("disabled");
+                    });
+                    this.removeAttribute("name")
+                    i--
+                }
+            });
+        });
+    </script>
+}

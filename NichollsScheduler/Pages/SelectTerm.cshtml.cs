@@ -13,6 +13,7 @@ namespace NichollsScheduler.Pages
     public class SelectTermModel : PageModel
     {
         public string termId { get; set; }
+
         public static Dictionary<string,string> availableTerms;
 
         public async Task<IActionResult> OnGetAsync(BannerService client)
@@ -32,6 +33,7 @@ namespace NichollsScheduler.Pages
             {
                 return Page();
             }
+            HttpContext.Session.SetString("termName", availableTerms.FirstOrDefault(t => t.Value == termId).Key);
             HttpContext.Session.SetString("termId", termId);
             return RedirectToPage("CourseSelection");
         }

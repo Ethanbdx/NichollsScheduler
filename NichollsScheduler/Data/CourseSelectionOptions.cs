@@ -15,8 +15,9 @@ namespace NichollsScheduler.Data
     
         public IEnumerable<Course> GetCourseSelections(string Subject)
         {
+            
             List<Course> CourseOptions = new List<Course>();
-            using (StreamReader sr = new StreamReader("Courses.txt"))
+            using (StreamReader sr = new StreamReader("wwwroot/Courses.txt"))
             {
                 string line;
                 while((line = sr.ReadLine()) != null)

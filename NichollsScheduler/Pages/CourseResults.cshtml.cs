@@ -13,19 +13,49 @@ namespace NichollsScheduler.Pages
 {
     public class CourseResultsModel : PageModel
     {
+        [BindProperty]
+        public List<string> selectedCourse { get; set; }
 
+        public static List<string> prevSelectedCourses;
         public static List<List<CourseResult>> courseResults;
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            
             string courseRes = HttpContext.Session.GetString("courseResults");
+            if (String.IsNullOrEmpty(courseRes))
+            {
+                return RedirectToPage("CourseSelection");
+            }
+
             var results = JsonConvert.DeserializeObject<List<List<CourseResult>>>(courseRes);
             courseResults = results;
-
+            try
+            {
+                var selectCourses = JsonConvert.DeserializeObject<List<CourseResult>>(HttpContext.Session.GetString("selectedCourseResults"));
+                var courseRegsNums = from c in selectCourses
+                                     select c.courseRegistrationNum;
+                prevSelectedCourses = courseRegsNums.ToList();
+                return Page();
+            }
+            catch
+            {
+                prevSelectedCourses = new List<string>();
+                return Page();
+            }
         }
-        public void OnPost()
+
+        public IActionResult OnPost()
         {
-            //TODO - Checking for overlapping schedules...done here or maybe within view?
+            if(selectedCourse.Count == 0)
+            {
+                return Page();
+            }
+            var selectedCourses = (from c in courseResults.SelectMany(l => l.Distinct())
+                                  where selectedCourse.Contains(c.courseRegistrationNum)
+                                  select c).ToList();
+            HttpContext.Session.SetString("selectedCourseResults", JsonConvert.SerializeObject(selectedCourses));
+            return RedirectToPage("ConfirmSchedule");
         }
     }
 }

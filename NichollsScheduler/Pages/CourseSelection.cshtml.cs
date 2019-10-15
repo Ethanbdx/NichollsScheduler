@@ -21,24 +21,29 @@ namespace NichollsScheduler.Pages
         public string courseNum { get; set; }
         public static List<Course> selectedCourses;
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("termId")))
+            {
+               return RedirectToPage("SelectTerm");
+            }
             try
             {
                 var jsonstring = HttpContext.Session.GetString("selectedCourses");
                 selectedCourses = JsonConvert.DeserializeObject<List<Course>>(jsonstring);
+                return Page();
             }
             catch
             {
                 selectedCourses = new List<Course>();
-                return; 
+                return Page();
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> OnPost(List<Course> selCourses, BannerService client)
         {
-            if(selCourses.Count == 0)
+            if (selCourses.Count == 0)
             {
                 return Page();
             }
