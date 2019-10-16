@@ -30,10 +30,15 @@ namespace NichollsScheduler.Logic
                 string htmlDocument = await terms.Content.ReadAsStringAsync();
                 var htmlDoc = new HtmlAgilityPack.HtmlDocument();
                 htmlDoc.LoadHtml(htmlDocument);
-                var selection = htmlDoc.DocumentNode.Descendants("option").ToDictionary(t => t.InnerText, t => t.GetAttributeValue("value", "0"));
-                List<string> toDelete = selection.Keys.Where(k => k.Contains("View only") || k.Contains("None")).ToList();
-                //toDelete.ForEach(k => selection.Remove(k));
-                return selection;
+                var termSelect = htmlDoc.DocumentNode.Descendants("option").ToDictionary(t => t.InnerText, t => t.GetAttributeValue("value", "0")).ToList();
+                termSelect.RemoveAt(0);
+                int termCount = termSelect.Count - 1;
+                for(int i=termCount; 3 != termSelect.Count; i--)
+                {
+                    termSelect.RemoveAt(i);
+                }
+                var termResult = termSelect.ToDictionary(x => x.Key, x => x.Value);
+                return termResult;
             }
             catch
             {
