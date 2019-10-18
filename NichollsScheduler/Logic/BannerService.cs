@@ -1,4 +1,6 @@
-﻿using HtmlAgilityPack;
+﻿using AngleSharp;
+using AngleSharp.Dom;
+using AngleSharp.XPath;
 using Microsoft.AspNetCore.Http;
 using NichollsScheduler.Data;
 using System;
@@ -28,9 +30,9 @@ namespace NichollsScheduler.Logic
             {
                 HttpResponseMessage terms = await client.GetAsync("bwckschd.p_disp_dyn_sched");
                 string htmlDocument = await terms.Content.ReadAsStringAsync();
-                var htmlDoc = new HtmlAgilityPack.HtmlDocument();
-                htmlDoc.LoadHtml(htmlDocument);
-                var termSelect = htmlDoc.DocumentNode.Descendants("option").ToDictionary(t => t.InnerText, t => t.GetAttributeValue("value", "0")).ToList();
+                var browsingContext = BrowsingContext.New(Configuration.Default);
+                var document = await browsingContext.OpenAsync(req => req.Content(htmlDocument));
+                var termSelect = document.QuerySelectorAll("option").ToDictionary(t => t.TextContent, t => t.GetAttribute("value")).ToList();
                 termSelect.RemoveAt(0);
                 int termCount = termSelect.Count - 1;
                 for(int i=termCount; 3 != termSelect.Count; i--)
@@ -84,12 +86,10 @@ namespace NichollsScheduler.Logic
                 HttpContent content = new FormUrlEncodedContent(values);
                 HttpResponseMessage result = await client.PostAsync("bwckschd.p_get_crse_unsec", content);
                 var html = await result.Content.ReadAsStringAsync();
-                var htmlDoc = new HtmlDocument();
-                htmlDoc.LoadHtml(html);
+                var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
                 try
                 {
-                    var tbody = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]");
-                    var trows = tbody.Elements("tr");
+                    var trows = htmlDoc.QuerySelectorAll("*[xpath>'/body/div[3]/table[1]/tbody/tr']").ToList();
                     for (int i = 0; i < trows.Count(); i++)
                     {
                         CourseResult course = parseCourseResultHtml(trows, i, c);
@@ -111,9 +111,9 @@ namespace NichollsScheduler.Logic
             }
             return courseResults;
         }
-        private CourseResult parseCourseResultHtml(IEnumerable<HtmlNode> html, int i, Course c)
+        private CourseResult parseCourseResultHtml(List<IElement> html, int i, Course c)
         {
-            var courseInfo = html.ElementAt(i).InnerText.Split('-').ToList();
+            var courseInfo = html.ElementAt(i).TextContent.Split('-').ToList();
             if (courseInfo.Count > 4)
             {
                 for (int p = 0; p < courseInfo.Count - 3; p++)
@@ -122,9 +122,9 @@ namespace NichollsScheduler.Logic
                     courseInfo.RemoveAt(1);
                 }
             }
-            var creditHoursHtml = html.ElementAt(i + 1).Element("td").InnerText.Split('\n').Where(s => s.Contains("Credits")).ElementAt(0).Trim();
+            var creditHoursHtml = html.ElementAt(i + 1).TextContent.Split('\n').Where(s => s.Contains("Credits")).ElementAt(0).Trim();
             creditHoursHtml = creditHoursHtml.Remove(5);
-            var courseDetails = html.ElementAt(i + 1).Element("td").Element("table").Elements("tr");
+            var courseDetails = html.ElementAt(i + 1).GetElementsByTagName("tr").ToList();
             List<string> time = new List<string>();
             List<string> inst = new List<string>();
             List<string> days = new List<string>();
@@ -132,7 +132,7 @@ namespace NichollsScheduler.Logic
             List<string> schedType = new List<string>();
             for (int x = 1; x < courseDetails.Count(); x++)
             {
-                string[] crseDetails = courseDetails.ElementAt(x).InnerText.Split('\n');
+                string[] crseDetails = courseDetails.ElementAt(x).TextContent.Split('\n');
                 time.Add(crseDetails[2]);
                 if (crseDetails[3] == "&nbsp;")
                 {
@@ -184,12 +184,11 @@ namespace NichollsScheduler.Logic
         {
             HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={course.courseRegistrationNum}");
             string html = await httpmsg.Content.ReadAsStringAsync();
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
-            var seatCap = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]/tr[2]/td/table/tr[2]/td[1]").InnerText;
-            var seatActual = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]/tr[2]/td/table/tr[2]/td[2]").InnerText;
-            var waitListCap = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]/tr[2]/td/table/tr[3]/td[1]").InnerText;
-            var waitListActual = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/table[1]/tr[2]/td/table/tr[3]/td[2]").InnerText;
+            var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
+            var seatCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[1]']").TextContent;
+            var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
+            var waitListCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[1]']").TextContent;
+            var waitListActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[2]']").TextContent;
             course.seatCap = Int32.Parse(seatCap);
             course.seatActual = Int32.Parse(seatActual);
             course.waitListCap = Int32.Parse(waitListCap);

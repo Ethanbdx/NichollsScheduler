@@ -8,5 +8,6 @@ namespace NichollsScheduler.Logic
     public class SchedulerService
     {
         //TODO - Begin work on Scheduler Service once page is started.
+
     }
 }
