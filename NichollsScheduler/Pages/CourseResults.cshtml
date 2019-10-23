@@ -65,7 +65,7 @@
                               
                                 <tr class="courseRow">
                                     <td>
-                                        @if ((course.seatCap - course.seatActual) < 0)
+                                        @if ((course.seatCap - course.seatActual) <= 0)
                                         {
                                             <input type="checkbox" disabled value="@course.courseRegistrationNum" />
                                         }
