@@ -11,15 +11,15 @@ The web application scrapes Nicholls' banner self service to provide students wi
 - JQuery
 
 # Images of Application
-###Home Page
+### Home Page
 ![Picture of Home Page](https://i.imgur.com/HMIicEY.jpg "Home Page")
-###Term Selection Page
+### Term Selection Page
 ![Picture of Term Selection](https://i.imgur.com/VBypa2d.jpg "Term Selection")
-###Course Search Page
+### Course Search Page
 ![Picture of Course Search](https://i.imgur.com/Fl3olsw.jpg "Course Search")
-###Course Results Page
+### Course Results Page
 ![Picture of Course Results](https://i.imgur.com/GKzoOl7.jpg "Course Results")
-###Schedule Confirmation Page
+### Schedule Confirmation Page
 ![Picture of Schedule Confirmation](https://i.imgur.com/bDL4yaT.jpg "Schedule Confirmation")
-###Registration Page
+### Registration Page
 ![Picture of Registration](https://i.imgur.com/AMgfbry.jpg "Course Registration Numbers")
