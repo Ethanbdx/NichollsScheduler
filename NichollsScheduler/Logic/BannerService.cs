@@ -35,7 +35,7 @@ namespace NichollsScheduler.Logic
                 var termSelect = document.QuerySelectorAll("option").ToDictionary(t => t.TextContent, t => t.GetAttribute("value")).ToList();
                 termSelect.RemoveAt(0);
                 int termCount = termSelect.Count - 1;
-                for(int i=termCount; 3 != termSelect.Count; i--)
+                for(int i=termCount; termSelect.Count != 3; i--)
                 {
                     termSelect.RemoveAt(i);
                 }
@@ -44,6 +44,7 @@ namespace NichollsScheduler.Logic
             }
             catch
             {
+                Console.WriteLine("No Term Available");
                 return null;
             }
 
