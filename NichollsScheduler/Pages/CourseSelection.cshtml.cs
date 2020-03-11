@@ -41,14 +41,14 @@ namespace NichollsScheduler.Pages
         }
 
         [HttpPost]
-        public async Task<IActionResult> OnPost(List<Course> selCourses, BannerService client)
+        public IActionResult OnPost(List<Course> selCourses, BannerService client)
         {
             if (selCourses.Count == 0)
             {
                 return Page();
             }
             var selectedCourses = JsonConvert.SerializeObject(selCourses);
-            var courseResults = JsonConvert.SerializeObject(await client.GetCourseResults(selCourses, HttpContext.Session.GetString("termId")));
+            var courseResults = JsonConvert.SerializeObject(client.GetCourseResults(selCourses, HttpContext.Session.GetString("termId")));
             HttpContext.Session.SetString("selectedCourses", selectedCourses);
             HttpContext.Session.SetString("courseResults", courseResults);
             return RedirectToPage("CourseResults");

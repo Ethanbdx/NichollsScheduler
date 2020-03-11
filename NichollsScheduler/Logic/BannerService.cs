@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Http;
 using NichollsScheduler.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NichollsScheduler.Logic
@@ -49,13 +51,10 @@ namespace NichollsScheduler.Logic
             }
 
         }
-        public async Task<List<List<CourseResult>>> GetCourseResults(List<Course> courses, string termId)
+        private async Task<List<CourseResult>> searchCourse (Course course, string termId)
         {
-            List<List<CourseResult>> courseResults = new List<List<CourseResult>>();
-            foreach (Course c in courses)
-            {
-                List<CourseResult> courseRes = new List<CourseResult>();
-                List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
+            List<CourseResult> courseRes = new List<CourseResult>();
+            List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("term_in", termId),
                 new KeyValuePair<string, string>("sel_subj", "dummy"),
@@ -68,8 +67,8 @@ namespace NichollsScheduler.Logic
                 new KeyValuePair<string, string>("sel_instr", "dummy"),
                 new KeyValuePair<string, string>("sel_ptrm", "dummy"),
                 new KeyValuePair<string, string>("sel_attr", "dummy"),
-                new KeyValuePair<string, string>("sel_subj", c.subject),
-                new KeyValuePair<string, string>("sel_crse", c.courseNum),
+                new KeyValuePair<string, string>("sel_subj", course.subject),
+                new KeyValuePair<string, string>("sel_crse", course.courseNum),
                 new KeyValuePair<string, string>("sel_title", ""),
                 new KeyValuePair<string, string>("sel_schd", "%"),
                 new KeyValuePair<string, string>("sel_from_cred", ""),
@@ -84,32 +83,41 @@ namespace NichollsScheduler.Logic
                 new KeyValuePair<string, string>("end_mi", "0"),
                 new KeyValuePair<string, string>("end_ap", "a")
             };
-                HttpContent content = new FormUrlEncodedContent(values);
-                HttpResponseMessage result = await client.PostAsync("bwckschd.p_get_crse_unsec", content);
-                var html = await result.Content.ReadAsStringAsync();
-                var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
-                try
+
+            HttpContent content = new FormUrlEncodedContent(values);
+            HttpResponseMessage result = await client.PostAsync("bwckschd.p_get_crse_unsec", content);
+            var html = await result.Content.ReadAsStringAsync();
+            var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
+            try
+            {
+                var trows = htmlDoc.QuerySelectorAll("*[xpath>'/body/div[3]/table[1]/tbody/tr']").ToList();
+                for (int i = 0; i < trows.Count(); i++)
                 {
-                    var trows = htmlDoc.QuerySelectorAll("*[xpath>'/body/div[3]/table[1]/tbody/tr']").ToList();
-                    for (int i = 0; i < trows.Count(); i++)
-                    {
-                        CourseResult course = parseCourseResultHtml(trows, i, c);
-                        course = getSeatCapacities(course, termId).Result;
-                        courseRes.Add(course);
-                        i++;
-                    }
-                    courseResults.Add(courseRes);
+                    CourseResult courseResult = parseCourseResultHtml(trows, i, course);
+                    courseResult = getSeatCapacities(courseResult, termId).Result;
+                    courseRes.Add(courseResult);
+                    i++;
                 }
-                catch
-                {
-                    courseRes.Add(new CourseResult
-                    {
-                        subject = c.subject,
-                        courseNumber = c.courseNum
-                    });
-                    courseResults.Add(courseRes);
-                }
+
             }
+            catch
+            {
+                courseRes.Add(new CourseResult
+                {
+                    subject = course.subject,
+                    courseNumber = course.courseNum
+                });
+            }
+            return courseRes;
+        }
+        public List<List<CourseResult>> GetCourseResults(List<Course> courses, string termId)
+        {
+            List<List<CourseResult>> courseResults = new List<List<CourseResult>>();
+            Parallel.ForEach(courses, course =>
+            { 
+                var result = searchCourse(course, termId);
+                courseResults.Add(result.Result);
+            });
             return courseResults;
         }
         private CourseResult parseCourseResultHtml(List<IElement> html, int i, Course c)
