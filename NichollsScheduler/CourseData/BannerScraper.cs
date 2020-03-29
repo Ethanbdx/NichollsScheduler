@@ -15,10 +15,8 @@ using System.Threading.Tasks;
 
 namespace NichollsScheduler.Logic
 {
-    public class BannerScraper
+    public static class BannerScraper
     {
-        public BannerScraper() { }
-        private CourseFactory courseFactory = new CourseFactory();
         private static readonly HttpClientHandler handler = new HttpClientHandler()
         {
             SslProtocols = System.Security.Authentication.SslProtocols.Tls,
@@ -28,7 +26,7 @@ namespace NichollsScheduler.Logic
             BaseAddress = new Uri("https://banner.nicholls.edu/PROD/")
         };
 
-        public async Task<Dictionary<string, string>> getTerms()
+        public static async Task<Dictionary<string, string>> getTerms()
         {
             try
             {
@@ -52,19 +50,19 @@ namespace NichollsScheduler.Logic
             }
 
         }
-        public List<List<CourseResult>> getCourseResults(List<Course> courses, string termId)
+        public static List<List<CourseResultModel>> getCourseResults(List<CourseModel> courses, string termId)
         {
-            List<List<CourseResult>> courseResults = new List<List<CourseResult>>();
-            Parallel.ForEach(courses, course =>
+            List<List<CourseResultModel>> courseResults = new List<List<CourseResultModel>>();
+            Parallel.ForEach(courses, CourseModel =>
             {
-                var result = getCourses(course, termId);
+                var result = getCourses(CourseModel, termId);
                 courseResults.Add(result.Result);
             });
             return courseResults;
         }
-        private async Task<List<CourseResult>> getCourses(Course course, string termId)
+        private static async Task<List<CourseResultModel>> getCourses(CourseModel CourseModel, string termId)
         {
-            List<CourseResult> courseRes = new List<CourseResult>();
+            List<CourseResultModel> courseRes = new List<CourseResultModel>();
 
             List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
             {
@@ -79,8 +77,8 @@ namespace NichollsScheduler.Logic
                 new KeyValuePair<string, string>("sel_instr", "dummy"),
                 new KeyValuePair<string, string>("sel_ptrm", "dummy"),
                 new KeyValuePair<string, string>("sel_attr", "dummy"),
-                new KeyValuePair<string, string>("sel_subj", course.subject),
-                new KeyValuePair<string, string>("sel_crse", course.courseNum),
+                new KeyValuePair<string, string>("sel_subj", CourseModel.subject),
+                new KeyValuePair<string, string>("sel_crse", CourseModel.courseNumber),
                 new KeyValuePair<string, string>("sel_title", ""),
                 new KeyValuePair<string, string>("sel_schd", "%"),
                 new KeyValuePair<string, string>("sel_from_cred", ""),
@@ -106,30 +104,29 @@ namespace NichollsScheduler.Logic
                 for (int i = 0; i < trows.Count(); i++)
                 {
                     //Collecting and Parsing all the data required to make a CourseResult object
-                    CourseResult courseResult = courseFactory.parseCourseResultHtml(trows, i, course);
+                    CourseResultModel courseResult = CourseFactory.parseCourseResultHtml(trows, i, CourseModel);
                     courseResult = getSeatCapacities(courseResult, termId).Result;
                     courseRes.Add(courseResult);
                     i++;
                 }
-
             }
             catch
             {
                 //Adding a blank case in the event of a fail.
-                courseRes.Add(new CourseResult
+                courseRes.Add(new CourseResultModel
                 {
-                    subject = course.subject,
-                    courseNumber = course.courseNum
+                    subject = CourseModel.subject,
+                    courseNumber = CourseModel.courseNumber
                 });
             }
             return courseRes;
         }
-        private async Task<CourseResult> getSeatCapacities(CourseResult course, string termId)
+        private static async Task<CourseResultModel> getSeatCapacities(CourseResultModel CourseModel, string termId)
         {
-            HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={course.courseRegistrationNum}");
+            HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={CourseModel.courseRegistrationNum}");
             string html = await httpmsg.Content.ReadAsStringAsync();
             var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
-            return courseFactory.parseSeatCapacitiesHtml(course, htmlDoc);
+            return CourseFactory.parseSeatCapacitiesHtml(CourseModel, htmlDoc);
         }
     }
 }

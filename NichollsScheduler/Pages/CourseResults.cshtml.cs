@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using NichollsScheduler.Data;
 using NichollsScheduler.Logic;
+using NichollsScheduler.Models;
 
 namespace NichollsScheduler.Pages
 {
@@ -17,7 +18,7 @@ namespace NichollsScheduler.Pages
         public List<string> selectedCourse { get; set; }
 
         public static List<string> prevSelectedCourses;
-        public static List<List<CourseResult>> courseResults;
+        public static List<List<CourseResultModel>> courseResults;
 
         public IActionResult OnGet()
         {
@@ -28,11 +29,11 @@ namespace NichollsScheduler.Pages
                 return RedirectToPage("CourseSelection");
             }
 
-            var results = JsonConvert.DeserializeObject<List<List<CourseResult>>>(courseRes);
+            var results = JsonConvert.DeserializeObject<List<List<CourseResultModel>>>(courseRes);
             courseResults = results;
             try
             {
-                var selectCourses = JsonConvert.DeserializeObject<List<CourseResult>>(HttpContext.Session.GetString("selectedCourseResults"));
+                var selectCourses = JsonConvert.DeserializeObject<List<CourseResultModel>>(HttpContext.Session.GetString("selectedCourseResults"));
                 var courseRegsNums = from c in selectCourses
                                      select c.courseRegistrationNum;
                 prevSelectedCourses = courseRegsNums.ToList();

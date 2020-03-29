@@ -8,15 +8,15 @@ namespace NichollsScheduler.Data
 {
     public interface ICourseSelection
     {
-        IEnumerable<Course> GetCourseSelections(string Subject);
+        IEnumerable<CourseModel> GetCourseSelections(string Subject);
     }
     public class CourseSelectionOptions : ICourseSelection
     {
     
-        public IEnumerable<Course> GetCourseSelections(string Subject)
+        public IEnumerable<CourseModel> GetCourseSelections(string Subject)
         {
             
-            List<Course> CourseOptions = new List<Course>();
+            List<CourseModel> CourseOptions = new List<CourseModel>();
             using (StreamReader sr = new StreamReader("wwwroot/Courses.txt"))
             {
                 string line;
@@ -24,18 +24,18 @@ namespace NichollsScheduler.Data
                 {
                     if (line.Length > 7)
                     {
-                        CourseOptions.Add(new Course
+                        CourseOptions.Add(new CourseModel
                         {
                             subject = line.Substring(0, 4),
-                            courseNum = line.Substring(5, 3)
+                            courseNumber = line.Substring(5, 3)
                         });
                     }
                     else
                     {
-                        CourseOptions.Add(new Course
+                        CourseOptions.Add(new CourseModel
                         {
                             subject = line.Substring(0, 3),
-                            courseNum = line.Substring(4, 3)
+                            courseNumber = line.Substring(4, 3)
                         });
                     }
                 }

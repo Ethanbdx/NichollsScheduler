@@ -55,89 +55,89 @@
                                 <th scope="col">Remaining Seats</th>
                             </tr>
                         </thead>
-                        @foreach (var course in courseList)
+                        @foreach (var CourseModel in courseList)
                         {
                            
                             
-                            @if (course.title != null)
+                            @if (CourseModel.title != null)
                             {
                                 
                               
                                 <tr class="courseRow">
                                     <td>
-                                        @if ((course.seatCap - course.seatActual) <= 0)
+                                        @if ((CourseModel.seatCap - CourseModel.seatActual) <= 0)
                                         {
-                                            <input type="checkbox" disabled value="@course.courseRegistrationNum" />
+                                            <input type="checkbox" disabled value="@CourseModel.courseRegistrationNum" />
                                         }
                                         else
                                         {
 
                                             @if (CourseResultsModel.prevSelectedCourses.Count > 0)
                                             {
-                                                if (CourseResultsModel.prevSelectedCourses.Contains(course.courseRegistrationNum))
+                                                if (CourseResultsModel.prevSelectedCourses.Contains(CourseModel.courseRegistrationNum))
                                                 {
-                                                    <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" checked name="selectedCourse[@(CourseResultsModel.prevSelectedCourses.IndexOf(course.courseRegistrationNum))]" />
+                                                    <input type="checkbox" value="@CourseModel.courseRegistrationNum" class="courseCheckbox" checked name="selectedCourse[@(CourseResultsModel.prevSelectedCourses.IndexOf(CourseModel.courseRegistrationNum))]" />
                                                 }
                                                 else
                                                 {
-                                                    <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" />
+                                                    <input type="checkbox" value="@CourseModel.courseRegistrationNum" class="courseCheckbox" />
                                                 }
                                             }
                                             else
                                             {
-                                                <input type="checkbox" value="@course.courseRegistrationNum" class="courseCheckbox" />
+                                                <input type="checkbox" value="@CourseModel.courseRegistrationNum" class="courseCheckbox" />
                                             }
                                         }
 
                                     </td>
-                                    @if(course.topic != null)
+                                    @if(CourseModel.topic != null)
                                     {
-                                    <td><h6>@course.topic</h6></td>
+                                    <td><h6>@CourseModel.topic</h6></td>
                                     }
-                                    <td class="section">@course.section</td>
-                                    @if (course.days.Count == 1)
+                                    <td class="section">@CourseModel.section</td>
+                                    @if (CourseModel.days.Count == 1)
                                     {
-                                        <td>@course.days[0]</td>
-                                        <td>@course.time[0]</td>
-                                        <td>@course.location[0]</td>
-                                        <td>@course.scheduleType[0]</td>
-                                        <td>@course.instructor[0]</td>
+                                        <td>@CourseModel.days[0]</td>
+                                        <td>@CourseModel.time[0]</td>
+                                        <td>@CourseModel.location[0]</td>
+                                        <td>@CourseModel.scheduleType[0]</td>
+                                        <td>@CourseModel.instructor[0]</td>
                                     }
                                     else
                                     {
                                         <td>
-                                            @for (int i = 0; i < course.days.Count; i++)
+                                            @for (int i = 0; i < CourseModel.days.Count; i++)
                                             {
-                                                <p>@course.days[i]</p>
+                                                <p>@CourseModel.days[i]</p>
                                             }
                                         </td>
                                         <td>
-                                            @for (int i = 0; i < course.time.Count; i++)
+                                            @for (int i = 0; i < CourseModel.time.Count; i++)
                                             {
-                                                <p>@course.time[i]</p>
+                                                <p>@CourseModel.time[i]</p>
                                             }
                                         </td>
                                         <td>
-                                            @for (int i = 0; i < course.location.Count; i++)
+                                            @for (int i = 0; i < CourseModel.location.Count; i++)
                                             {
-                                                <p>@course.location[i]</p>
+                                                <p>@CourseModel.location[i]</p>
                                             }
                                         </td>
                                         <td>
-                                            @for (int i = 0; i < course.scheduleType.Count; i++)
+                                            @for (int i = 0; i < CourseModel.scheduleType.Count; i++)
                                             {
-                                                <p>@course.scheduleType[i]</p>
+                                                <p>@CourseModel.scheduleType[i]</p>
                                             }
                                         </td>
                                         <td>
-                                            @for (int i = 0; i < course.instructor.Count; i++)
+                                            @for (int i = 0; i < CourseModel.instructor.Count; i++)
                                             {
-                                                <p>@course.instructor[i]</p>
+                                                <p>@CourseModel.instructor[i]</p>
                                             }
                                         </td>
                                     }
-                                    <td>@course.creditHours</td>
-                                    <td style="text-align:center">@(course.seatCap - course.seatActual)</td>
+                                    <td>@CourseModel.creditHours</td>
+                                    <td style="text-align:center">@(CourseModel.seatCap - CourseModel.seatActual)</td>
                                 </tr>
                             }
                             else
@@ -174,7 +174,7 @@
                 
             $("#register").click(function (e) {
                 if (i == 0) {
-                    alert("You must select a course first.");
+                    alert("You must select a Course first.");
                 }
             });
             $(".courseCheckbox").change(function () {

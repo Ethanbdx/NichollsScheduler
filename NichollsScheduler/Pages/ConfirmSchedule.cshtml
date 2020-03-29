@@ -17,7 +17,7 @@
             <table class="table table-responsive-md table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Course</th>
+                        <th scope="col">CourseModel</th>
                         <th scope="col">Section</th>
                         <th scope="col">Days</th>
                         <th scope="col">Times</th>
@@ -27,53 +27,53 @@
                         <th scope="col">Credits</th>
                     </tr>
                 </thead>
-                @foreach (var course in ConfirmScheduleModel.selectedCourses)
+                @foreach (var CourseModel in ConfirmScheduleModel.selectedCourses)
                 {
                     <tr>
-                        <td><h6>@course.subject @course.courseNumber</h6></td>
-                        <td><h6>@course.section</h6></td>
-                        @if (course.days.Count == 1)
+                        <td><h6>@CourseModel.subject @CourseModel.courseNumber</h6></td>
+                        <td><h6>@CourseModel.section</h6></td>
+                        @if (CourseModel.days.Count == 1)
                         {
-                        <td><h6>@course.days[0]</h6></td>
-                        <td><h6>@course.time[0]</h6></td>
-                        <td><h6>@course.location[0]</h6></td>
-                        <td><h6>@course.scheduleType[0]</h6></td>
-                        <td><h6>@course.instructor[0]</h6></td>
+                        <td><h6>@CourseModel.days[0]</h6></td>
+                        <td><h6>@CourseModel.time[0]</h6></td>
+                        <td><h6>@CourseModel.location[0]</h6></td>
+                        <td><h6>@CourseModel.scheduleType[0]</h6></td>
+                        <td><h6>@CourseModel.instructor[0]</h6></td>
                         }
                         else
                         {
                             <td>
-                                @for (int i = 0; i < course.days.Count; i++)
+                                @for (int i = 0; i < CourseModel.days.Count; i++)
                                 {
-                                <p><h6>@course.days[i]</h6></p>
+                                <p><h6>@CourseModel.days[i]</h6></p>
                                 }
                             </td>
                             <td>
-                                @for (int i = 0; i < course.time.Count; i++)
+                                @for (int i = 0; i < CourseModel.time.Count; i++)
                                 {
-                                <p><h6>@course.time[i]</h6></p>
+                                <p><h6>@CourseModel.time[i]</h6></p>
                                 }
                             </td>
                             <td>
-                                @for (int i = 0; i < course.location.Count; i++)
+                                @for (int i = 0; i < CourseModel.location.Count; i++)
                                 {
-                                <p><h6>@course.location[i]</h6></p>
+                                <p><h6>@CourseModel.location[i]</h6></p>
                                 }
                             </td>
                             <td>
-                                @for (int i = 0; i < course.scheduleType.Count; i++)
+                                @for (int i = 0; i < CourseModel.scheduleType.Count; i++)
                                 {
-                                <p><h6>@course.scheduleType[i]</h6></p>
+                                <p><h6>@CourseModel.scheduleType[i]</h6></p>
                                 }
                             </td>
                             <td>
-                                @for (int i = 0; i < course.instructor.Count; i++)
+                                @for (int i = 0; i < CourseModel.instructor.Count; i++)
                                 {
-                                <p><h6>@course.instructor[i]</h6></p>
+                                <p><h6>@CourseModel.instructor[i]</h6></p>
                                 }
                             </td>
                         }
-                            <td><h6>@course.creditHours</h6></td>
+                            <td><h6>@CourseModel.creditHours</h6></td>
                     </tr>
                 }
             </table>

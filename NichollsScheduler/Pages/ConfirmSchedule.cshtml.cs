@@ -14,7 +14,7 @@ namespace NichollsScheduler.Pages
     {
 
         public static string termName;
-        public static List<CourseResult> selectedCourses;
+        public static List<CourseResultModel> selectedCourses;
 
         public IActionResult OnGet()
         {
@@ -23,7 +23,7 @@ namespace NichollsScheduler.Pages
                 return RedirectToPage("CourseResults");
             }
             termName = HttpContext.Session.GetString("termName");
-            selectedCourses = JsonConvert.DeserializeObject<List<CourseResult>>(HttpContext.Session.GetString("selectedCourseResults"));
+            selectedCourses = JsonConvert.DeserializeObject<List<CourseResultModel>>(HttpContext.Session.GetString("selectedCourseResults"));
             return Page();
         }
     }

@@ -97,7 +97,7 @@
                         {
                             for (int i = 0; i < CourseSelectionModel.selectedCourses.Count; i++)
                             {
-                                <tr id="row@(i)" class="course"><td><div class="subjTxt"><p>@(CourseSelectionModel.selectedCourses[i].fullSubject)</p><input type="hidden" name="selCourses[@(i)].fullSubject" value="@(CourseSelectionModel.selectedCourses[i].fullSubject)" /><input type="hidden" name="selCourses[@(i)].subject" value="@(CourseSelectionModel.selectedCourses[i].subject)" /></div></td><td><div class="cnumTxt"><p>@(CourseSelectionModel.selectedCourses[i].courseNum)</p><input type="hidden" name="selCourses[@(i)].courseNum" value="@(CourseSelectionModel.selectedCourses[i].courseNum)" /></div></td><td><div class="removebtn float-right"><button type="button" class="btn btn-danger btn_remove" id="@(i)" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr>
+                                <tr id="row@(i)" class="Course"><td><div class="subjTxt"><p>@(CourseSelectionModel.selectedCourses[i].fullSubject)</p><input type="hidden" name="selCourses[@(i)].fullSubject" value="@(CourseSelectionModel.selectedCourses[i].fullSubject)" /><input type="hidden" name="selCourses[@(i)].subject" value="@(CourseSelectionModel.selectedCourses[i].subject)" /></div></td><td><div class="cnumTxt"><p>@(CourseSelectionModel.selectedCourses[i].courseNumber)</p><input type="hidden" name="selCourses[@(i)].courseNumber" value="@(CourseSelectionModel.selectedCourses[i].courseNumber)" /></div></td><td><div class="removebtn float-right"><button type="button" class="btn btn-danger btn_remove" id="@(i)" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr>
                             }
                         }
                     </tbody>
@@ -122,7 +122,7 @@
                 $("#cnum").append("<option value=''>Select Course Number</option>");
                 $.getJSON(`?handler=CourseSelections&Subject=${subject}`, (data) => {
                     $.each(data, function (i, item) {
-                        $("#cnum").append(`<option value="${item.courseNum}">${item.courseNum}</option>`);
+                        $("#cnum").append(`<option value="${item.courseNumber}">${item.courseNumber}</option>`);
                     });
                 });
             });
@@ -135,7 +135,7 @@
                 if (subjectVal == "" || courseNumVal == "") {
                     return;
                 }
-                $(".course").each(function () {
+                $(".Course").each(function () {
                     var existSub = $(this).find('.subjTxt p').text();
                     var existNum = $(this).find('.cnumTxt p').text();
                     if (subjectText == existSub && courseNumVal == existNum) {
@@ -147,7 +147,7 @@
                     return;
                 }
                 e.preventDefault();
-                $("#courseTable").append(`<tr id="row${i}" class="course"><td><div class="subjTxt"><p>${subjectText}</p><input type="hidden" name="selCourses[${i}].fullSubject" value="${subjectText}"/><input type="hidden" name="selCourses[${i}].subject" value="${subjectVal}"/></div></td><td><div class="cnumTxt"><p>${courseNumVal}</p><input type="hidden" name="selCourses[${i}].courseNum" value="${courseNumVal}" /></div></td><td><div class="removebtn float-right"><button type="button" class="btn btn-danger btn_remove" id="${i}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr>`);
+                $("#courseTable").append(`<tr id="row${i}" class="Course"><td><div class="subjTxt"><p>${subjectText}</p><input type="hidden" name="selCourses[${i}].fullSubject" value="${subjectText}"/><input type="hidden" name="selCourses[${i}].subject" value="${subjectVal}"/></div></td><td><div class="cnumTxt"><p>${courseNumVal}</p><input type="hidden" name="selCourses[${i}].courseNumber" value="${courseNumVal}" /></div></td><td><div class="removebtn float-right"><button type="button" class="btn btn-danger btn_remove" id="${i}" name="remove"><i class="fas fa-times-circle"></i>&nbsp;Remove</button></div></td></tr>`);
                 i++;
             });
             $(document).on('click', '.btn_remove', function () {
@@ -164,7 +164,7 @@
                     table[c].setAttribute("id", `row${newIndex}`);
                     table[c].querySelector(".subjTxt").querySelectorAll("input")[0].setAttribute("name", `selCourses[${newIndex}].fullSubject`);
                     table[c].querySelector(".subjTxt").querySelectorAll("input")[1].setAttribute("name", `selCourses[${newIndex}].subject`);
-                    table[c].querySelector(".cnumTxt").querySelector("input").setAttribute("name", `selCourses[${newIndex}].courseNum`);
+                    table[c].querySelector(".cnumTxt").querySelector("input").setAttribute("name", `selCourses[${newIndex}].courseNumber`);
                     table[c].querySelector(".btn_remove").setAttribute("id", `${newIndex}`);
                 }
             });

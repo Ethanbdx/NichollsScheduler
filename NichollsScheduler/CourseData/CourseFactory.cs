@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace NichollsScheduler.Banner_Data
 {
-    public class CourseFactory
+    public static class CourseFactory
     {
-
-        public CourseFactory() { }
-        public CourseResult parseCourseResultHtml(List<IElement> html, int i, Course c)
+        public static CourseResultModel parseCourseResultHtml(List<IElement> html, int i, CourseModel c)
         {
             var courseInfo = html.ElementAt(i).TextContent.Split('-').ToList();
             if (courseInfo.Count > 4)
@@ -45,16 +43,16 @@ namespace NichollsScheduler.Banner_Data
             }
             if (c.subject == "ENGL")
             {
-                if (c.courseNum == "215" || c.courseNum == "216" || c.courseNum == "217")
+                if (c.courseNumber == "215" || c.courseNumber == "216" || c.courseNumber == "217")
                 {
                     var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
-                    return new CourseResult
+                    return new CourseResultModel
                     {
                         title = fulltitle[0],
                         topic = fulltitle[1],
                         courseRegistrationNum = courseInfo[1].Trim(),
                         subject = c.subject,
-                        courseNumber = c.courseNum,
+                        courseNumber = c.courseNumber,
                         section = courseInfo[3].Trim('\n', ' '),
                         time = time,
                         days = days,
@@ -65,12 +63,12 @@ namespace NichollsScheduler.Banner_Data
                     };
                 }
             }
-            return new CourseResult
+            return new CourseResultModel
             {
                 title = courseInfo[0].Trim('\n', ' '),
                 courseRegistrationNum = courseInfo[1].Trim(),
                 subject = c.subject,
-                courseNumber = c.courseNum,
+                courseNumber = c.courseNumber,
                 section = courseInfo[3].Trim('\n', ' '),
                 time = time,
                 days = days,
@@ -80,17 +78,17 @@ namespace NichollsScheduler.Banner_Data
                 scheduleType = schedType
             };
         }
-        public CourseResult parseSeatCapacitiesHtml(CourseResult course, IDocument htmlDoc)
+        public static CourseResultModel parseSeatCapacitiesHtml(CourseResultModel CourseModel, IDocument htmlDoc)
         {
             var seatCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[1]']").TextContent;
             var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
             var waitListCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[1]']").TextContent;
             var waitListActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[2]']").TextContent;
-            course.seatCap = Int32.Parse(seatCap);
-            course.seatActual = Int32.Parse(seatActual);
-            course.waitListCap = Int32.Parse(waitListCap);
-            course.waitListActual = Int32.Parse(waitListActual);
-            return course;
+            CourseModel.seatCap = Int32.Parse(seatCap);
+            CourseModel.seatActual = Int32.Parse(seatActual);
+            CourseModel.waitListCap = Int32.Parse(waitListCap);
+            CourseModel.waitListActual = Int32.Parse(waitListActual);
+            return CourseModel;
         }
 
     }

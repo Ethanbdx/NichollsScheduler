@@ -16,9 +16,9 @@ namespace NichollsScheduler.Pages
 
         public static Dictionary<string,string> availableTerms;
 
-        public async Task<IActionResult> OnGetAsync(BannerScraper client)
+        public async Task<IActionResult> OnGetAsync()
         { 
-            availableTerms = await client.getTerms();
+            availableTerms = await BannerScraper.getTerms();
             
             return Page();
         }

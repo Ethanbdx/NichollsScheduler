@@ -19,7 +19,7 @@ namespace NichollsScheduler.Pages
         [BindProperty(SupportsGet = true)]
         public string subject { get; set; }
         public string courseNum { get; set; }
-        public static List<Course> selectedCourses;
+        public static List<CourseModel> selectedCourses;
 
         public IActionResult OnGet()
         {
@@ -30,25 +30,25 @@ namespace NichollsScheduler.Pages
             try
             {
                 var jsonstring = HttpContext.Session.GetString("selectedCourses");
-                selectedCourses = JsonConvert.DeserializeObject<List<Course>>(jsonstring);
+                selectedCourses = JsonConvert.DeserializeObject<List<CourseModel>>(jsonstring);
                 return Page();
             }
             catch
             {
-                selectedCourses = new List<Course>();
+                selectedCourses = new List<CourseModel>();
                 return Page();
             }
         }
 
         [HttpPost]
-        public IActionResult OnPost(List<Course> selCourses, BannerScraper client)
+        public IActionResult OnPost(List<CourseModel> selCourses)
         {
             if (selCourses.Count == 0)
             {
                 return Page();
             }
             var selectedCourses = JsonConvert.SerializeObject(selCourses);
-            var courseResults = JsonConvert.SerializeObject(client.getCourseResults(selCourses, HttpContext.Session.GetString("termId")));
+            var courseResults = JsonConvert.SerializeObject(BannerScraper.getCourseResults(selCourses, HttpContext.Session.GetString("termId")));
             HttpContext.Session.SetString("selectedCourses", selectedCourses);
             HttpContext.Session.SetString("courseResults", courseResults);
             return RedirectToPage("CourseResults");
