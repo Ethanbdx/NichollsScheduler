@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NichollsScheduler.Banner_Data
 {
-    public static class CourseFactory
+    public class CourseFactory
     {
         public static CourseResultModel parseCourseResultHtml(List<IElement> html, int i, CourseModel c)
         {

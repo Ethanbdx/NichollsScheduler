@@ -3,6 +3,7 @@ using AngleSharp.Dom;
 using AngleSharp.XPath;
 using Microsoft.AspNetCore.Http;
 using NichollsScheduler.Banner_Data;
+using NichollsScheduler.CourseData;
 using NichollsScheduler.Data;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace NichollsScheduler.Logic
 {
-    public static class BannerScraper
+    public class BannerScraper
     {
         private static readonly HttpClientHandler handler = new HttpClientHandler()
         {
@@ -64,35 +65,7 @@ namespace NichollsScheduler.Logic
         {
             List<CourseResultModel> courseRes = new List<CourseResultModel>();
 
-            List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("term_in", termId),
-                new KeyValuePair<string, string>("sel_subj", "dummy"),
-                new KeyValuePair<string, string>("sel_day", "dummy"),
-                new KeyValuePair<string, string>("sel_schd", "dummy"),
-                new KeyValuePair<string, string>("sel_insm", "dummy"),
-                new KeyValuePair<string, string>("sel_camp", "dummy"),
-                new KeyValuePair<string, string>("sel_levl", "dummy"),
-                new KeyValuePair<string, string>("sel_sess", "dummy"),
-                new KeyValuePair<string, string>("sel_instr", "dummy"),
-                new KeyValuePair<string, string>("sel_ptrm", "dummy"),
-                new KeyValuePair<string, string>("sel_attr", "dummy"),
-                new KeyValuePair<string, string>("sel_subj", CourseModel.subject),
-                new KeyValuePair<string, string>("sel_crse", CourseModel.courseNumber),
-                new KeyValuePair<string, string>("sel_title", ""),
-                new KeyValuePair<string, string>("sel_schd", "%"),
-                new KeyValuePair<string, string>("sel_from_cred", ""),
-                new KeyValuePair<string, string>("sel_to_cred", ""),
-                new KeyValuePair<string, string>("sel_levl", "%"),
-                new KeyValuePair<string, string>("sel_ptrm", "%"),
-                new KeyValuePair<string, string>("sel_instr", "%"),
-                new KeyValuePair<string, string>("begin_hh", "0"),
-                new KeyValuePair<string, string>("begin_mi", "0"),
-                new KeyValuePair<string, string>("begin_ap", "a"),
-                new KeyValuePair<string, string>("end_hh", "0"),
-                new KeyValuePair<string, string>("end_mi", "0"),
-                new KeyValuePair<string, string>("end_ap", "a")
-            };
+            List<KeyValuePair<string, string>> values = BannerContent.GetKeyValues(termId, CourseModel.subject, CourseModel.courseNumber);
 
             HttpContent content = new FormUrlEncodedContent(values);
             HttpResponseMessage result = await client.PostAsync("bwckschd.p_get_crse_unsec", content);
