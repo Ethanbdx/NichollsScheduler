@@ -20,11 +20,11 @@ namespace NichollsScheduler.Logic
     {
         private static readonly HttpClientHandler handler = new HttpClientHandler()
         {
-            SslProtocols = System.Security.Authentication.SslProtocols.Tls,
+            SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
         };
         private static readonly HttpClient client = new HttpClient(handler)
         {
-            BaseAddress = new Uri("https://banner.nicholls.edu/PROD/")
+            BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
 
         public static async Task<Dictionary<string, string>> getTerms()
@@ -44,9 +44,9 @@ namespace NichollsScheduler.Logic
                 var termResult = termSelect.ToDictionary(x => x.Key, x => x.Value);
                 return termResult;
             }
-            catch
+            catch(Exception e)
             {
-                Console.WriteLine("No Terms Found");
+                Console.WriteLine(e.Message);
                 return null;
             }
 

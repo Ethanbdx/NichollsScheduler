@@ -6,11 +6,21 @@
 }
 @if (SelectTermModel.availableTerms == null)
 {
-    <div class="container">
-        <br />
-        <h2 class="text-center">Unable to Conenct to Banner :(</h2>
-    </div>
+    if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
+    {
+        <div class="container">
+            <br />
+            <h2 class="text-center">Banner may be down for weekly maintenance. :(</h2>
+        </div>
+    }
 
+    else
+    {
+        <div class="container">
+            <br />
+            <h2 class="text-center">Unable to Connect to Banner :(</h2>
+        </div>
+    }
     return;
 }
 
@@ -39,13 +49,6 @@
                 </div>
             </form>
         </div>
-    </div>
-}
-else if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
-{
-    <div class="container">
-        <br />
-        <h2 class="text-center">Banner may be down for weekly maintenance. :(</h2>
     </div>
 }
 else
