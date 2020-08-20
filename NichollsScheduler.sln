@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NichollsScheduler.Tests", "
 		{D6D1B5BF-A585-46CA-9D56-5663968BB70C} = {D6D1B5BF-A585-46CA-9D56-5663968BB70C}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NichollsScheduler.Web", "NichollsScheduler.Web\NichollsScheduler.Web.csproj", "{93CB5450-67CA-47C0-B6B8-D492E5DBD16A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{56FB8282-6D9A-4D0E-A7F8-C93B456F3A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56FB8282-6D9A-4D0E-A7F8-C93B456F3A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56FB8282-6D9A-4D0E-A7F8-C93B456F3A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93CB5450-67CA-47C0-B6B8-D492E5DBD16A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93CB5450-67CA-47C0-B6B8-D492E5DBD16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93CB5450-67CA-47C0-B6B8-D492E5DBD16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93CB5450-67CA-47C0-B6B8-D492E5DBD16A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
