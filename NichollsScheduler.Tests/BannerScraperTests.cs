@@ -30,19 +30,25 @@ namespace NichollsScheduler.Tests {
                     CourseNumber = "101"
                 },
                 new CourseModel {
-                    Subject = "MATH",
-                    CourseNumber = "101"
-                },
-                new CourseModel {
-                    Subject = "SPCH",
-                    CourseNumber = "101"
+                    Subject = "ENGL",
+                    CourseNumber = "215"
                 }
             };
             var courseResults = BannerScraper.GetCourseResults(courseQuery, "202080");
             stopWatch.Stop();
             
-            foreach(var course in courseResults) {
-                Console.WriteLine(course.Count);
+            foreach(var courseList in courseResults) {
+                Console.WriteLine("------------------");
+                foreach(var course in courseList) {
+                    Console.WriteLine($"CRN: {course.CourseRegistrationNum}");
+                    Console.WriteLine($"Subject: {course.Subject}");
+                    Console.WriteLine($"Course Number: {course.CourseNumber}");
+                    Console.WriteLine($"Title: {course.Title}");
+                    if(course.Topic != null) {
+                        Console.WriteLine($"Topic: {course.Topic}");
+                    }
+                }
+                Console.WriteLine("------------------");
             }
             Console.WriteLine(stopWatch.Elapsed);
         }

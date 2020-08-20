@@ -96,7 +96,7 @@ namespace NichollsScheduler.Core.Business
             HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={CourseModel.CourseRegistrationNum}");
             string html = await httpmsg.Content.ReadAsStringAsync();
             var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
-            return CourseFactory.parseSeatCapacitiesHtml(CourseModel, htmlDoc);
+            return CourseFactory.ParseSeatCapacitiesHtml(CourseModel, htmlDoc);
         }
     }
     public static class BannerQueryValues {

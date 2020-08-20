@@ -41,44 +41,31 @@ namespace NichollsScheduler.Core.Business
                 inst.Add(crseDetails[7].Replace("(P)", ""));
                 schedType.Add(crseDetails[6].Trim());
             }
-            if (c.Subject == "ENGL")
+            var result = new CourseResultModel();
+            if (courseInfo[0].Contains(':'))
             {
-                if (c.CourseNumber == "215" || c.CourseNumber == "216" || c.CourseNumber == "217")
-                {
-                    var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
-                    return new CourseResultModel
-                    {
-                        Title = fulltitle[0],
-                        Topic = fulltitle[1],
-                        CourseRegistrationNum = courseInfo[1].Trim(),
-                        Subject = c.Subject,
-                        CourseNumber = c.CourseNumber,
-                        Section = courseInfo[3].Trim('\n', ' '),
-                        Time = time,
-                        Days = days,
-                        Location = location,
-                        Instructor = inst,
-                        CreditHours = creditHoursHtml,
-                        ScheduleType = schedType
-                    };
-                }
+                var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
+                result.Title = fulltitle[0];
+                result.Topic = fulltitle[1];
+            } 
+            else 
+            {
+                result.Title = courseInfo[0].Trim('\n', ' ');
             }
-            return new CourseResultModel
-            {
-                Title = courseInfo[0].Trim('\n', ' '),
-                CourseRegistrationNum = courseInfo[1].Trim(),
-                Subject = c.Subject,
-                CourseNumber = c.CourseNumber,
-                Section = courseInfo[3].Trim('\n', ' '),
-                Time = time,
-                Days = days,
-                Location = location,
-                Instructor = inst,
-                CreditHours = creditHoursHtml,
-                ScheduleType = schedType
-            };
+            result.CourseRegistrationNum = courseInfo[1].Trim();
+            result.Subject = c.Subject;
+            result.CourseNumber = c.CourseNumber;
+            result.Section = courseInfo[3].Trim('\n', ' ');
+            result.Time = time;
+            result.Days = days;
+            result.Location = location;
+            result.Instructor = inst;
+            result.CreditHours = creditHoursHtml;
+            result.ScheduleType = schedType;
+
+            return result;
         }
-        public static CourseResultModel parseSeatCapacitiesHtml(CourseResultModel CourseModel, IDocument htmlDoc)
+        public static CourseResultModel ParseSeatCapacitiesHtml(CourseResultModel CourseModel, IDocument htmlDoc)
         {
             var seatCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[1]']").TextContent;
             var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
