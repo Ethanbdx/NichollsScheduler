@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using NichollsScheduler.Core.Models;
 
-namespace NichollsScheduler.Data
+namespace NichollsScheduler.Core.Business
 {
     public interface ICourseSelection
     {
@@ -26,20 +27,20 @@ namespace NichollsScheduler.Data
                     {
                         CourseOptions.Add(new CourseModel
                         {
-                            subject = line.Substring(0, 4),
-                            courseNumber = line.Substring(5, 3)
+                            Subject = line.Substring(0, 4),
+                            CourseNumber = line.Substring(5, 3)
                         });
                     }
                     else
                     {
                         CourseOptions.Add(new CourseModel
                         {
-                            subject = line.Substring(0, 3),
-                            courseNumber = line.Substring(4, 3)
+                            Subject = line.Substring(0, 3),
+                            CourseNumber = line.Substring(4, 3)
                         });
                     }
                 }
-                return CourseOptions.Where(c => c.subject == Subject);
+                return CourseOptions.Where(c => c.Subject == Subject);
             }
         }
     }

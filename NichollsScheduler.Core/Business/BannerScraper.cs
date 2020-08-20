@@ -1,10 +1,7 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.XPath;
-using Microsoft.AspNetCore.Http;
-using NichollsScheduler.Banner_Data;
-using NichollsScheduler.CourseData;
-using NichollsScheduler.Data;
+using NichollsScheduler.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,9 +11,9 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NichollsScheduler.Logic
+namespace NichollsScheduler.Core.Business
 {
-    public class BannerScraper
+    public static class BannerScraper
     {
         private static readonly HttpClientHandler handler = new HttpClientHandler()
         {
@@ -27,7 +24,7 @@ namespace NichollsScheduler.Logic
             BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
 
-        public static async Task<Dictionary<string, string>> getTerms()
+        public static async Task<Dictionary<string, string>> GetTerms()
         {
             try
             {
@@ -44,28 +41,28 @@ namespace NichollsScheduler.Logic
                 var termResult = termSelect.ToDictionary(x => x.Key, x => x.Value);
                 return termResult;
             }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
+            catch 
+            { 
+
                 return null;
             }
 
         }
-        public static List<List<CourseResultModel>> getCourseResults(List<CourseModel> courses, string termId)
+        public static List<List<CourseResultModel>> GetCourseResults(List<CourseModel> courses, string termId)
         {
             List<List<CourseResultModel>> courseResults = new List<List<CourseResultModel>>();
             Parallel.ForEach(courses, CourseModel =>
             {
-                var result = getCourses(CourseModel, termId);
+                var result = GetCourses(CourseModel, termId);
                 courseResults.Add(result.Result);
             });
             return courseResults;
         }
-        private static async Task<List<CourseResultModel>> getCourses(CourseModel CourseModel, string termId)
+        private static async Task<List<CourseResultModel>> GetCourses(CourseModel CourseModel, string termId)
         {
             List<CourseResultModel> courseRes = new List<CourseResultModel>();
 
-            List<KeyValuePair<string, string>> values = BannerContent.GetKeyValues(termId, CourseModel.subject, CourseModel.courseNumber);
+            List<KeyValuePair<string, string>> values = BannerQueryValues.GetKeyValues(termId, CourseModel.Subject, CourseModel.CourseNumber);
 
             HttpContent content = new FormUrlEncodedContent(values);
             HttpResponseMessage result = await client.PostAsync("bwckschd.p_get_crse_unsec", content);
@@ -78,7 +75,7 @@ namespace NichollsScheduler.Logic
                 {
                     //Collecting and Parsing all the data required to make a CourseResult object
                     CourseResultModel courseResult = CourseFactory.parseCourseResultHtml(trows, i, CourseModel);
-                    courseResult = getSeatCapacities(courseResult, termId).Result;
+                    courseResult = GetSeatCapacities(courseResult, termId).Result;
                     courseRes.Add(courseResult);
                     i++;
                 }
@@ -88,18 +85,52 @@ namespace NichollsScheduler.Logic
                 //Adding a blank case in the event of a fail.
                 courseRes.Add(new CourseResultModel
                 {
-                    subject = CourseModel.subject,
-                    courseNumber = CourseModel.courseNumber
+                    Subject = CourseModel.Subject,
+                    CourseNumber = CourseModel.CourseNumber
                 });
             }
             return courseRes;
         }
-        private static async Task<CourseResultModel> getSeatCapacities(CourseResultModel CourseModel, string termId)
+        private static async Task<CourseResultModel> GetSeatCapacities(CourseResultModel CourseModel, string termId)
         {
-            HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={CourseModel.courseRegistrationNum}");
+            HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={CourseModel.CourseRegistrationNum}");
             string html = await httpmsg.Content.ReadAsStringAsync();
             var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
             return CourseFactory.parseSeatCapacitiesHtml(CourseModel, htmlDoc);
+        }
+    }
+    public static class BannerQueryValues {
+        public static List<KeyValuePair<string, string>> GetKeyValues(string termId, string subject, string courseNumber) {
+            List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("term_in", termId),
+                new KeyValuePair<string, string>("sel_subj", "dummy"),
+                new KeyValuePair<string, string>("sel_day", "dummy"),
+                new KeyValuePair<string, string>("sel_schd", "dummy"),
+                new KeyValuePair<string, string>("sel_insm", "dummy"),
+                new KeyValuePair<string, string>("sel_camp", "dummy"),
+                new KeyValuePair<string, string>("sel_levl", "dummy"),
+                new KeyValuePair<string, string>("sel_sess", "dummy"),
+                new KeyValuePair<string, string>("sel_instr", "dummy"),
+                new KeyValuePair<string, string>("sel_ptrm", "dummy"),
+                new KeyValuePair<string, string>("sel_attr", "dummy"),
+                new KeyValuePair<string, string>("sel_subj", subject),
+                new KeyValuePair<string, string>("sel_crse", courseNumber),
+                new KeyValuePair<string, string>("sel_title", ""),
+                new KeyValuePair<string, string>("sel_schd", "%"),
+                new KeyValuePair<string, string>("sel_from_cred", ""),
+                new KeyValuePair<string, string>("sel_to_cred", ""),
+                new KeyValuePair<string, string>("sel_levl", "%"),
+                new KeyValuePair<string, string>("sel_ptrm", "%"),
+                new KeyValuePair<string, string>("sel_instr", "%"),
+                new KeyValuePair<string, string>("begin_hh", "0"),
+                new KeyValuePair<string, string>("begin_mi", "0"),
+                new KeyValuePair<string, string>("begin_ap", "a"),
+                new KeyValuePair<string, string>("end_hh", "0"),
+                new KeyValuePair<string, string>("end_mi", "0"),
+                new KeyValuePair<string, string>("end_ap", "a")
+            };
+            return values;
         }
     }
 }

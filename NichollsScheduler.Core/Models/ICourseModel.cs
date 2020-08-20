@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NichollsScheduler.Models
+namespace NichollsScheduler.Core.Models
 {
     public interface ICourseModel
     {
-        string subject { get; set; }
-        string courseNumber { get; set; }
+        string Subject { get; set; }
+        string CourseNumber { get; set; }
     }
 }

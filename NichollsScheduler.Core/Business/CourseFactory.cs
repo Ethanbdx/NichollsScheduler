@@ -1,11 +1,11 @@
 ﻿using AngleSharp.Dom;
-using NichollsScheduler.Data;
+using NichollsScheduler.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NichollsScheduler.Banner_Data
+namespace NichollsScheduler.Core.Business
 {
     public class CourseFactory
     {
@@ -41,41 +41,41 @@ namespace NichollsScheduler.Banner_Data
                 inst.Add(crseDetails[7].Replace("(P)", ""));
                 schedType.Add(crseDetails[6].Trim());
             }
-            if (c.subject == "ENGL")
+            if (c.Subject == "ENGL")
             {
-                if (c.courseNumber == "215" || c.courseNumber == "216" || c.courseNumber == "217")
+                if (c.CourseNumber == "215" || c.CourseNumber == "216" || c.CourseNumber == "217")
                 {
                     var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
                     return new CourseResultModel
                     {
-                        title = fulltitle[0],
-                        topic = fulltitle[1],
-                        courseRegistrationNum = courseInfo[1].Trim(),
-                        subject = c.subject,
-                        courseNumber = c.courseNumber,
-                        section = courseInfo[3].Trim('\n', ' '),
-                        time = time,
-                        days = days,
-                        location = location,
-                        instructor = inst,
-                        creditHours = creditHoursHtml,
-                        scheduleType = schedType
+                        Title = fulltitle[0],
+                        Topic = fulltitle[1],
+                        CourseRegistrationNum = courseInfo[1].Trim(),
+                        Subject = c.Subject,
+                        CourseNumber = c.CourseNumber,
+                        Section = courseInfo[3].Trim('\n', ' '),
+                        Time = time,
+                        Days = days,
+                        Location = location,
+                        Instructor = inst,
+                        CreditHours = creditHoursHtml,
+                        ScheduleType = schedType
                     };
                 }
             }
             return new CourseResultModel
             {
-                title = courseInfo[0].Trim('\n', ' '),
-                courseRegistrationNum = courseInfo[1].Trim(),
-                subject = c.subject,
-                courseNumber = c.courseNumber,
-                section = courseInfo[3].Trim('\n', ' '),
-                time = time,
-                days = days,
-                location = location,
-                instructor = inst,
-                creditHours = creditHoursHtml,
-                scheduleType = schedType
+                Title = courseInfo[0].Trim('\n', ' '),
+                CourseRegistrationNum = courseInfo[1].Trim(),
+                Subject = c.Subject,
+                CourseNumber = c.CourseNumber,
+                Section = courseInfo[3].Trim('\n', ' '),
+                Time = time,
+                Days = days,
+                Location = location,
+                Instructor = inst,
+                CreditHours = creditHoursHtml,
+                ScheduleType = schedType
             };
         }
         public static CourseResultModel parseSeatCapacitiesHtml(CourseResultModel CourseModel, IDocument htmlDoc)
@@ -84,10 +84,10 @@ namespace NichollsScheduler.Banner_Data
             var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
             var waitListCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[1]']").TextContent;
             var waitListActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[2]']").TextContent;
-            CourseModel.seatCap = Int32.Parse(seatCap);
-            CourseModel.seatActual = Int32.Parse(seatActual);
-            CourseModel.waitListCap = Int32.Parse(waitListCap);
-            CourseModel.waitListActual = Int32.Parse(waitListActual);
+            CourseModel.SeatCap = Int32.Parse(seatCap);
+            CourseModel.SeatActual = Int32.Parse(seatActual);
+            CourseModel.WaitListCap = Int32.Parse(waitListCap);
+            CourseModel.WaitListActual = Int32.Parse(waitListActual);
             return CourseModel;
         }
 
