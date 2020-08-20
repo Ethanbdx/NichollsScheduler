@@ -2,12 +2,11 @@
   <v-app>
     <PageHeader />
     <v-main>
-      <v-container>
         <transition name="component-fade" mode="out-in">
         <router-view />
         </transition>
-      </v-container>
     </v-main>
+    <PageFooter />
   </v-app>
   
 </template>
@@ -23,12 +22,14 @@
 
 <script>
 import PageHeader from './global-components/PageHeader';
+import PageFooter from './global-components/PageFooter';
 
 export default {
   name: 'App',
 
   components: {
     PageHeader,
+    PageFooter
   },
   data: () => ({
 
