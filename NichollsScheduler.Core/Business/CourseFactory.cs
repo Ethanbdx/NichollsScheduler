@@ -2,6 +2,7 @@
 using NichollsScheduler.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace NichollsScheduler.Core.Business
 {
     public class CourseFactory
     {
-        public static CourseResultModel parseCourseResultHtml(List<IElement> html, int i, CourseModel c)
+        public static CourseResultModel ParseCourseResultHtml(List<IElement> html, int i, CourseModel c)
         {
             var courseInfo = html.ElementAt(i).TextContent.Split('-').ToList();
             if (courseInfo.Count > 4)
@@ -52,9 +53,10 @@ namespace NichollsScheduler.Core.Business
             {
                 result.Title = courseInfo[0].Trim('\n', ' ');
             }
+            
             result.CourseRegistrationNum = courseInfo[1].Trim();
-            result.Subject = c.Subject;
-            result.CourseNumber = c.CourseNumber;
+            result.Subject = courseInfo[2].Trim().Split(' ').GetValue(0).ToString();
+            result.CourseNumber = courseInfo[2].Trim().Split(' ').GetValue(1).ToString();
             result.Section = courseInfo[3].Trim('\n', ' ');
             result.Time = time;
             result.Days = days;
@@ -62,11 +64,11 @@ namespace NichollsScheduler.Core.Business
             result.Instructor = inst;
             result.CreditHours = creditHoursHtml;
             result.ScheduleType = schedType;
-
             return result;
         }
         public static CourseResultModel ParseSeatCapacitiesHtml(CourseResultModel CourseModel, IDocument htmlDoc)
         {
+            var sw = new Stopwatch();
             var seatCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[1]']").TextContent;
             var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
             var waitListCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[1]']").TextContent;

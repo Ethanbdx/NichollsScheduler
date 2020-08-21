@@ -13,18 +13,18 @@ using System.Threading.Tasks;
 
 namespace NichollsScheduler.Core.Business
 {
-    public static class BannerScraper
+    public class BannerScraper
     {
         private static readonly HttpClientHandler handler = new HttpClientHandler()
         {
             SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
         };
-        private static readonly HttpClient client = new HttpClient(handler)
+        private readonly HttpClient client = new HttpClient(handler)
         {
             BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
 
-        public static async Task<Dictionary<string, string>> GetTerms()
+        public async Task<Dictionary<string, string>> GetTerms()
         {
             try
             {
@@ -48,7 +48,7 @@ namespace NichollsScheduler.Core.Business
             }
 
         }
-        public static List<List<CourseResultModel>> GetCourseResults(List<CourseModel> courses, string termId)
+        public List<List<CourseResultModel>> GetCourseResults(List<CourseModel> courses, string termId)
         {
             List<List<CourseResultModel>> courseResults = new List<List<CourseResultModel>>();
             Parallel.ForEach(courses, CourseModel =>
@@ -58,7 +58,7 @@ namespace NichollsScheduler.Core.Business
             });
             return courseResults;
         }
-        private static async Task<List<CourseResultModel>> GetCourses(CourseModel CourseModel, string termId)
+        private async Task<List<CourseResultModel>> GetCourses(CourseModel CourseModel, string termId)
         {
             List<CourseResultModel> courseRes = new List<CourseResultModel>();
 
@@ -74,7 +74,7 @@ namespace NichollsScheduler.Core.Business
                 for (int i = 0; i < trows.Count(); i++)
                 {
                     //Collecting and Parsing all the data required to make a CourseResult object
-                    CourseResultModel courseResult = CourseFactory.parseCourseResultHtml(trows, i, CourseModel);
+                    CourseResultModel courseResult = CourseFactory.ParseCourseResultHtml(trows, i, CourseModel);
                     courseResult = GetSeatCapacities(courseResult, termId).Result;
                     courseRes.Add(courseResult);
                     i++;
@@ -91,7 +91,7 @@ namespace NichollsScheduler.Core.Business
             }
             return courseRes;
         }
-        private static async Task<CourseResultModel> GetSeatCapacities(CourseResultModel CourseModel, string termId)
+        private async Task<CourseResultModel> GetSeatCapacities(CourseResultModel CourseModel, string termId)
         {
             HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={CourseModel.CourseRegistrationNum}");
             string html = await httpmsg.Content.ReadAsStringAsync();
