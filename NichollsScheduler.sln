@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NichollsScheduler.Tests", "
 		{D6D1B5BF-A585-46CA-9D56-5663968BB70C} = {D6D1B5BF-A585-46CA-9D56-5663968BB70C}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NichollsScheduler.Api", "NichollsScheduler.Web\NichollsScheduler.Api.csproj", "{93CB5450-67CA-47C0-B6B8-D492E5DBD16A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NichollsScheduler.Api", "NichollsScheduler.Api\NichollsScheduler.Api.csproj", "{93CB5450-67CA-47C0-B6B8-D492E5DBD16A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
