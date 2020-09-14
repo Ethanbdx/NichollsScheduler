@@ -1,4 +1,5 @@
-﻿using AngleSharp;
+﻿using System.Runtime.Serialization;
+using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.XPath;
 using NichollsScheduler.Core.Models;
@@ -24,7 +25,7 @@ namespace NichollsScheduler.Core.Business
             BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
 
-        public async Task<Dictionary<string, string>> GetTerms()
+        public async Task<TermModel[]> GetTerms()
         {
             try
             {
@@ -38,7 +39,7 @@ namespace NichollsScheduler.Core.Business
                 //Removing all other options except the 3 most recent.
                 termSelect.RemoveRange(3, termSelect.Count - 3);
 
-                var termResult = termSelect.ToDictionary(x => x.Key, x => x.Value);
+                var termResult = termSelect.Select(kvp => new TermModel { TermName = kvp.Key, TermId = int.Parse(kvp.Value)}).ToArray();
                 return termResult;
             }
             catch
