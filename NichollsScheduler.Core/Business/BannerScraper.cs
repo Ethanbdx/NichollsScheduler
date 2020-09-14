@@ -41,10 +41,10 @@ namespace NichollsScheduler.Core.Business
                 var termResult = termSelect.ToDictionary(x => x.Key, x => x.Value);
                 return termResult;
             }
-            catch 
+            catch
             { 
 
-                return null;
+                throw new Exception("Error. There was an issue getting the available terms.");
             }
 
         }
@@ -99,7 +99,7 @@ namespace NichollsScheduler.Core.Business
             return CourseFactory.ParseSeatCapacitiesHtml(CourseModel, htmlDoc);
         }
     }
-    public static class BannerQueryValues {
+    internal static class BannerQueryValues {
         public static List<KeyValuePair<string, string>> GetKeyValues(string termId, string subject, string courseNumber) {
             List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
             {

@@ -10,8 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NichollsScheduler.Core.Business;
 
-namespace NichollsScheduler.Web {
+namespace NichollsScheduler.Api {
     public class Startup {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
@@ -22,6 +23,8 @@ namespace NichollsScheduler.Web {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
+            services.AddSingleton<BannerScraper>();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,6 +32,8 @@ namespace NichollsScheduler.Web {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod());
 
             app.UseHttpsRedirection();
 
