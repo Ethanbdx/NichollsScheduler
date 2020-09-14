@@ -1,14 +1,25 @@
 <template>
   <v-container>
-    <v-row :justify="'center'" :align-content="'center'">
+    <div v-if="doneLoading">
+      <v-row :justify="'center'" :align-content="'center'">
       <v-col :cols=12 :align-self="'center'">
-        <h1>Select a Term</h1>
-        <v-select :items="data" label="Term" solo></v-select>
-        <button @click="getTerms()">Click me!</button>
+        <div v-if="!error">
+        <h1>What term are you scheduling for?</h1>
+        <v-select :items="terms" label="Select a Term" solo></v-select>
+        </div>
+        <h1 v-if="error">There was an error getting available terms :(</h1>
       </v-col>
     </v-row>
+    </div>
+    <div v-if="!doneLoading">
+      <v-progress-circular
+      indeterminate
+      size="500"
+      width="5"
+      color="primary"
+    ></v-progress-circular>
+    </div>
   </v-container>
-  
 </template>
 
 <style scoped>
@@ -20,14 +31,31 @@ export default {
   name: 'SelectTerm',
   data() {
     return {
-      data: [{text: 'Test', value: 2}, {text: 'Test 2', value: 1}],
-      terms: null
+      terms: [],
+      error: false,
+      doneLoading: false
     }
   },
   methods: {
     getTerms: function() {
-      this.$http.get('https://localhost:5001/api/get-available-terms').then(res => (this.terms = res.data))
+      this.$http.get('https://localhost:5001/api/get-available-terms')
+      .then(res => {
+        for(let i = 0; i < res.data.length; i++) {
+          res.data[i] = {text: res.data[i].termName, value: res.data[i].termId}
+        }
+        this.terms = res.data;
+      })
+      .catch(err => {
+        console.log(err)
+        this.error = true;
+      })
+      .finally(() => {
+        this.doneLoading = true
+      })
     } 
+  },
+  created() {
+    this.getTerms();
   }
 }
 </script>
