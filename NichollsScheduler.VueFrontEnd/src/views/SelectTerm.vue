@@ -9,7 +9,7 @@
       </v-row>
       <v-row>
         <v-col cols="8" xs="6">
-          <v-select :items="terms" item-text="termName" item-value="termId" label="Select a term" v-model="selectedTermId" :reduce="term => term.termId" type="'number'" outlined></v-select>
+          <v-select :items="terms" item-text="termName" item-value="termId" label="Select a term" v-model="selectedTermId" :reduce="term => term.termId" @change="updateTermSelected()" type="'number'" outlined></v-select>
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -78,6 +78,9 @@ export default {
     },
     continueClicked: function() {
       alert(this.selectedTermId)
+    },
+    updateTermSelected: function() {
+      this.$store.commit('selectTermId', this.selectedTermId)
     }
   },
   created() {
