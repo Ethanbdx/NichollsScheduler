@@ -1,25 +1,45 @@
 <template>
-  <v-container>
-    <div v-if="doneLoading">
-      <v-row :justify="'center'" :align-content="'center'">
-      <v-col :cols=12 :align-self="'center'">
-        <div v-if="!error">
-        <h1>What term are you scheduling for?</h1>
-        <v-select :items="terms" label="Select a Term" solo></v-select>
-        </div>
-        <h1 v-if="error">There was an error getting available terms :(</h1>
-      </v-col>
-    </v-row>
-    </div>
-    <div v-if="!doneLoading">
-      <v-progress-circular
-      indeterminate
-      size="500"
-      width="5"
-      color="primary"
-    ></v-progress-circular>
-    </div>
-  </v-container>
+  <div class="my-8" style="height: 60%">
+    <v-container v-if="doneLoading">
+      <template v-if="!error">
+        <v-row>
+        <v-col cols="12">
+          <h1 text-center>What term are you scheduling for?</h1>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="8" xs="6">
+          <v-select :items="terms" item-text="termName" item-value="termId" label="Select a term" v-model="selectedTermId" :reduce="term => term.termId" type="'number'" outlined></v-select>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col>
+          <v-btn color="primary" large @click="continueClicked()" :disabled="!termSelected">
+            Continue
+          </v-btn>
+        </v-col>
+      </v-row>
+      </template>
+      <template v-if="error">
+        <v-row>
+        <v-col cols="12">
+          <h1 class="red--text text--accent-4">:(</h1>
+          <h2 class="red--text text--accent-4">There was an error getting the available terms.</h2>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <h2>Please try again later.</h2>
+        </v-col>
+      </v-row>
+      </template>
+    </v-container>
+    <v-container v-if="!doneLoading" style="height: 100%">
+      <v-row style="height: 100%" justify="center" align-content="center">
+          <v-progress-circular indeterminate size="250" width="5" color="primary"></v-progress-circular>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <style scoped>
@@ -33,16 +53,19 @@ export default {
     return {
       terms: [],
       error: false,
-      doneLoading: false
+      doneLoading: false,
+      selectedTermId: 0
+    }
+  },
+  computed: {
+    termSelected: function() {
+      return this.selectedTermId != 0
     }
   },
   methods: {
     getTerms: function() {
       this.$http.get('https://localhost:5001/api/get-available-terms')
       .then(res => {
-        for(let i = 0; i < res.data.length; i++) {
-          res.data[i] = {text: res.data[i].termName, value: res.data[i].termId}
-        }
         this.terms = res.data;
       })
       .catch(err => {
@@ -52,7 +75,10 @@ export default {
       .finally(() => {
         this.doneLoading = true
       })
-    } 
+    },
+    continueClicked: function() {
+      alert(this.selectedTermId)
+    }
   },
   created() {
     this.getTerms();
