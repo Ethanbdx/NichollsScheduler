@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NichollsScheduler.Core.Business;
+using NichollsScheduler.Core.Data;
 using NichollsScheduler.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,19 @@ namespace NichollsScheduler.Tests {
                 }
             };
             var courseResults = bannerScraper.GetCourseResults(courseQuery, "202080");
+        }
+    }
+    [TestClass]
+    public class SqliteDriverTests {
+        [TestMethod]
+        public async Task GetEnglishCourseNumbers() {
+            var driver = new SQLiteDriver();
+            await driver.GetCourseNumbers("ENGL");
+        }
+        [TestMethod]
+        public async Task TaskGetMathCourseNumbers() {
+            var driver = new SQLiteDriver();
+            await driver.GetCourseNumbers("MATH");
         }
     }
 }
