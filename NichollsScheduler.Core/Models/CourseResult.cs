@@ -11,7 +11,7 @@ namespace NichollsScheduler.Core.Models
 
         public string CourseNumber { get; set; }
 
-        public string Topic { get; set; } = null;
+        public string Topic { get; set; }
         public string CourseRegistrationNum { get; set; }
 
         public string Section { get; set; }

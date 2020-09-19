@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace NichollsScheduler.Core.Business
 {
@@ -24,6 +25,8 @@ namespace NichollsScheduler.Core.Business
         {
             BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
+        private MemoryCache CachedCourses = new MemoryCache(new MemoryCacheOptions());
+
 
         public async Task<TermModel[]> GetTerms()
         {
@@ -61,7 +64,16 @@ namespace NichollsScheduler.Core.Business
         }
         private async Task<List<CourseResultModel>> GetCourses(CourseModel CourseModel, string termId)
         {
+
             List<CourseResultModel> courseRes = new List<CourseResultModel>();
+
+            string cacheId = $"{termId}.{CourseModel.Subject}{CourseModel.CourseNumber}";
+            if(this.CachedCourses.TryGetValue<List<CourseResultModel>>(cacheId, out courseRes)) {
+                for(int i = 0; i < courseRes.Count; i++) {
+                    courseRes[i] = await GetSeatCapacities(courseRes[i], termId);
+                }
+                return courseRes;
+            }
 
             List<KeyValuePair<string, string>> values = BannerQueryValues.GetKeyValues(termId, CourseModel.Subject, CourseModel.CourseNumber);
 
@@ -76,7 +88,7 @@ namespace NichollsScheduler.Core.Business
                 {
                     //Collecting and Parsing all the data required to make a CourseResult object
                     CourseResultModel courseResult = CourseFactory.ParseCourseResultHtml(trows, i, CourseModel);
-                    courseResult = GetSeatCapacities(courseResult, termId).Result;
+                    courseResult = await GetSeatCapacities(courseResult, termId);
                     courseRes.Add(courseResult);
                     i++;
                 }
@@ -84,12 +96,11 @@ namespace NichollsScheduler.Core.Business
             catch
             {
                 //Adding a blank case in the event of a fail.
-                courseRes.Add(new CourseResultModel
-                {
-                    Subject = CourseModel.Subject,
-                    CourseNumber = CourseModel.CourseNumber
-                });
+                return null;
             }
+
+            this.CachedCourses.Set<List<CourseResultModel>>(cacheId, courseRes, TimeSpan.FromDays(3));
+
             return courseRes;
         }
         private async Task<CourseResultModel> GetSeatCapacities(CourseResultModel CourseModel, string termId)

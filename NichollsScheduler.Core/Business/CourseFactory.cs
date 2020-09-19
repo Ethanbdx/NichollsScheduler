@@ -68,7 +68,6 @@ namespace NichollsScheduler.Core.Business
         }
         public static CourseResultModel ParseSeatCapacitiesHtml(CourseResultModel CourseModel, IDocument htmlDoc)
         {
-            var sw = new Stopwatch();
             var seatCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[1]']").TextContent;
             var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
             var waitListCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[1]']").TextContent;
