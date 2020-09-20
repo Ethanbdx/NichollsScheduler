@@ -8,6 +8,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'SelectTerm',
     component: () => import('../views/SelectTerm.vue')
+  },
+  {
+    path: '/select-courses',
+    name: 'SelectCourses',
+    component: () => import('../views/CourseSelection.vue')
   }
 ]
 

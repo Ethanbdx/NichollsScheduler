@@ -77,7 +77,7 @@ export default {
       })
     },
     continueClicked: function() {
-      alert(this.selectedTermId)
+      this.$router.push('/select-courses')
     },
     updateTermSelected: function() {
       this.$store.commit('selectTermId', this.selectedTermId)
