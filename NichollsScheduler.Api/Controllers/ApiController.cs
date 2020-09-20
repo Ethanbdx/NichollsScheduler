@@ -32,11 +32,11 @@ namespace NichollsScheduler.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-course-numbers")]
-        public async Task<IActionResult> GetCourseNumbers(string subject) {
+        [Route("get-courses-info")]
+        public async Task<IActionResult> GetCoursesInfo(string subject) {
 
-            var courseNumbers = await SQLiteDriver.GetCourseNumbers(subject);
-            return Ok(courseNumbers);
+            var coursesInfo = await SQLiteDriver.GetCoursesInfo(subject);
+            return Ok(coursesInfo);
         }
     }
 }
