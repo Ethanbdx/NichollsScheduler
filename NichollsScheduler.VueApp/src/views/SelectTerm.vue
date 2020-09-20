@@ -9,7 +9,7 @@
       </v-row>
       <v-row>
         <v-col cols="12" md="8" lg="6">
-          <v-select :items="terms" item-text="termName" item-value="termId" label="Select a term" v-model="selectedTermId" :reduce="term => term.termId" @change="updateTermSelected()" type="'number'" outlined></v-select>
+          <v-select :items="terms" item-text="termName" item-value="termId" label="Select a term" v-model="termId" type="'number'" outlined></v-select>
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -53,13 +53,20 @@ export default {
     return {
       terms: [],
       error: false,
-      doneLoading: false,
-      selectedTermId: 0
+      doneLoading: false
     }
   },
   computed: {
     termSelected: function() {
       return this.selectedTermId != 0
+    },
+    termId: {
+      get: function() {
+        return this.$store.getters.termId
+      },
+      set: function(value) {
+        this.$store.commit('setTermId', value)
+      }
     }
   },
   methods: {
@@ -79,9 +86,6 @@ export default {
     continueClicked: function() {
       this.$router.push('/select-courses')
     },
-    updateTermSelected: function() {
-      this.$store.commit('selectTermId', this.selectedTermId)
-    }
   },
   created() {
     this.getTerms();

@@ -5,20 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    termId: null,
+    termId: 0,
     currentStep: 1,
     selectedCourses: []
   },
   getters: {
-    getTermId: state => {
+    termId: state => {
       return state.termId
     },
-    getSelectedCourses: state => {
+    selectedCourses: state => {
       return state.selectedCourses
     }
   },
   mutations: {
-    selectTermId(state, termId) {
+    setTermId(state, termId) {
       state.termId = termId;
     },
     setSelectedCourses(state, selectedCourses) {

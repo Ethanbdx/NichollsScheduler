@@ -50,7 +50,6 @@ export default {
             courses: [],
             selectedSubject: "",
             selectedCourse: {},
-            selectedCourses: [],
             courseInfoLoading: false
         }
     },
@@ -63,6 +62,9 @@ export default {
         },
         canContinue: function() {
             return this.selectedCourses.length != 0;
+        },
+        selectedCourses: function() {
+            return this.$store.getters.selectedCourses
         }
     },
     methods: {
