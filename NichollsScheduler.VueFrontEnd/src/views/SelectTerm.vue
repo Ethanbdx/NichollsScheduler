@@ -8,13 +8,13 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="8" xs="6">
+        <v-col cols="12" md="8" lg="6">
           <v-select :items="terms" item-text="termName" item-value="termId" label="Select a term" v-model="selectedTermId" :reduce="term => term.termId" @change="updateTermSelected()" type="'number'" outlined></v-select>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <v-col>
-          <v-btn color="primary" large @click="continueClicked()" :disabled="!termSelected">
+          <v-btn color="primary" x-large @click="continueClicked()" :disabled="!termSelected">
             Continue
           </v-btn>
         </v-col>

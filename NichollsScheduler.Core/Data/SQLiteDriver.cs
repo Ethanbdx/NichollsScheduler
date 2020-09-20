@@ -25,16 +25,18 @@ namespace NichollsScheduler.Core.Data
             return courseNumbers;
         }
 
-        public static async Task<List<string>> GetCourseSubjects() {
+        public static async Task<List<object>> GetCourseSubjects() {
             using var connection = new SQLiteConnection(DB_PATH);
             await connection.OpenAsync();
             var command = connection.CreateCommand();
-            command.CommandText = "SELECT DISTINCT Subject FROM Courses";
+            command.CommandText = "SELECT FullSubject, SubjectCode FROM Subjects";
 
             using var resultReader = await command.ExecuteReaderAsync();
-            var courseSubjects = new List<string>();
+            var courseSubjects = new List<object>();
             while (resultReader.Read()) {
-                courseSubjects.Add(resultReader.GetString(0));
+                //anonymous object for subjects
+                var subject = new { fullSubject = resultReader.GetString(0), subjectCode = resultReader.GetString(1) };
+                courseSubjects.Add(subject);
             }
             await connection.CloseAsync();
             return courseSubjects;
