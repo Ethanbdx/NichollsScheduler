@@ -10,7 +10,7 @@
                 <v-select :items="subjects" v-model="selectedSubject" item-text="fullSubject" item-value="subjectCode" label="Select a Subject" @change="getCoursesInfo()" outlined></v-select>
             </v-col>
             <v-col cols="12" lg="3">
-                <v-select :items="courses" v-model="selectedCourse" item-text="courseNumber" label="Select a Course Number" :disabled="!courseNumberEnabled" return-object outlined></v-select>
+                <v-select :items="courses" v-model="selectedCourse" item-text="courseNumber" label="Select a Course Number" :disabled="!courseNumberEnabled" :loading="courseInfoLoading" return-object outlined></v-select>
             </v-col>
             <v-col cols="12" lg="3">
                 <v-btn raised x-large color="primary" :disabled="!canAddCourse" @click="addCourseButtonClick()">Add Course to List</v-btn>
@@ -35,7 +35,7 @@
         </v-row>
         <v-row v-if="canContinue">
             <v-col>
-                <v-btn color="primary" x-large>Continue</v-btn>
+                <v-btn color="primary" x-large @click="continueButtonClicked()">Continue</v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -50,7 +50,8 @@ export default {
             courses: [],
             selectedSubject: "",
             selectedCourse: {},
-            selectedCourses: []
+            selectedCourses: [],
+            courseInfoLoading: false
         }
     },
     computed: {
@@ -75,6 +76,7 @@ export default {
             })
         },
         getCoursesInfo: function() {
+            this.courseInfoLoading = true;
             this.courses = []
             this.$http.get(`https://localhost:5001/api/get-courses-info?subject=${this.selectedSubject}`)
             .then(res => {
@@ -82,6 +84,9 @@ export default {
             })
             .catch(err => {
                 console.log(err)
+            })
+            .finally(() => {
+                this.courseInfoLoading = false
             })
         },
         addCourseButtonClick: function() {
@@ -95,6 +100,10 @@ export default {
         removeCourse: function(course)  {
             let index = this.selectedCourses.indexOf(course);
             this.selectedCourses.splice(index, 1)
+        },
+        continueButtonClicked: function() {
+            this.$store.commit('setSelectedCourses', this.selectedCourses)
+            this.$router.push('/course-results')
         }
     },
     created() {

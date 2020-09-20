@@ -13,6 +13,11 @@ Vue.use(VueRouter)
     path: '/select-courses',
     name: 'SelectCourses',
     component: () => import('../views/CourseSelection.vue')
+  },
+  {
+    path: '/course-results',
+    name: 'CourseResults',
+    component: () => import('../views/CourseResults.vue')
   }
 ]
 
