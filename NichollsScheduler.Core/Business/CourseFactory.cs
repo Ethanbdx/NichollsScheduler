@@ -55,7 +55,7 @@ namespace NichollsScheduler.Core.Business
             }
             
             result.CourseRegistrationNum = courseInfo[1].Trim();
-            result.Subject = courseInfo[2].Trim().Split(' ').GetValue(0).ToString();
+            result.SubjectCode = courseInfo[2].Trim().Split(' ').GetValue(0).ToString();
             result.CourseNumber = courseInfo[2].Trim().Split(' ').GetValue(1).ToString();
             result.Section = courseInfo[3].Trim('\n', ' ');
             result.Time = time;

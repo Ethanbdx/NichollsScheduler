@@ -7,7 +7,7 @@ namespace NichollsScheduler.Core.Models
 {
     public interface ICourseModel
     {
-        string Subject { get; set; }
+        string SubjectCode { get; set; }
         string CourseNumber { get; set; }
     }
 }

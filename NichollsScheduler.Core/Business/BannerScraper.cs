@@ -67,7 +67,8 @@ namespace NichollsScheduler.Core.Business
 
             List<CourseResultModel> courseRes = new List<CourseResultModel>();
 
-            string cacheId = $"{termId}.{CourseModel.Subject}{CourseModel.CourseNumber}";
+            //Check for cache, it if exists...just get current seat count.
+            string cacheId = $"{termId}.{CourseModel.SubjectCode}{CourseModel.CourseNumber}";
             if(this.CachedCourses.TryGetValue<List<CourseResultModel>>(cacheId, out courseRes)) {
                 for(int i = 0; i < courseRes.Count; i++) {
                     courseRes[i] = await GetSeatCapacities(courseRes[i], termId);
@@ -75,7 +76,7 @@ namespace NichollsScheduler.Core.Business
                 return courseRes;
             }
 
-            List<KeyValuePair<string, string>> values = BannerQueryValues.GetKeyValues(termId, CourseModel.Subject, CourseModel.CourseNumber);
+            List<KeyValuePair<string, string>> values = BannerQueryValues.GetKeyValues(termId, CourseModel.SubjectCode, CourseModel.CourseNumber);
 
             HttpContent content = new FormUrlEncodedContent(values);
             HttpResponseMessage result = await client.PostAsync("bwckschd.p_get_crse_unsec", content);

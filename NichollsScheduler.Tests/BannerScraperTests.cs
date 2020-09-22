@@ -39,11 +39,11 @@ namespace NichollsScheduler.Tests {
     public class SqliteDriverTests {
         [TestMethod]
         public async Task GetEnglishCourseNumbers() {
-            await SQLiteDriver.GetCourseNumbers("ENGL");
+            await SQLiteDriver.GetCoursesInfo("ENGL");
         }
         [TestMethod]
         public async Task TaskGetMathCourseNumbers() {
-            await SQLiteDriver.GetCourseNumbers("MATH");
+            await SQLiteDriver.GetCoursesInfo("MATH");
         }
     }
 }
