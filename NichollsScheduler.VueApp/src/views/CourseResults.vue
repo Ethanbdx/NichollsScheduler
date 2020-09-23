@@ -5,7 +5,7 @@
         <v-row>
           <v-col cols="12">
             <h1 class="red--text text--accent-4">:(</h1>
-            <h2 class="red--text text--accent-4">There was an error getting the available terms.</h2>
+            <h2 class="red--text text--accent-4">There was an error finding matches.</h2>
           </v-col>
         </v-row>
         <v-row>

@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     termSelected: function () {
-      return this.selectedTermId != 0;
+      return this.termId != 0;
     },
     termId: {
       get: function () {

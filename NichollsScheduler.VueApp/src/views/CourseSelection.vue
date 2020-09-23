@@ -48,7 +48,7 @@
     <v-row dense>
       <v-col
         v-for="course in selectedCourses"
-        :key="course.subject + course.courseNumber"
+        :key="course.subjectCode + course.courseNumber"
         cols="12"
         sm="6"
         md="4"
@@ -85,7 +85,10 @@ export default {
   },
   computed: {
     canAddCourse: function () {
-      return this.selectedCourse != {};
+      return Object.keys(this.selectedCourse).length != 0 && !this.selectedCourses.some(c => c.subjectCode === this.selectedSubject && c.courseNumber === this.selectedCourse.courseNumber)
+    },
+    test: function() {
+      return !this.selectedCourses.some(c => c.subjectCode === this.selectedSubject)
     },
     courseNumberEnabled: function () {
       return this.selectedSubject.length != 0;
