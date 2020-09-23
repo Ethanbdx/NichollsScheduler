@@ -87,9 +87,6 @@ export default {
     canAddCourse: function () {
       return Object.keys(this.selectedCourse).length != 0 && !this.selectedCourses.some(c => c.subjectCode === this.selectedSubject && c.courseNumber === this.selectedCourse.courseNumber)
     },
-    test: function() {
-      return !this.selectedCourses.some(c => c.subjectCode === this.selectedSubject)
-    },
     courseNumberEnabled: function () {
       return this.selectedSubject.length != 0;
     },
@@ -144,6 +141,9 @@ export default {
     },
   },
   created() {
+    if(this.$store.getters.termId === 0) {
+      this.$router.push('/')
+    }
     this.getSubjects();
   },
 };

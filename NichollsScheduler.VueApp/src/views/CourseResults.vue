@@ -46,10 +46,7 @@ export default {
   },
   created() {
     this.$http
-      .post(
-        `/api/search-courses?termId=${this.selectedTerm}`,
-        this.selectedCourses
-      )
+      .post(`/api/search-courses?termId=${this.selectedTerm}`, this.selectedCourses)
       .then((res) => {
         this.results = res.data;
       })
