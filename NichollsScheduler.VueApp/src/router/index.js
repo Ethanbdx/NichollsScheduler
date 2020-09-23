@@ -18,6 +18,11 @@ Vue.use(VueRouter)
     path: '/course-results',
     name: 'CourseResults',
     component: () => import('../views/CourseResults.vue')
+  },
+  {
+    path:'/confirm-schedule',
+    name:'ConfirmSchedule',
+    component: () => import('../views/ConfirmSchedule.vue')
   }
 ]
 

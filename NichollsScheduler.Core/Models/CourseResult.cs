@@ -21,16 +21,13 @@ namespace NichollsScheduler.Core.Models
 
         public List<string> Days { get; set; }
 
-        public double CreditHours { get; set; }
+        public string CreditHours { get; set; }
 
         public List<string> ScheduleType { get; set; }
 
-        public int SeatCap { get; set; }
+        public int RemainingSeats { get; set; }
 
-        public int SeatActual { get; set; }
+        public int RemainingWaitlist { get; set; }
 
-        public int WaitListCap {get; set;}
-
-        public int WaitListActual { get; set; }
     }
 }

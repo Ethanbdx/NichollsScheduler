@@ -55,7 +55,7 @@ namespace NichollsScheduler.Core.Business
             result.Days = days.Select(d => d.Trim()).ToList();
             result.Location = location;
             result.Instructor = inst.Select(i => i.Trim()).ToList();
-            result.CreditHours = double.Parse(creditHoursHtml);
+            result.CreditHours = creditHoursHtml;
             result.ScheduleType = schedType;
             return result;
         }
@@ -66,10 +66,8 @@ namespace NichollsScheduler.Core.Business
             var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
             var waitListCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[1]']").TextContent;
             var waitListActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[2]']").TextContent;
-            CourseModel.SeatCap = Int32.Parse(seatCap);
-            CourseModel.SeatActual = Int32.Parse(seatActual);
-            CourseModel.WaitListCap = Int32.Parse(waitListCap);
-            CourseModel.WaitListActual = Int32.Parse(waitListActual);
+            CourseModel.RemainingSeats = Int32.Parse(seatCap) - Int32.Parse(seatActual);
+            CourseModel.RemainingWaitlist = Int32.Parse(waitListCap) - Int32.Parse(waitListActual);
             return CourseModel;
         }
 

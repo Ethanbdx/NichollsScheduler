@@ -2,20 +2,74 @@
   <div class="my-8" style="height: 60%">
     <v-container v-if="!loadingResults">
       <div v-if="!error">
-        <v-expansion-panels>
-          <v-expansion-panel v-for="courses in results" :key="courses[0].searchModel.subjectCode + courses[0].searchModel.courseNumber">
-            <v-expansion-panel-header><h1>{{courses[0].searchModel.subjectCode}} {{courses[0].searchModel.courseNumber}} - {{courses[0].searchModel.courseTitle}}</h1></v-expansion-panel-header>
-              <v-expansion-panel-content>
+        <v-row class="mb-10">
+          <v-col cols="12">
+            <h1>Click/tap to select your desired sections.</h1>
+          </v-col>
+        </v-row>
+          <div v-for="courses in results" :key="courses[0].searchModel.subjectCode + courses[0].searchModel.courseNumber">
+            <div><h2 class="font-weight-regular">{{courses[0].searchModel.subjectCode}} {{courses[0].searchModel.courseNumber}} - {{courses[0].searchModel.courseTitle}}</h2></div>
+            <v-item-group v-if="courses[0].courseRegistrationNum != null">
+              <v-container>
                 <v-row>
-                  <v-col cols="4" v-for="course in courses" :key="`${course.registrationNumber}.${course.subjectCode + course.courseNumber}`">
-                    <v-card color="secondary">
-                      <v-card-title class="headline">{{course}}</v-card-title>
-                    </v-card>
+                  <v-col cols="12" lg="6" xl="4" v-for="course in courses" :key="course.courseRegistrationNum" class="d-flex" style="flex-direction:column">
+                    <v-item v-slot:default="{active, toggle}">
+                      <v-card
+                      :color="active ? 'primary' : ''"
+                      :dark="active"
+                      :disabled="courseDisabled(course)"
+                      @click="toggle(); selectedCourseUpdate(course, !active)"
+                      class="mb-1 flex-grow-1"
+                      :class="courseDisabled(course) ? 'text-decoration-line-through' : ''"
+                      outlined
+                      hover
+                      >
+                      <v-card-title>
+                        <h4>{{course.section}}</h4>
+                        <template v-if="course.topic != null"> - {{course.topic}}</template>
+                      </v-card-title>
+                      <v-card-subtitle>
+                        <v-chip pill light><v-icon left>mdi-briefcase-account</v-icon><h5>{{course.instructor[0]}}</h5></v-chip></v-card-subtitle>
+                      <v-card-text>
+                        <div>
+                          <h4>Remaining Seats: {{course.remainingSeats}}</h4>
+                          <h4>Waitlist Remaining: {{course.remainingWaitlist}}</h4>
+                        </div>
+                        <div>
+                          <v-simple-table dense light>
+                            <thead>
+                              <tr>
+                                <th>Days</th>
+                                <th>Times</th>
+                                <th>Location</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="index in course.days.length" :key="course.courseRegistrationNum + course.days[index - 1]">
+                                <td>{{course.days[index - 1]}}</td>
+                                <td>{{course.time[index - 1]}}</td>
+                                <td>{{course.location[index - 1]}}</td>
+                              </tr>
+                            </tbody>
+                          </v-simple-table>
+                        </div>
+                      </v-card-text>
+                      </v-card>
+                    </v-item>
                   </v-col>
                 </v-row>
-              </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
+              </v-container>
+            </v-item-group>
+            <v-container v-if="courses[0].courseRegistrationNum == null">
+              <h4 class="red--text text--accent-4">No matching courses found.</h4>
+            </v-container>
+            <v-divider inset></v-divider>
+          </div>
+          <v-row>
+            <v-col v-if="canContinue">
+              <v-btn color="primary" x-large @click="continueButtonClick()">Continue</v-btn>
+            </v-col>
+          </v-row>
       </div>
       <div v-if="error">
         <v-row>
@@ -32,7 +86,7 @@
       </div>
     </v-container>
     <v-container v-if="loadingResults" style="height: 100%">
-      <v-row style="height: 100%" justify="center" align-content="center">
+      <v-row style="height: 100%" justify="center" align-content="center" class="mb-5">
         <v-progress-circular indeterminate size="250" width="5" color="primary"></v-progress-circular>
       </v-row>
       <v-row justify="center">
@@ -42,6 +96,28 @@
   </div>
 </template>
 
+<style>
+  .theme--light.v-sheet--outlined {
+    border-top-color: rgba(0, 0, 0, 0.4);
+    border-top-style: solid;
+    border-top-width: thin;
+    border-right-color: rgba(0, 0, 0, 0.4);
+    border-right-style: solid;
+    border-right-width: thin;
+    border-bottom-color: rgba(0, 0, 0, 0.4);
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-left-color: rgba(0, 0, 0, 0.4);
+    border-left-style: solid;
+    border-left-width: thin;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+  }
+</style>
+
 <script>
 export default {
   name: "CourseResults",
@@ -49,7 +125,7 @@ export default {
     return {
       error: false,
       loadingResults: true,
-      results: [],
+      results: []
     };
   },
   computed: {
@@ -59,11 +135,28 @@ export default {
     selectedTerm: function () {
       return this.$store.getters.termId;
     },
+    selectedResults: function() {
+      return this.$store.getters.selectedResults;
+    },
+    canContinue: function() {
+      return Object.keys(this.selectedResults).length > 0
+    }
+  },
+  methods: {
+    selectedCourseUpdate(course, active) {
+      active ? this.$set(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`, course) : this.$delete(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`)
+    },
+    courseDisabled(course) {
+      return course.remainingWaitlist <= 0 && course.remainingSeats <= 0
+    },
+    continueButtonClick() {
+      this.$router.push('/confirm-schedule')
+    }
   },
   created() {
-    if(this.$store.getters.termId == 0) {
+    if(this.selectedTerm == 0) {
       this.$router.push('/')
-    } else if(this.$store.getters.selectedCourses.length == 0) {
+    } else if(this.selectedCourses.length == 0) {
       this.$router.push('select-courses')
     }
     this.$store.commit('setCurrentStep', 3)
