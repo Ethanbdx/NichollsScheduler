@@ -24,9 +24,9 @@ namespace NichollsScheduler.Core.Models
 
         public List<string> Days { get; set; }
 
-        public string CreditHours { get; set; }
+        public double CreditHours { get; set; }
 
-        public string Title { get; set; }
+        public string CourseTitle { get; set; }
 
         public List<string> ScheduleType { get; set; }
 

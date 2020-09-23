@@ -40,9 +40,9 @@ namespace NichollsScheduler.Api.Controllers
             var coursesInfo = await SQLiteDriver.GetCoursesInfo(subject);
             return Ok(coursesInfo);
         }
-        [HttpGet]
+        [HttpPost]
         [Route("search-courses")]
-        public async Task<IActionResult> SearchCourses([FromBody] List<CourseModel> courses, [FromBody] string termId) {
+        public async Task<IActionResult> SearchCourses([FromBody]List<CourseModel> courses, string termId) {
             var results = this.BannerScraper.GetCourseResults(courses, termId);
             return Ok(results);
         }

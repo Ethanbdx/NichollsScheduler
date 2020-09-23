@@ -69,7 +69,8 @@ namespace NichollsScheduler.Core.Business
 
             //Check for cache, it if exists...just get current seat count.
             string cacheId = $"{termId}.{CourseModel.SubjectCode}{CourseModel.CourseNumber}";
-            if(this.CachedCourses.TryGetValue<List<CourseResultModel>>(cacheId, out courseRes)) {
+            if(this.CachedCourses.TryGetValue<List<CourseResultModel>>(cacheId, out _)) {
+                courseRes = this.CachedCourses.Get<List<CourseResultModel>>(cacheId);
                 for(int i = 0; i < courseRes.Count; i++) {
                     courseRes[i] = await GetSeatCapacities(courseRes[i], termId);
                 }
@@ -93,14 +94,11 @@ namespace NichollsScheduler.Core.Business
                     courseRes.Add(courseResult);
                     i++;
                 }
+                this.CachedCourses.Set<List<CourseResultModel>>(cacheId, courseRes, TimeSpan.FromDays(3));
             }
-            catch
-            {
-                //Adding a blank case in the event of a fail.
-                return null;
+            catch(Exception e) {
+                Debug.Print(e.Message);
             }
-
-            this.CachedCourses.Set<List<CourseResultModel>>(cacheId, courseRes, TimeSpan.FromDays(3));
 
             return courseRes;
         }

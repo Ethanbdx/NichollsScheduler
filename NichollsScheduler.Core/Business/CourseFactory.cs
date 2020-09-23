@@ -46,12 +46,12 @@ namespace NichollsScheduler.Core.Business
             if (courseInfo[0].Contains(':'))
             {
                 var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
-                result.Title = fulltitle[0];
-                result.Topic = fulltitle[1];
+                result.CourseTitle = c.CourseTitle;
+                result.Topic = fulltitle[1].Trim();
             } 
             else 
             {
-                result.Title = courseInfo[0].Trim('\n', ' ');
+                result.CourseTitle = c.CourseTitle;
             }
             
             result.CourseRegistrationNum = courseInfo[1].Trim();
@@ -59,13 +59,14 @@ namespace NichollsScheduler.Core.Business
             result.CourseNumber = courseInfo[2].Trim().Split(' ').GetValue(1).ToString();
             result.Section = courseInfo[3].Trim('\n', ' ');
             result.Time = time;
-            result.Days = days;
+            result.Days = days.Select(d => d.Trim()).ToList();
             result.Location = location;
-            result.Instructor = inst;
-            result.CreditHours = creditHoursHtml;
+            result.Instructor = inst.Select(i => i.Trim()).ToList();
+            result.CreditHours = double.Parse(creditHoursHtml);
             result.ScheduleType = schedType;
             return result;
         }
+
         public static CourseResultModel ParseSeatCapacitiesHtml(CourseResultModel CourseModel, IDocument htmlDoc)
         {
             var seatCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[1]']").TextContent;

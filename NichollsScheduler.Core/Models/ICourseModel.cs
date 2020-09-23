@@ -9,5 +9,6 @@ namespace NichollsScheduler.Core.Models
     {
         string SubjectCode { get; set; }
         string CourseNumber { get; set; }
+        string CourseTitle { get; set; }
     }
 }

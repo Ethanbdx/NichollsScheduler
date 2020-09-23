@@ -20,15 +20,15 @@ namespace NichollsScheduler.Tests {
             var bannerScraper = new BannerScraper();
             var courseQuery = new List<CourseModel> {
                 new CourseModel {
-                    Subject = "ENGL",
+                    SubjectCode = "ENGL",
                     CourseNumber = "101"
                 },
                 new CourseModel {
-                    Subject = "SPCH",
+                    SubjectCode = "SPCH",
                     CourseNumber = "101"
                 },
                 new CourseModel {
-                    Subject = "MATH",
+                    SubjectCode = "MATH",
                     CourseNumber = "101"
                 }
             };

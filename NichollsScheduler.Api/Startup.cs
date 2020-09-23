@@ -33,8 +33,6 @@ namespace NichollsScheduler.Api {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod());
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
