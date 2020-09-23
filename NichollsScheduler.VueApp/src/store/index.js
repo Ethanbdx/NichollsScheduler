@@ -15,6 +15,9 @@ export default new Vuex.Store({
     },
     selectedCourses: state => {
       return state.selectedCourses
+    },
+    currentStep: state => {
+      return state.currentStep
     }
   },
   mutations: {
@@ -23,6 +26,9 @@ export default new Vuex.Store({
     },
     setSelectedCourses(state, selectedCourses) {
       state.selectedCourses = selectedCourses;
+    },
+    setCurrentStep(state, newCurrentStep) {
+      state.currentStep = newCurrentStep;
     }
   },
   actions: {

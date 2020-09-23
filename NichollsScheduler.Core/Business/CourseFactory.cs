@@ -46,17 +46,10 @@ namespace NichollsScheduler.Core.Business
             if (courseInfo[0].Contains(':'))
             {
                 var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
-                result.CourseTitle = c.CourseTitle;
                 result.Topic = fulltitle[1].Trim();
-            } 
-            else 
-            {
-                result.CourseTitle = c.CourseTitle;
             }
-            
+            result.SearchModel = c;
             result.CourseRegistrationNum = courseInfo[1].Trim();
-            result.SubjectCode = courseInfo[2].Trim().Split(' ').GetValue(0).ToString();
-            result.CourseNumber = courseInfo[2].Trim().Split(' ').GetValue(1).ToString();
             result.Section = courseInfo[3].Trim('\n', ' ');
             result.Time = time;
             result.Days = days.Select(d => d.Trim()).ToList();

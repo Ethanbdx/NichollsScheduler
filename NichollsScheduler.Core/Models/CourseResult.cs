@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace NichollsScheduler.Core.Models
 {
-    public class CourseResultModel : ICourseModel
+    public class CourseResultModel
     {
-        public string SubjectCode { get; set; }
-
-        public string CourseNumber { get; set; }
-
+        public CourseModel SearchModel { get; set; }
         public string Topic { get; set; }
         public string CourseRegistrationNum { get; set; }
 
@@ -25,8 +22,6 @@ namespace NichollsScheduler.Core.Models
         public List<string> Days { get; set; }
 
         public double CreditHours { get; set; }
-
-        public string CourseTitle { get; set; }
 
         public List<string> ScheduleType { get; set; }
 

@@ -1,6 +1,22 @@
 <template>
   <div class="my-8" style="height: 60%">
     <v-container v-if="!loadingResults">
+      <div v-if="!error">
+        <v-expansion-panels>
+          <v-expansion-panel v-for="courses in results" :key="courses[0].searchModel.subjectCode + courses[0].searchModel.courseNumber">
+            <v-expansion-panel-header><h1>{{courses[0].searchModel.subjectCode}} {{courses[0].searchModel.courseNumber}} - {{courses[0].searchModel.courseTitle}}</h1></v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-row>
+                  <v-col cols="4" v-for="course in courses" :key="`${course.registrationNumber}.${course.subjectCode + course.courseNumber}`">
+                    <v-card color="secondary">
+                      <v-card-title class="headline">{{course}}</v-card-title>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </div>
       <div v-if="error">
         <v-row>
           <v-col cols="12">
@@ -45,6 +61,12 @@ export default {
     },
   },
   created() {
+    if(this.$store.getters.termId == 0) {
+      this.$router.push('/')
+    } else if(this.$store.getters.selectedCourses.length == 0) {
+      this.$router.push('select-courses')
+    }
+    this.$store.commit('setCurrentStep', 3)
     this.$http
       .post(`/api/search-courses?termId=${this.selectedTerm}`, this.selectedCourses)
       .then((res) => {
@@ -52,6 +74,7 @@ export default {
       })
       .catch((err) => {
         console.log(err);
+        this.error = true;
       })
       .finally(() => {
         this.loadingResults = false;

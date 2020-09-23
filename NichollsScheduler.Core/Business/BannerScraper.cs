@@ -97,7 +97,9 @@ namespace NichollsScheduler.Core.Business
                 this.CachedCourses.Set<List<CourseResultModel>>(cacheId, courseRes, TimeSpan.FromDays(3));
             }
             catch(Exception e) {
-                Debug.Print(e.Message);
+                Console.WriteLine(e.Message); ;
+                //Add default case if fail.
+                courseRes.Add(new CourseResultModel { SearchModel = CourseModel });
             }
 
             return courseRes;

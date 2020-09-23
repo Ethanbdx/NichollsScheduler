@@ -95,10 +95,12 @@ export default {
         });
     },
     continueClicked: function () {
+      this.$store.commit('setCurrentStep', 2)
       this.$router.push("/select-courses");
     },
   },
   created() {
+    this.$store.commit('setCurrentStep', 1)
     this.getTerms();
   },
 };

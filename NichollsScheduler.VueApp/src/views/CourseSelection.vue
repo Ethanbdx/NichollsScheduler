@@ -53,8 +53,9 @@
         sm="6"
         md="4"
         lg="3"
+        class="d-flex" style="flex-direction:column"
       >
-        <v-card color="#696868" dark>
+        <v-card color="#696868" dark class="mb-1 flex-grow-1">
           <v-card-title class="headline">{{course.subjectCode + " " + course.courseNumber}}</v-card-title>
           <v-card-subtitle>{{course.courseTitle}}</v-card-subtitle>
           <v-card-actions>
@@ -137,6 +138,7 @@ export default {
     },
     continueButtonClicked: function () {
       this.$store.commit("setSelectedCourses", this.selectedCourses);
+      this.$store.commit('setCurrentStep', 3)
       this.$router.push("/course-results");
     },
   },
@@ -144,6 +146,7 @@ export default {
     if(this.$store.getters.termId === 0) {
       this.$router.push('/')
     }
+    this.$store.commit('setCurrentStep', 2)
     this.getSubjects();
   },
 };

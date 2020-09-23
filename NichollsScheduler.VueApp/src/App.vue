@@ -32,7 +32,7 @@ export default {
     PageFooter
   },
   data: () => ({
-
+    
   }),
 };
 </script>
