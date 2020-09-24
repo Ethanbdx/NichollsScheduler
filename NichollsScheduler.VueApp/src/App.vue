@@ -24,6 +24,7 @@
 import PageHeader from './global-components/PageHeader';
 import PageFooter from './global-components/PageFooter';
 
+
 export default {
   name: 'App',
 

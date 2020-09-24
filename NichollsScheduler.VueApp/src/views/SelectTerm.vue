@@ -21,8 +21,9 @@
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <v-col>
+          <v-col cols="10" offset="1" md="3" offset-md="0">
             <v-btn
+              block
               color="primary"
               x-large
               @click="continueClicked()"
@@ -95,12 +96,10 @@ export default {
         });
     },
     continueClicked: function () {
-      this.$store.commit('setCurrentStep', 2)
       this.$router.push("/select-courses");
     },
   },
   created() {
-    this.$store.commit('setCurrentStep', 1)
     this.getTerms();
   },
 };

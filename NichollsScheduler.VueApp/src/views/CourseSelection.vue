@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <BackButton />
     <v-row>
       <v-col cols="12">
         <h1 text-center>What courses do you want to search for?</h1>
@@ -31,6 +32,7 @@
       </v-col>
       <v-col cols="12" lg="3">
         <v-btn
+          block
           raised
           x-large
           color="primary"
@@ -64,17 +66,22 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row v-if="canContinue">
-      <v-col>
-        <v-btn color="primary" x-large @click="continueButtonClicked()">Continue</v-btn>
+    <v-row v-if="canContinue" class="my-4">
+      <v-col cols="12" md="4" offset-md="4">
+        <v-btn block color="primary" x-large @click="continueButtonClicked()" >
+          Continue</v-btn>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import BackButton from '../global-components/BackButton'
 export default {
   name: "CourseSelection",
+  components: {
+    BackButton
+  },
   data() {
     return {
       subjects: [],
@@ -138,7 +145,6 @@ export default {
     },
     continueButtonClicked: function () {
       this.$store.commit("setSelectedCourses", this.selectedCourses);
-      this.$store.commit('setCurrentStep', 3)
       this.$router.push("/course-results");
     },
   },
@@ -146,7 +152,6 @@ export default {
     if(this.$store.getters.termId === 0) {
       this.$router.push('/')
     }
-    this.$store.commit('setCurrentStep', 2)
     this.getSubjects();
   },
 };

@@ -1,7 +1,8 @@
 <template>
-  <div class="my-8" style="height: 60%">
+  <div>
     <v-container v-if="!loadingResults">
       <div v-if="!error">
+        <BackButton />
         <v-row class="mb-10">
           <v-col cols="12">
             <h1>Click/tap to select your desired sections.</h1>
@@ -9,16 +10,14 @@
         </v-row>
           <div v-for="courses in results" :key="courses[0].searchModel.subjectCode + courses[0].searchModel.courseNumber">
             <div><h2 class="font-weight-regular">{{courses[0].searchModel.subjectCode}} {{courses[0].searchModel.courseNumber}} - {{courses[0].searchModel.courseTitle}}</h2></div>
-            <v-item-group v-if="courses[0].courseRegistrationNum != null">
-              <v-container>
+              <v-container v-if="courses[0].courseRegistrationNum != null" class="px-5">
                 <v-row>
                   <v-col cols="12" lg="6" xl="4" v-for="course in courses" :key="course.courseRegistrationNum" class="d-flex" style="flex-direction:column">
-                    <v-item v-slot:default="{active, toggle}">
                       <v-card
-                      :color="active ? 'primary' : ''"
-                      :dark="active"
+                      :color="isCourseSelected(course) ? 'primary' : ''"
+                      :dark="isCourseSelected(course)"
                       :disabled="courseDisabled(course)"
-                      @click="toggle(); selectedCourseUpdate(course, !active)"
+                      @click="selectedCourseUpdate(course, !isCourseSelected(course))"
                       class="mb-1 flex-grow-1"
                       :class="courseDisabled(course) ? 'text-decoration-line-through' : ''"
                       outlined
@@ -55,19 +54,17 @@
                         </div>
                       </v-card-text>
                       </v-card>
-                    </v-item>
                   </v-col>
                 </v-row>
               </v-container>
-            </v-item-group>
             <v-container v-if="courses[0].courseRegistrationNum == null">
               <h4 class="red--text text--accent-4">No matching courses found.</h4>
             </v-container>
-            <v-divider inset></v-divider>
+            <v-divider inset class="my-3"></v-divider>
           </div>
           <v-row>
-            <v-col v-if="canContinue">
-              <v-btn color="primary" x-large @click="continueButtonClick()">Continue</v-btn>
+            <v-col offset="1" cols="10" md="4" offset-md="4" v-if="canContinue">
+              <v-btn block color="primary" x-large @click="continueButtonClick()">Continue</v-btn>
             </v-col>
           </v-row>
       </div>
@@ -85,11 +82,11 @@
         </v-row>
       </div>
     </v-container>
-    <v-container v-if="loadingResults" style="height: 100%">
-      <v-row style="height: 100%" justify="center" align-content="center" class="mb-5">
+    <v-container v-if="loadingResults" class="mt-5">
+      <v-row justify="center" align-content="center" class="mb-5">
         <v-progress-circular indeterminate size="250" width="5" color="primary"></v-progress-circular>
       </v-row>
-      <v-row justify="center">
+      <v-row justify="center" class="mt-5">
         <h2>Searching for matching courses...</h2>
       </v-row>
     </v-container>
@@ -119,8 +116,12 @@
 </style>
 
 <script>
+import BackButton from '../global-components/BackButton'
 export default {
   name: "CourseResults",
+  components: {
+    BackButton
+  },
   data() {
     return {
       error: false,
@@ -151,6 +152,9 @@ export default {
     },
     continueButtonClick() {
       this.$router.push('/confirm-schedule')
+    },
+    isCourseSelected(course) {
+      return Object.values(this.selectedResults).filter(c => c.courseRegistrationNum === course.courseRegistrationNum).length === 1
     }
   },
   created() {
@@ -159,7 +163,6 @@ export default {
     } else if(this.selectedCourses.length == 0) {
       this.$router.push('select-courses')
     }
-    this.$store.commit('setCurrentStep', 3)
     this.$http
       .post(`/api/search-courses?termId=${this.selectedTerm}`, this.selectedCourses)
       .then((res) => {

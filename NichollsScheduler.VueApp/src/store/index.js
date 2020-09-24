@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     termId: 0,
-    currentStep: 1,
     selectedCourses: [],
     selectedResults: {}
   },
@@ -16,9 +15,6 @@ export default new Vuex.Store({
     },
     selectedCourses: state => {
       return state.selectedCourses
-    },
-    currentStep: state => {
-      return state.currentStep
     },
     selectedResults: state => {
       return state.selectedResults
@@ -30,9 +26,6 @@ export default new Vuex.Store({
     },
     setSelectedCourses(state, selectedCourses) {
       state.selectedCourses = selectedCourses;
-    },
-    setCurrentStep(state, newCurrentStep) {
-      state.currentStep = newCurrentStep;
     }
   },
   actions: {
