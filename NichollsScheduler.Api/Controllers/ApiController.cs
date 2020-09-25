@@ -43,8 +43,8 @@ namespace NichollsScheduler.Api.Controllers
         }
         [HttpPost]
         [Route("search-courses")]
-        public async Task<IActionResult> SearchCourses([FromBody]List<CourseModel> courses, string termId) {
-            var results = await Task.Run(() => this.BannerScraper.GetCourseResults(courses, termId).OrderBy(x => x.Count));
+        public IActionResult SearchCourses([FromBody]List<CourseModel> courses, string termId) {
+            var results = this.BannerScraper.GetCourseResults(courses, termId).OrderBy(x => x.Count);
             return Ok(results);
         }
     }

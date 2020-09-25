@@ -7,7 +7,7 @@ namespace NichollsScheduler.Core.Data
 {
     public static class SQLiteDriver
     {
-        public static string DB_PATH = @"Data Source=E:\source\repos\NichollsScheduler\courses.db";
+        public static string DB_PATH = $"Data Source={Directory.GetCurrentDirectory()}\\courses.db";
         public static async Task<List<object>> GetCoursesInfo(string subject) {
 
             using var connection = new SQLiteConnection(DB_PATH);

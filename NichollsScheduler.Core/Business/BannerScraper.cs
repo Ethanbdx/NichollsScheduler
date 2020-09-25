@@ -54,11 +54,11 @@ namespace NichollsScheduler.Core.Business
         }
         public List<List<CourseResultModel>> GetCourseResults(List<CourseModel> courses, string termId)
         {
-            List<List<CourseResultModel>> courseResults = new List<List<CourseResultModel>>();
+            List<List<CourseResultModel>> courseResults = new List<List<CourseResultModel>>(); 
             Parallel.ForEach(courses, CourseModel =>
             {
                 var result = GetCourses(CourseModel, termId);
-                courseResults.Add(result.Result);
+                courseResults.Add(result.Result.OrderByDescending(x => x.RemainingSeats).ThenBy(x => x.Section).ToList());
             });
             return courseResults;
         }
