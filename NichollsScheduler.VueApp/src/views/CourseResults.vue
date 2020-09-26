@@ -146,6 +146,7 @@ export default {
   methods: {
     selectedCourseUpdate(course, active) {
       active ? this.$set(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`, course) : this.$delete(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`)
+
     },
     courseDisabled(course) {
       return course.remainingWaitlist <= 0 && course.remainingSeats <= 0

@@ -6,13 +6,8 @@ Vue.use(VueRouter)
   const routes = [
   {
     path: '/',
-    name: 'SelectTerm',
-    component: () => import('../views/SelectTerm.vue')
-  },
-  {
-    path: '/select-courses',
-    name: 'SelectCourses',
-    component: () => import('../views/CourseSelection.vue')
+    name: 'Select',
+    component: () => import('../views/Select.vue')
   },
   {
     path: '/course-results',

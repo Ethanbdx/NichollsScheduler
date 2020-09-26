@@ -1,7 +1,27 @@
 <template>
-  <v-container>
-    <BackButton />
-    <v-row>
+  <div class="my-8" style="height: 60%">
+    <v-container v-if="doneLoading">
+      <template v-if="!error">
+        <v-row>
+          <v-col cols="12">
+            <h1 text-center>What term are you scheduling for?</h1>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" lg="6">
+            <v-select
+              :items="terms"
+              item-text="termName"
+              item-value="termId"
+              label="Select a term"
+              v-model="termId"
+              type="'number'"
+              outlined
+            ></v-select>
+          </v-col>
+        </v-row>
+        <template v-if="termSelected">
+          <v-row>
       <v-col cols="12">
         <h1 text-center>What courses do you want to search for?</h1>
       </v-col>
@@ -72,18 +92,41 @@
           Continue</v-btn>
       </v-col>
     </v-row>
-  </v-container>
+        </template>
+      </template>
+      <template v-if="error">
+        <v-row>
+          <v-col cols="12">
+            <h1 class="red--text text--accent-4">:(</h1>
+            <h2 class="red--text text--accent-4">There was an error getting the available terms.</h2>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <h2>Please try again later.</h2>
+          </v-col>
+        </v-row>
+      </template>
+    </v-container>
+    <v-container v-if="!doneLoading" style="height: 100%">
+      <v-row style="height: 100%" justify="center" align-content="center">
+        <v-progress-circular indeterminate size="250" width="5" color="primary"></v-progress-circular>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
+<style scoped>
+</style>
+
 <script>
-import BackButton from '../global-components/BackButton'
 export default {
-  name: "CourseSelection",
-  components: {
-    BackButton
-  },
+  name: "Select",
   data() {
     return {
+      terms: [],
+      error: false,
+      doneLoading: false,
       subjects: [],
       courses: [],
       selectedSubject: "",
@@ -92,6 +135,17 @@ export default {
     };
   },
   computed: {
+    termSelected: function () {
+      return this.termId != 0;
+    },
+    termId: {
+      get: function () {
+        return this.$store.getters.termId;
+      },
+      set: function (value) {
+        this.$store.commit("setTermId", value);
+      }
+    },
     canAddCourse: function () {
       return Object.keys(this.selectedCourse).length != 0 && !this.selectedCourses.some(c => c.subjectCode === this.selectedSubject && c.courseNumber === this.selectedCourse.courseNumber)
     },
@@ -106,6 +160,20 @@ export default {
     },
   },
   methods: {
+    getTerms: function () {
+      this.$http
+        .get("/api/get-available-terms")
+        .then((res) => {
+          this.terms = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.error = true;
+        })
+        .finally(() => {
+          this.doneLoading = true;
+        });
+    },
     getSubjects: function () {
       this.$http
         .get("/api/get-course-subjects")
@@ -146,12 +214,10 @@ export default {
     continueButtonClicked: function () {
       this.$store.commit("setSelectedCourses", this.selectedCourses);
       this.$router.push("/course-results");
-    },
+    }
   },
   created() {
-    if(this.$store.getters.termId === 0) {
-      this.$router.push('/')
-    }
+    this.getTerms();
     this.getSubjects();
   },
 };
