@@ -77,11 +77,11 @@
         lg="3"
         class="d-flex" style="flex-direction:column"
       >
-        <v-card color="#696868" dark class="mb-1 flex-grow-1">
-          <v-card-title class="headline">{{course.subjectCode + " " + course.courseNumber}}</v-card-title>
-          <v-card-subtitle>{{course.courseTitle}}</v-card-subtitle>
+        <v-card color="secondary" class="mb-1 flex-grow-1">
+          <v-card-title class="headline white--text">{{course.subjectCode + " " + course.courseNumber}}</v-card-title>
+          <v-card-subtitle class="white--text">{{course.courseTitle}}</v-card-subtitle>
           <v-card-actions>
-            <v-btn text color="#630a0a" @click="removeCourse(course)">Remove</v-btn>
+            <v-btn color="primary" outlined @click="removeCourse(course)">Remove</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

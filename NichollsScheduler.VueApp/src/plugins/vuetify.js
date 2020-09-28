@@ -7,13 +7,14 @@ const vuetify = new Vuetify({
     theme: {
         themes: {
             light: {
-                primary: '#AF0022',
-                secondary: '#b0bec5',
-                accent: '#8c9eff',
+                primary: '#A6192E',
+                secondary: '#7C878E',
+                white: '#FFFFFF',
+                accent: '#2D2926',
                 error: '#b71c1c',  
             },
             dark: {
-                secondary: '#b0bec5'
+                secondary: '#7C878E'
             }
         }
     }

@@ -1,8 +1,8 @@
 <template>
-    <v-footer>
+    <v-footer color="secondary">
         <v-container>
             <div></div>
-             <div>Created by Ethan Boudreaux ツ - <a href="https://github.com/Ethanbdx/NichollsScheduler">View Source</a></div>
+             <div class="white--text">Created by Ethan Boudreaux ツ <a href="https://github.com/Ethanbdx/NichollsScheduler">View Source</a></div>
         </v-container>
     </v-footer>
 </template>
