@@ -12,10 +12,18 @@ namespace NichollsScheduler.Core.Models
         public int Minute { get; set; }
         public string TwelveHourTime {
             get {
-                return this.Hour > 12 ? string.Format("{0}:{1:00} am", this.Hour - 12, this.Minute): string.Format("{0}:{1:00} am", this.Hour, this.Minute);
+                if(this.Hour > 12) {
+                    return string.Format("{0}:{1:00} pm", this.Hour - 12, this.Minute);
+                }
+                else if (this.Hour < 12) {
+                    return string.Format("{0}:{1:00} am", this.Hour, this.Minute);
+                } 
+                else {
+                    return string.Format("{0}:{1:00} pm", this.Hour, this.Minute);
+                }
             }
         }
-        public static Tuple<Time, Time> ParseTime(string times) {
+        public static Tuple<Time, Time> ParseTimes(string times) {
             var timesArray = times.Split(" - ");
             var startTimeString = timesArray[0].Split(':');
             var startTimeHour = int.Parse(startTimeString[0]);
@@ -28,8 +36,10 @@ namespace NichollsScheduler.Core.Models
             var startTime = new Time(startTimeHour, startTimeMinutes);
             var endTime = new Time(endTimeHour, endTimeMinutes);
 
-            if(timesArray[0].Contains("pm") && startTime.Hour != 12) {
-                startTime.Hour += 12;
+            if(timesArray[0].Contains("pm")) {
+                if(startTime.Hour != 12) {
+                    startTime.Hour += 12;
+                }
                 endTime.Hour += 12;
             }
             

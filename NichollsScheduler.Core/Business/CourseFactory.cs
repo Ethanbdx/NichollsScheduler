@@ -65,22 +65,19 @@ namespace NichollsScheduler.Core.Business
             CourseModel.RemainingWaitlist = Int32.Parse(waitListCap) - Int32.Parse(waitListActual);
             return CourseModel;
         }
-        public static Dictionary<char, List<Meeting>> ParseCourseMeetingInformation(List<string> days, List<string> locations, List<string> times) {
-            var meetings = new Dictionary<char, List<Meeting>>();
+        public static List<Meeting> ParseCourseMeetingInformation(List<string> days, List<string> locations, List<string> times) {
+            var meetings = new List<Meeting>();
             for(int i = 0; i < days.Count; i++) {
-                foreach(char d in days[i]) {
-                    if(!meetings.ContainsKey(d)) {
-                        meetings[d] = new List<Meeting>();
-                    }
-                    var parsedTimes = Time.ParseTime(times[i]);
+                    var meetingDays = days[i].ToCharArray();
+                    var parsedTimes = Time.ParseTimes(times[i]);
                     var meeting = new Meeting {
                         Location = locations[i],
                         StartTime = parsedTimes.Item1,
-                        EndTime = parsedTimes.Item2
+                        EndTime = parsedTimes.Item2,
+                        Days = meetingDays
                     };
-                    meetings[d].Add(meeting);
+                    meetings.Add(meeting);
                 }
-            }
             return meetings;
         }
 

@@ -13,7 +13,7 @@ namespace NichollsScheduler.Core.Models
 
         public string Section { get; set; }
 
-        public Dictionary<char, List<Meeting>> Meetings { get; set; }
+        public List<Meeting> Meetings { get; set; }
 
         public string Instructor { get; set; }
 
