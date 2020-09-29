@@ -28,7 +28,7 @@
                         <template v-if="course.topic != null"> - {{course.topic}}</template>
                       </v-card-title>
                       <v-card-subtitle>
-                        <v-chip pill light><v-icon left>mdi-briefcase-account</v-icon><h5>{{course.instructor[0]}}</h5></v-chip></v-card-subtitle>
+                        <v-chip pill light><v-icon left>mdi-briefcase-account</v-icon><h5>{{course.instructor}}</h5></v-chip></v-card-subtitle>
                       <v-card-text>
                         <div>
                           <h4>Remaining Seats: {{course.remainingSeats}}</h4>

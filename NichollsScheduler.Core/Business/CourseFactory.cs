@@ -24,23 +24,21 @@ namespace NichollsScheduler.Core.Business
             var creditHoursHtml = html.ElementAt(i + 1).TextContent.Split('\n').Where(s => s.Contains("Credits")).ElementAt(0).Trim();
             creditHoursHtml = creditHoursHtml.Remove(5);
             var courseDetails = html.ElementAt(i + 1).GetElementsByTagName("tr").ToList();
-            List<string> time = new List<string>();
+            List<string> times = new List<string>();
             List<string> inst = new List<string>();
             List<string> days = new List<string>();
-            List<string> location = new List<string>();
-            List<string> schedType = new List<string>();
+            List<string> locations = new List<string>();
             for (int x = 1; x < courseDetails.Count(); x++)
             {
                 string[] crseDetails = courseDetails.ElementAt(x).TextContent.Split('\n');
-                time.Add(crseDetails[2]);
+                times.Add(crseDetails[2]);
                 if (crseDetails[3] == "&nbsp;")
                 {
                     crseDetails[3] = "N/A";
                 }
                 days.Add(crseDetails[3]);
-                location.Add(crseDetails[4]);
+                locations.Add(crseDetails[4]);
                 inst.Add(crseDetails[7].Replace("(P)", ""));
-                schedType.Add(crseDetails[6].Trim());
             }
             var result = new CourseResultModel();
             if (courseInfo[0].Contains(':'))
@@ -51,12 +49,9 @@ namespace NichollsScheduler.Core.Business
             result.SearchModel = c;
             result.CourseRegistrationNum = courseInfo[1].Trim();
             result.Section = courseInfo[3].Trim('\n', ' ');
-            result.Time = time;
-            result.Days = days.Select(d => d.Trim()).ToList();
-            result.Location = location;
-            result.Instructor = inst.Select(i => i.Trim()).ToList();
+            result.Instructor = inst.Select(i => i.Trim()).FirstOrDefault();
             result.CreditHours = creditHoursHtml;
-            result.ScheduleType = schedType;
+            result.Meetings = ParseCourseMeetingInformation(days, locations, times);
             return result;
         }
 
@@ -69,6 +64,24 @@ namespace NichollsScheduler.Core.Business
             CourseModel.RemainingSeats = Int32.Parse(seatCap) - Int32.Parse(seatActual);
             CourseModel.RemainingWaitlist = Int32.Parse(waitListCap) - Int32.Parse(waitListActual);
             return CourseModel;
+        }
+        public static Dictionary<char, List<Meeting>> ParseCourseMeetingInformation(List<string> days, List<string> locations, List<string> times) {
+            var meetings = new Dictionary<char, List<Meeting>>();
+            for(int i = 0; i < days.Count; i++) {
+                foreach(char d in days[i]) {
+                    if(!meetings.ContainsKey(d)) {
+                        meetings[d] = new List<Meeting>();
+                    }
+                    var parsedTimes = Time.ParseTime(times[i]);
+                    var meeting = new Meeting {
+                        Location = locations[i],
+                        StartTime = parsedTimes.Item1,
+                        EndTime = parsedTimes.Item2
+                    };
+                    meetings[d].Add(meeting);
+                }
+            }
+            return meetings;
         }
 
     }

@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using NichollsScheduler.Core.Business;
 using NichollsScheduler.Core.Data;
 using NichollsScheduler.Core.Models;
@@ -20,19 +21,21 @@ namespace NichollsScheduler.Tests {
             var bannerScraper = new BannerScraper();
             var courseQuery = new List<CourseModel> {
                 new CourseModel {
-                    SubjectCode = "ENGL",
-                    CourseNumber = "101"
+                    SubjectCode = "BIOL",
+                    CourseNumber = "155"
                 },
                 new CourseModel {
                     SubjectCode = "SPCH",
                     CourseNumber = "101"
                 },
                 new CourseModel {
-                    SubjectCode = "MATH",
-                    CourseNumber = "101"
+                    SubjectCode = "ENGL",
+                    CourseNumber = "215"
                 }
             };
             var courseResults = bannerScraper.GetCourseResults(courseQuery, "202080");
+            string json = JsonConvert.SerializeObject(courseResults);
+            System.IO.File.WriteAllText(@"E:\source\repos\NichollsScheduler\NichollsScheduler.Tests\test.json", json);
         }
     }
     [TestClass]

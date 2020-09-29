@@ -1,0 +1,2219 @@
+[
+    [
+        {
+            "SearchModel": {
+                "SubjectCode": "ENGL",
+                "CourseNumber": "215",
+                "CourseTitle": null
+            },
+            "Topic": "HUNTING & FISHING",
+            "CourseRegistrationNum": "84160",
+            "Section": "5T",
+            "Meetings": {
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 13,
+                            "Minute": 30,
+                            "TwelveHourTime": "1:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 14,
+                            "Minute": 50,
+                            "TwelveHourTime": "2:50 am"
+                        },
+                        "Location": "Peltier Hall 247"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 13,
+                            "Minute": 30,
+                            "TwelveHourTime": "1:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 14,
+                            "Minute": 50,
+                            "TwelveHourTime": "2:50 am"
+                        },
+                        "Location": "Peltier Hall 247"
+                    }
+                ]
+            },
+            "Instructor": "Michael S  Martin",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 9,
+            "RemainingWaitlist": 0
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ENGL",
+                "CourseNumber": "215",
+                "CourseTitle": null
+            },
+            "Topic": "HARRY POTTER",
+            "CourseRegistrationNum": "84217",
+            "Section": "6M",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 55,
+                            "TwelveHourTime": "12:55 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 50,
+                            "TwelveHourTime": "1:50 am"
+                        },
+                        "Location": "Peltier Hall 250"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 55,
+                            "TwelveHourTime": "12:55 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 50,
+                            "TwelveHourTime": "1:50 am"
+                        },
+                        "Location": "Peltier Hall 250"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 55,
+                            "TwelveHourTime": "12:55 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 50,
+                            "TwelveHourTime": "1:50 am"
+                        },
+                        "Location": "Peltier Hall 250"
+                    }
+                ]
+            },
+            "Instructor": "Jenna L  Portier",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 1,
+            "RemainingWaitlist": 10
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ENGL",
+                "CourseNumber": "215",
+                "CourseTitle": null
+            },
+            "Topic": "WORLD WAR II LIT",
+            "CourseRegistrationNum": "84262",
+            "Section": "3T",
+            "Meetings": {
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 10,
+                            "Minute": 30,
+                            "TwelveHourTime": "10:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "Location": "Peltier Hall 250"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 10,
+                            "Minute": 30,
+                            "TwelveHourTime": "10:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "Location": "Peltier Hall 250"
+                    }
+                ]
+            },
+            "Instructor": "Elka Schmidt  Staley",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 0,
+            "RemainingWaitlist": 0
+        }
+    ],
+    [
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84447",
+            "Section": "3M",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 40,
+                            "TwelveHourTime": "9:40 am"
+                        },
+                        "EndTime": {
+                            "Hour": 10,
+                            "Minute": 35,
+                            "TwelveHourTime": "10:35 am"
+                        },
+                        "Location": "White Hall 201"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 40,
+                            "TwelveHourTime": "9:40 am"
+                        },
+                        "EndTime": {
+                            "Hour": 10,
+                            "Minute": 35,
+                            "TwelveHourTime": "10:35 am"
+                        },
+                        "Location": "White Hall 201"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 40,
+                            "TwelveHourTime": "9:40 am"
+                        },
+                        "EndTime": {
+                            "Hour": 10,
+                            "Minute": 35,
+                            "TwelveHourTime": "10:35 am"
+                        },
+                        "Location": "White Hall 201"
+                    }
+                ]
+            },
+            "Instructor": "Daniel   Bloomingdale",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 7,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "85777",
+            "Section": "EW",
+            "Meetings": {
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 55,
+                            "TwelveHourTime": "8:55 am"
+                        },
+                        "Location": "Talbot Hall 201"
+                    }
+                ]
+            },
+            "Instructor": "Anna Maria Ruffino  Broussard",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 6,
+            "RemainingWaitlist": 20
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84378",
+            "Section": "5MW",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 15,
+                            "TwelveHourTime": "12:15 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 35,
+                            "TwelveHourTime": "1:35 am"
+                        },
+                        "Location": "White Hall 207"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 15,
+                            "TwelveHourTime": "12:15 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 35,
+                            "TwelveHourTime": "1:35 am"
+                        },
+                        "Location": "White Hall 207"
+                    }
+                ]
+            },
+            "Instructor": "Rya   Butterfield",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 5,
+            "RemainingWaitlist": 30
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84435",
+            "Section": "3T1",
+            "Meetings": {
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 10,
+                            "Minute": 30,
+                            "TwelveHourTime": "10:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 10,
+                            "Minute": 30,
+                            "TwelveHourTime": "10:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ]
+            },
+            "Instructor": "Rya   Butterfield",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 4,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84460",
+            "Section": "6M",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 55,
+                            "TwelveHourTime": "12:55 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 50,
+                            "TwelveHourTime": "1:50 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 55,
+                            "TwelveHourTime": "12:55 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 50,
+                            "TwelveHourTime": "1:50 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 55,
+                            "TwelveHourTime": "12:55 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 50,
+                            "TwelveHourTime": "1:50 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ]
+            },
+            "Instructor": "Daniel   Bloomingdale",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 4,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84397",
+            "Section": "1M",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 7,
+                            "Minute": 30,
+                            "TwelveHourTime": "7:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 8,
+                            "Minute": 25,
+                            "TwelveHourTime": "8:25 am"
+                        },
+                        "Location": "Talbot Hall 175"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 7,
+                            "Minute": 30,
+                            "TwelveHourTime": "7:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 8,
+                            "Minute": 25,
+                            "TwelveHourTime": "8:25 am"
+                        },
+                        "Location": "Talbot Hall 175"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 7,
+                            "Minute": 30,
+                            "TwelveHourTime": "7:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 8,
+                            "Minute": 25,
+                            "TwelveHourTime": "8:25 am"
+                        },
+                        "Location": "Talbot Hall 175"
+                    }
+                ]
+            },
+            "Instructor": "Farren K  Clark",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 3,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84346",
+            "Section": "4T",
+            "Meetings": {
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ]
+            },
+            "Instructor": "Farren K  Clark",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 3,
+            "RemainingWaitlist": 30
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "85278",
+            "Section": "4T1",
+            "Meetings": {
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Col Sciences & Technology 165"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Col Sciences & Technology 165"
+                    }
+                ]
+            },
+            "Instructor": "Daniel   Bloomingdale",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 3,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84409",
+            "Section": "2M",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Talbot Hall 175"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Talbot Hall 175"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Talbot Hall 175"
+                    }
+                ]
+            },
+            "Instructor": "Farren K  Clark",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 2,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84429",
+            "Section": "2T",
+            "Meetings": {
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 0,
+                            "TwelveHourTime": "9:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 10,
+                            "Minute": 20,
+                            "TwelveHourTime": "10:20 am"
+                        },
+                        "Location": "Talbot Hall 201"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 0,
+                            "TwelveHourTime": "9:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 10,
+                            "Minute": 20,
+                            "TwelveHourTime": "10:20 am"
+                        },
+                        "Location": "Talbot Hall 201"
+                    }
+                ]
+            },
+            "Instructor": "Rya   Butterfield",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 2,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84456",
+            "Section": "4M",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 10,
+                            "Minute": 45,
+                            "TwelveHourTime": "10:45 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 40,
+                            "TwelveHourTime": "11:40 am"
+                        },
+                        "Location": "White Hall 201"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 10,
+                            "Minute": 45,
+                            "TwelveHourTime": "10:45 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 40,
+                            "TwelveHourTime": "11:40 am"
+                        },
+                        "Location": "White Hall 201"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 10,
+                            "Minute": 45,
+                            "TwelveHourTime": "10:45 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 40,
+                            "TwelveHourTime": "11:40 am"
+                        },
+                        "Location": "White Hall 201"
+                    }
+                ]
+            },
+            "Instructor": "Daniel   Bloomingdale",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 2,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84511",
+            "Section": "ER",
+            "Meetings": {
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 55,
+                            "TwelveHourTime": "8:55 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ]
+            },
+            "Instructor": "Bill F  Durocher",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 2,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "85407",
+            "Section": "5M",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "EndTime": {
+                            "Hour": 12,
+                            "Minute": 45,
+                            "TwelveHourTime": "12:45 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "EndTime": {
+                            "Hour": 12,
+                            "Minute": 45,
+                            "TwelveHourTime": "12:45 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "EndTime": {
+                            "Hour": 12,
+                            "Minute": 45,
+                            "TwelveHourTime": "12:45 am"
+                        },
+                        "Location": "Talbot Hall 105"
+                    }
+                ]
+            },
+            "Instructor": "Daniel   Bloomingdale",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 1,
+            "RemainingWaitlist": 15
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "85838",
+            "Section": "6R",
+            "Meetings": {
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 15,
+                            "Minute": 0,
+                            "TwelveHourTime": "3:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 17,
+                            "Minute": 50,
+                            "TwelveHourTime": "5:50 am"
+                        },
+                        "Location": "Talbot Hall 175"
+                    }
+                ]
+            },
+            "Instructor": "Anna Maria Ruffino  Broussard",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 1,
+            "RemainingWaitlist": 20
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "SPCH",
+                "CourseNumber": "101",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84506",
+            "Section": "EM",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 55,
+                            "TwelveHourTime": "8:55 am"
+                        },
+                        "Location": "Talbot Hall 201"
+                    }
+                ]
+            },
+            "Instructor": "Bill F  Durocher",
+            "CreditHours": "3.000",
+            "ScheduleType": null,
+            "RemainingSeats": 0,
+            "RemainingWaitlist": 15
+        }
+    ],
+    [
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84390",
+            "Section": "2M2",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Timothy A  Clay",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 9,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84420",
+            "Section": "4T3",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 40,
+                            "TwelveHourTime": "9:40 am"
+                        },
+                        "EndTime": {
+                            "Hour": 12,
+                            "Minute": 30,
+                            "TwelveHourTime": "12:30 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Rajkumar   Nathaniel",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 5,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84395",
+            "Section": "2M3",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 40,
+                            "TwelveHourTime": "9:40 am"
+                        },
+                        "EndTime": {
+                            "Hour": 12,
+                            "Minute": 30,
+                            "TwelveHourTime": "12:30 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ]
+            },
+            "Instructor": "Timothy A  Clay",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 4,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84418",
+            "Section": "4T2",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ]
+            },
+            "Instructor": "Rajkumar   Nathaniel",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 3,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84411",
+            "Section": "2M7",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Timothy A  Clay",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 2,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84432",
+            "Section": "4T6",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 13,
+                            "Minute": 30,
+                            "TwelveHourTime": "1:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 16,
+                            "Minute": 20,
+                            "TwelveHourTime": "4:20 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Rajkumar   Nathaniel",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 2,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84399",
+            "Section": "2M4",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 55,
+                            "TwelveHourTime": "12:55 am"
+                        },
+                        "EndTime": {
+                            "Hour": 3,
+                            "Minute": 45,
+                            "TwelveHourTime": "3:45 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ]
+            },
+            "Instructor": "Timothy A  Clay",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 1,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84407",
+            "Section": "2M6",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 13,
+                            "Minute": 30,
+                            "TwelveHourTime": "1:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 16,
+                            "Minute": 20,
+                            "TwelveHourTime": "4:20 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Timothy A  Clay",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 1,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84417",
+            "Section": "4T1",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 13,
+                            "Minute": 30,
+                            "TwelveHourTime": "1:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 16,
+                            "Minute": 20,
+                            "TwelveHourTime": "4:20 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ]
+            },
+            "Instructor": "Rajkumar   Nathaniel , Kristie R  Ellis",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 1,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84437",
+            "Section": "4T7",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Rajkumar   Nathaniel",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 1,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84387",
+            "Section": "2M1",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 13,
+                            "Minute": 30,
+                            "TwelveHourTime": "1:30 am"
+                        },
+                        "EndTime": {
+                            "Hour": 16,
+                            "Minute": 20,
+                            "TwelveHourTime": "4:20 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Timothy A  Clay",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 0,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84427",
+            "Section": "4T5",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 0,
+                            "TwelveHourTime": "9:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Rajkumar   Nathaniel",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": 0,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84380",
+            "Section": "2M",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 0,
+                            "TwelveHourTime": "9:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Timothy A  Clay",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": -1,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84402",
+            "Section": "2M5",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "F": [
+                    {
+                        "StartTime": {
+                            "Hour": 8,
+                            "Minute": 35,
+                            "TwelveHourTime": "8:35 am"
+                        },
+                        "EndTime": {
+                            "Hour": 9,
+                            "Minute": 30,
+                            "TwelveHourTime": "9:30 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 0,
+                            "TwelveHourTime": "9:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Timothy A  Clay",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": -1,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84415",
+            "Section": "4T",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    },
+                    {
+                        "StartTime": {
+                            "Hour": 9,
+                            "Minute": 0,
+                            "TwelveHourTime": "9:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 11,
+                            "Minute": 50,
+                            "TwelveHourTime": "11:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ]
+            },
+            "Instructor": "Rajkumar   Nathaniel",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": -1,
+            "RemainingWaitlist": 5
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "BIOL",
+                "CourseNumber": "155",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84423",
+            "Section": "4T4",
+            "Meetings": {
+                "M": [
+                    {
+                        "StartTime": {
+                            "Hour": 18,
+                            "Minute": 0,
+                            "TwelveHourTime": "6:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 20,
+                            "Minute": 50,
+                            "TwelveHourTime": "8:50 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ],
+                "T": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "R": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 0,
+                            "TwelveHourTime": "12:00 am"
+                        },
+                        "EndTime": {
+                            "Hour": 1,
+                            "Minute": 20,
+                            "TwelveHourTime": "1:20 am"
+                        },
+                        "Location": "Peltier Hall 101"
+                    }
+                ],
+                "W": [
+                    {
+                        "StartTime": {
+                            "Hour": 12,
+                            "Minute": 55,
+                            "TwelveHourTime": "12:55 am"
+                        },
+                        "EndTime": {
+                            "Hour": 3,
+                            "Minute": 45,
+                            "TwelveHourTime": "3:45 am"
+                        },
+                        "Location": "Virtual at Days &Times Shown "
+                    }
+                ]
+            },
+            "Instructor": "Rajkumar   Nathaniel",
+            "CreditHours": "4.000",
+            "ScheduleType": null,
+            "RemainingSeats": -1,
+            "RemainingWaitlist": 5
+        }
+    ]
+]
