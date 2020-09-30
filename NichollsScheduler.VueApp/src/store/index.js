@@ -26,6 +26,9 @@ export default new Vuex.Store({
     },
     setSelectedCourses(state, selectedCourses) {
       state.selectedCourses = selectedCourses;
+    },
+    resetSelectedResults(state) {
+      state.selectedResults = {};
     }
   },
   actions: {

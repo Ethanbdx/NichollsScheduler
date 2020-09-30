@@ -217,6 +217,7 @@ export default {
     }
   },
   created() {
+    this.$store.commit('resetSelectedResults');
     this.getTerms();
     this.getSubjects();
   },

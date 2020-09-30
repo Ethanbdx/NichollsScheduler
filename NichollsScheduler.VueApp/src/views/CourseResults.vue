@@ -16,7 +16,7 @@
                       <v-card
                       :color="isCourseSelected(course) ? 'primary' : ''"
                       :dark="isCourseSelected(course)"
-                      :disabled="courseDisabled(course)"
+                      :disabled="courseDisabled(course) || checkForScheduleConflict(course)"
                       @click="selectedCourseUpdate(course, !isCourseSelected(course))"
                       class="mb-1 flex-grow-1"
                       :class="courseDisabled(course) ? 'text-decoration-line-through' : ''"
@@ -181,10 +181,12 @@ export default {
         if(!(course.searchModel.subjectCode == currentSchedule[i].searchModel.subjectCode && course.searchModel.courseNumber == currentSchedule[i].searchModel.courseNumber) && currentSchedule[i].meetings != null && course.meetings != null) {
           for(let k = 0; k < currentSchedule[i].meetings.length; k++) {
             for(let l = 0; l < course.meetings.length; l++) {
-              if(!(course.meetings[l].startTime.value > currentSchedule[i].meetings[k].endTime.value || currentSchedule[i].meetings[k].endTime.value < course.meetings[l].startTime.value)) {
-                for(let a = 0; a < course.meetings[l].days.length; a++) {
-                  for(let b = 0; b < currentSchedule[i].meetings[k].days.length; b++) {
-                    if(course.meetings[l].days[a] == currentSchedule[i].meetings[k].days[b]) {
+              const existingCourse = currentSchedule[i].meetings[k];
+              const courseMeeting = course.meetings[l];
+              if(courseMeeting.startTime.value < existingCourse.endTime.value && existingCourse.startTime.value < courseMeeting.endTime.value) {
+                for(let a = 0; a < courseMeeting.days.length; a++) {
+                  for(let b = 0; b < existingCourse.days.length; b++) {
+                    if(courseMeeting.days[a] == existingCourse.days[b]) {
                       return true;
                     }
                   }

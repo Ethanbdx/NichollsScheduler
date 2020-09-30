@@ -60,7 +60,7 @@ namespace NichollsScheduler.Core.Business
                 var result = GetCourses(CourseModel, termId);
                 courseResults.Add(result.Result.OrderByDescending(x => x.RemainingSeats).ThenBy(x => x.Section).ToList());
             });
-            return courseResults;
+            return courseResults.OrderBy(x => x.Count).ToList();
         }
         private async Task<List<CourseResultModel>> GetCourses(CourseModel CourseModel, string termId)
         {

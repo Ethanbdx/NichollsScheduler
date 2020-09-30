@@ -47,11 +47,20 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr v-for="index in course.days.length" :key="course.courseRegistrationNum + course.days[index - 1]">
-                                <td>{{course.days[index - 1]}}</td>
-                                <td>{{course.time[index - 1]}}</td>
-                                <td>{{course.location[index - 1]}}</td>
+                              <template v-if="course.meetings !== null">
+                                <tr v-for="index in course.meetings.length" :key="course.courseRegistrationNum + course.meetings[index - 1].days">
+                                <td>{{course.meetings[index - 1].days.join("")}}</td>
+                                <td>{{course.meetings[index - 1].startTime.twelveHourTime}} - {{course.meetings[index - 1].endTime.twelveHourTime}}</td>
+                                <td>{{course.meetings[index - 1].location}}</td>
                               </tr>
+                              </template>
+                              <template v-if="course.meetings === null">
+                                <tr>
+                                  <td>Online</td>
+                                  <td>N/A</td>
+                                  <td>N/A</td>
+                                </tr>
+                              </template>
                             </tbody>
                           </v-simple-table>
                         </div>
