@@ -68,6 +68,9 @@ namespace NichollsScheduler.Core.Business
         public static List<Meeting> ParseCourseMeetingInformation(List<string> days, List<string> locations, List<string> times) {
             var meetings = new List<Meeting>();
             for(int i = 0; i < days.Count; i++) {
+                    if(times[0] == "TBA") {
+                        return null;
+                    }
                     var meetingDays = days[i].ToCharArray();
                     var parsedTimes = Time.ParseTimes(times[i]);
                     var meeting = new Meeting {
@@ -78,7 +81,7 @@ namespace NichollsScheduler.Core.Business
                     };
                     meetings.Add(meeting);
                 }
-            return meetings;
+            return meetings.OrderBy(x => x.StartTime.Hour).ToList();
         }
 
     }

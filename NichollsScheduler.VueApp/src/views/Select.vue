@@ -81,7 +81,7 @@
           <v-card-title class="headline white--text">{{course.subjectCode + " " + course.courseNumber}}</v-card-title>
           <v-card-subtitle class="white--text">{{course.courseTitle}}</v-card-subtitle>
           <v-card-actions>
-            <v-btn color="primary" outlined @click="removeCourse(course)">Remove</v-btn>
+            <v-btn color="primary" text @click="removeCourse(course)">Remove</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
