@@ -13,17 +13,11 @@ namespace NichollsScheduler.Core.Models
 
         public string Section { get; set; }
 
-        public List<string> Location { get; set; }
+        public List<Meeting> Meetings { get; set; }
 
-        public List<string> Instructor { get; set; }
-
-        public List<string> Time { get; set; }
-
-        public List<string> Days { get; set; }
+        public string Instructor { get; set; }
 
         public string CreditHours { get; set; }
-
-        public List<string> ScheduleType { get; set; }
 
         public int RemainingSeats { get; set; }
 

@@ -16,7 +16,7 @@
                       <v-card
                       :color="isCourseSelected(course) ? 'primary' : ''"
                       :dark="isCourseSelected(course)"
-                      :disabled="courseDisabled(course)"
+                      :disabled="courseDisabled(course) || checkForScheduleConflict(course)"
                       @click="selectedCourseUpdate(course, !isCourseSelected(course))"
                       class="mb-1 flex-grow-1"
                       :class="courseDisabled(course) ? 'text-decoration-line-through' : ''"
@@ -28,7 +28,7 @@
                         <template v-if="course.topic != null"> - {{course.topic}}</template>
                       </v-card-title>
                       <v-card-subtitle>
-                        <v-chip pill light><v-icon left>mdi-briefcase-account</v-icon><h5>{{course.instructor[0]}}</h5></v-chip></v-card-subtitle>
+                        <v-chip pill light><v-icon left>mdi-briefcase-account</v-icon><h5>{{course.instructor}}</h5></v-chip></v-card-subtitle>
                       <v-card-text>
                         <div>
                           <h4>Remaining Seats: {{course.remainingSeats}}</h4>
@@ -44,11 +44,20 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr v-for="index in course.days.length" :key="course.courseRegistrationNum + course.days[index - 1]">
-                                <td>{{course.days[index - 1]}}</td>
-                                <td>{{course.time[index - 1]}}</td>
-                                <td>{{course.location[index - 1]}}</td>
+                              <template v-if="course.meetings !== null">
+                                <tr v-for="index in course.meetings.length" :key="course.courseRegistrationNum + course.meetings[index - 1].days">
+                                <td>{{course.meetings[index - 1].days.join("")}}</td>
+                                <td>{{course.meetings[index - 1].startTime.twelveHourTime}} - {{course.meetings[index - 1].endTime.twelveHourTime}}</td>
+                                <td>{{course.meetings[index - 1].location}}</td>
                               </tr>
+                              </template>
+                              <template v-if="course.meetings === null">
+                                <tr>
+                                  <td>Online</td>
+                                  <td>N/A</td>
+                                  <td>N/A</td>
+                                </tr>
+                              </template>
                             </tbody>
                           </v-simple-table>
                         </div>
@@ -145,8 +154,16 @@ export default {
   },
   methods: {
     selectedCourseUpdate(course, active) {
-      active ? this.$set(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`, course) : this.$delete(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`)
-
+      if(active) {
+        const conflict = this.checkForScheduleConflict(course);
+        if(conflict) {
+          return;
+        }
+        this.$set(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`, course);
+      }
+      else {
+        this.$delete(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`)
+      }
     },
     courseDisabled(course) {
       return course.remainingWaitlist <= 0 && course.remainingSeats <= 0
@@ -156,6 +173,30 @@ export default {
     },
     isCourseSelected(course) {
       return Object.values(this.selectedResults).filter(c => c.courseRegistrationNum === course.courseRegistrationNum).length === 1
+    },
+    //lord forgive me for I have sinned.
+    checkForScheduleConflict(course) {
+      const currentSchedule = Object.values(this.selectedResults);
+      for(let i = 0; i < currentSchedule.length; i++) {
+        if(!(course.searchModel.subjectCode == currentSchedule[i].searchModel.subjectCode && course.searchModel.courseNumber == currentSchedule[i].searchModel.courseNumber) && currentSchedule[i].meetings != null && course.meetings != null) {
+          for(let k = 0; k < currentSchedule[i].meetings.length; k++) {
+            for(let l = 0; l < course.meetings.length; l++) {
+              const existingCourse = currentSchedule[i].meetings[k];
+              const courseMeeting = course.meetings[l];
+              if(courseMeeting.startTime.value < existingCourse.endTime.value && existingCourse.startTime.value < courseMeeting.endTime.value) {
+                for(let a = 0; a < courseMeeting.days.length; a++) {
+                  for(let b = 0; b < existingCourse.days.length; b++) {
+                    if(courseMeeting.days[a] == existingCourse.days[b]) {
+                      return true;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    return false;
     }
   },
   created() {

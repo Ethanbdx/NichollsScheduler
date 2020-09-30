@@ -1,0 +1,272 @@
+[
+    [
+        {
+            "SearchModel": {
+                "SubjectCode": "ACCT",
+                "CourseNumber": "205",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84049",
+            "Section": "2T",
+            "Meetings": [
+                {
+                    "StartTime": {
+                        "Value": 540,
+                        "TwelveHourTime": "9:00 am"
+                    },
+                    "EndTime": {
+                        "Value": 620,
+                        "TwelveHourTime": "10:20 am"
+                    },
+                    "Location": "Powell Hall 214",
+                    "Days": [
+                        "T",
+                        "R"
+                    ]
+                }
+            ],
+            "Instructor": "Kevin T  Breaux",
+            "CreditHours": "3.000",
+            "RemainingSeats": -2,
+            "RemainingWaitlist": 10
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ACCT",
+                "CourseNumber": "205",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84055",
+            "Section": "3T",
+            "Meetings": [
+                {
+                    "StartTime": {
+                        "Value": 630,
+                        "TwelveHourTime": "10:30 am"
+                    },
+                    "EndTime": {
+                        "Value": 710,
+                        "TwelveHourTime": "11:50 am"
+                    },
+                    "Location": "Powell Hall 217",
+                    "Days": [
+                        "T",
+                        "R"
+                    ]
+                }
+            ],
+            "Instructor": "Samantha Fazzio  Falgout",
+            "CreditHours": "3.000",
+            "RemainingSeats": -2,
+            "RemainingWaitlist": 10
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ACCT",
+                "CourseNumber": "205",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84059",
+            "Section": "4T",
+            "Meetings": [
+                {
+                    "StartTime": {
+                        "Value": 720,
+                        "TwelveHourTime": "12:00 pm"
+                    },
+                    "EndTime": {
+                        "Value": 800,
+                        "TwelveHourTime": "1:20 pm"
+                    },
+                    "Location": "Powell Hall 215",
+                    "Days": [
+                        "T",
+                        "R"
+                    ]
+                }
+            ],
+            "Instructor": "Stephanie Ann  Merrell",
+            "CreditHours": "3.000",
+            "RemainingSeats": -6,
+            "RemainingWaitlist": 10
+        }
+    ],
+    [
+        {
+            "SearchModel": {
+                "SubjectCode": "ART",
+                "CourseNumber": "110",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84195",
+            "Section": "CTR",
+            "Meetings": [
+                {
+                    "StartTime": {
+                        "Value": 1020,
+                        "TwelveHourTime": "5:00 pm"
+                    },
+                    "EndTime": {
+                        "Value": 1105,
+                        "TwelveHourTime": "6:25 pm"
+                    },
+                    "Location": "Talbot Hall 201",
+                    "Days": [
+                        "T",
+                        "R"
+                    ]
+                }
+            ],
+            "Instructor": "Michael G  Williams",
+            "CreditHours": "3.000",
+            "RemainingSeats": 12,
+            "RemainingWaitlist": 10
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ART",
+                "CourseNumber": "110",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "85401",
+            "Section": "5M",
+            "Meetings": [
+                {
+                    "StartTime": {
+                        "Value": 710,
+                        "TwelveHourTime": "11:50 am"
+                    },
+                    "EndTime": {
+                        "Value": 765,
+                        "TwelveHourTime": "12:45 pm"
+                    },
+                    "Location": "Talbot Hall 175",
+                    "Days": [
+                        "M",
+                        "W",
+                        "F"
+                    ]
+                }
+            ],
+            "Instructor": "Kaitlin M  Arndt",
+            "CreditHours": "3.000",
+            "RemainingSeats": 5,
+            "RemainingWaitlist": 10
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ART",
+                "CourseNumber": "110",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "85452",
+            "Section": "6M",
+            "Meetings": [
+                {
+                    "StartTime": {
+                        "Value": 775,
+                        "TwelveHourTime": "12:55 pm"
+                    },
+                    "EndTime": {
+                        "Value": 830,
+                        "TwelveHourTime": "1:50 pm"
+                    },
+                    "Location": "Talbot Hall 175",
+                    "Days": [
+                        "M",
+                        "W",
+                        "F"
+                    ]
+                }
+            ],
+            "Instructor": "Charles J  Brown",
+            "CreditHours": "3.000",
+            "RemainingSeats": 5,
+            "RemainingWaitlist": 10
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ART",
+                "CourseNumber": "110",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84070",
+            "Section": "1T",
+            "Meetings": [
+                {
+                    "StartTime": {
+                        "Value": 450,
+                        "TwelveHourTime": "7:30 am"
+                    },
+                    "EndTime": {
+                        "Value": 530,
+                        "TwelveHourTime": "8:50 am"
+                    },
+                    "Location": "Talbot Hall 175",
+                    "Days": [
+                        "T",
+                        "R"
+                    ]
+                }
+            ],
+            "Instructor": "Michael G  Williams",
+            "CreditHours": "3.000",
+            "RemainingSeats": 3,
+            "RemainingWaitlist": 10
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ART",
+                "CourseNumber": "110",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "85447",
+            "Section": "4M",
+            "Meetings": [
+                {
+                    "StartTime": {
+                        "Value": 645,
+                        "TwelveHourTime": "10:45 am"
+                    },
+                    "EndTime": {
+                        "Value": 700,
+                        "TwelveHourTime": "11:40 am"
+                    },
+                    "Location": "Talbot Hall 175",
+                    "Days": [
+                        "M",
+                        "W",
+                        "F"
+                    ]
+                }
+            ],
+            "Instructor": "Charles J  Brown",
+            "CreditHours": "3.000",
+            "RemainingSeats": 1,
+            "RemainingWaitlist": 10
+        },
+        {
+            "SearchModel": {
+                "SubjectCode": "ART",
+                "CourseNumber": "110",
+                "CourseTitle": null
+            },
+            "Topic": null,
+            "CourseRegistrationNum": "84875",
+            "Section": "WWW",
+            "Meetings": null,
+            "Instructor": "Christopher M  Diket",
+            "CreditHours": "3.000",
+            "RemainingSeats": 0,
+            "RemainingWaitlist": 15
+        }
+    ]
+]
