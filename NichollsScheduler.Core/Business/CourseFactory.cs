@@ -81,7 +81,7 @@ namespace NichollsScheduler.Core.Business
                     };
                     meetings.Add(meeting);
                 }
-            return meetings.OrderBy(x => x.StartTime.Hour).ToList();
+            return meetings.OrderBy(x => x.StartTime.Value).ToList();
         }
 
     }

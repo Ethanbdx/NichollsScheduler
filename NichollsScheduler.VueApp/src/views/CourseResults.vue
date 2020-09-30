@@ -154,8 +154,16 @@ export default {
   },
   methods: {
     selectedCourseUpdate(course, active) {
-      active ? this.$set(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`, course) : this.$delete(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`)
-
+      if(active) {
+        const conflict = this.checkForScheduleConflict(course);
+        if(conflict) {
+          return;
+        }
+        this.$set(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`, course);
+      }
+      else {
+        this.$delete(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`)
+      }
     },
     courseDisabled(course) {
       return course.remainingWaitlist <= 0 && course.remainingSeats <= 0
@@ -165,6 +173,28 @@ export default {
     },
     isCourseSelected(course) {
       return Object.values(this.selectedResults).filter(c => c.courseRegistrationNum === course.courseRegistrationNum).length === 1
+    },
+    //lord forgive me for I have sinned.
+    checkForScheduleConflict(course) {
+      const currentSchedule = Object.values(this.selectedResults);
+      for(let i = 0; i < currentSchedule.length; i++) {
+        if(!(course.searchModel.subjectCode == currentSchedule[i].searchModel.subjectCode && course.searchModel.courseNumber == currentSchedule[i].searchModel.courseNumber) && currentSchedule[i].meetings != null && course.meetings != null) {
+          for(let k = 0; k < currentSchedule[i].meetings.length; k++) {
+            for(let l = 0; l < course.meetings.length; l++) {
+              if(!(course.meetings[l].startTime.value > currentSchedule[i].meetings[k].endTime.value || currentSchedule[i].meetings[k].endTime.value < course.meetings[l].startTime.value)) {
+                for(let a = 0; a < course.meetings[l].days.length; a++) {
+                  for(let b = 0; b < currentSchedule[i].meetings[k].days.length; b++) {
+                    if(course.meetings[l].days[a] == currentSchedule[i].meetings[k].days[b]) {
+                      return true;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    return false;
     }
   },
   created() {
