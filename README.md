@@ -6,8 +6,7 @@ The web application scrapes Nicholls' banner self service to provide students wi
 *Once Nicholls State upgrades over to Banner 9, this project will no longer function. :(*
 # Technologies Used
 - C#
-- ASP.NET Core 3.0
-- HTML/CSS
 - JavaScript
-- Azure
-- CI/CD
+- Python
+- ASP.NET Core 3.0 Web Api
+- Vue.js
