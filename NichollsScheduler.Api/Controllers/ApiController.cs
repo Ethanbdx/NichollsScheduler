@@ -11,18 +11,18 @@ namespace NichollsScheduler.Api.Controllers
     [Route("api")]
     public class ApiController : Controller
     {
-        private BannerService BannerService { get; set; }
+        private BannerScraper BannerScraper { get; set; }
 
-        public ApiController(BannerService bannerService) 
+        public ApiController(BannerScraper bannerScraper) 
         {
-            this.BannerService = bannerService;
+            this.BannerScraper = bannerScraper;
         }
 
         [HttpGet]
         [Route("get-available-terms")]
         public async Task<IActionResult> GetAvailableTerms() 
         {
-            var availableTerms = await BannerService.GetTerms();
+            var availableTerms = await BannerScraper.GetTerms();
             return Ok(availableTerms);
         }
 
@@ -30,7 +30,7 @@ namespace NichollsScheduler.Api.Controllers
         [Route("get-course-subjects")]
         public async Task<IActionResult> GetCourseSubjects() {
 
-            var courseSubjects = await BannerService.GetCourseSubjects();
+            var courseSubjects = await SQLiteDriver.GetCourseSubjects();
             return Ok(courseSubjects);
         }
 
@@ -38,13 +38,13 @@ namespace NichollsScheduler.Api.Controllers
         [Route("get-courses-info")]
         public async Task<IActionResult> GetCoursesInfo(string subject) {
 
-            var coursesInfo = await BannerService.GetCoursesInfo(subject);
+            var coursesInfo = await SQLiteDriver.GetCoursesInfo(subject);
             return Ok(coursesInfo);
         }
         [HttpPost]
         [Route("search-courses")]
         public IActionResult SearchCourses([FromBody]List<CourseModel> courses, string termId) {
-            var results = this.BannerService.GetCourseResults(courses, termId);
+            var results = this.BannerScraper.GetCourseResults(courses, termId);
             return Ok(results);
         }
     }

@@ -13,12 +13,12 @@ namespace NichollsScheduler.Tests {
     public class BannerScraperTests {
         [TestMethod]
         public async Task GetTerms() {
-            var bannerScraper = new BannerService();
+            var bannerScraper = new BannerScraper();
             var terms = await bannerScraper.GetTerms();
         }
         [TestMethod]
         public void GetCourseResults() {
-            var bannerService = new BannerService();
+            var bannerScraper = new BannerScraper();
             var courseQuery = new List<CourseModel> {
                 new CourseModel {
                     SubjectCode = "ART",
@@ -29,19 +29,20 @@ namespace NichollsScheduler.Tests {
                     CourseNumber = "205"
                 }
             };
-            var courseResults = bannerService.GetCourseResults(courseQuery, "202080");
+            var courseResults = bannerScraper.GetCourseResults(courseQuery, "202080");
             string json = JsonConvert.SerializeObject(courseResults);
             System.IO.File.WriteAllText(@"E:\source\repos\NichollsScheduler\NichollsScheduler.Tests\test.json", json);
         }
+    }
+    [TestClass]
+    public class SqliteDriverTests {
         [TestMethod]
         public async Task GetEnglishCourseNumbers() {
-            var bannerService = new BannerService();
-            await bannerService.GetCoursesInfo("ENGL");
+            await SQLiteDriver.GetCoursesInfo("ENGL");
         }
         [TestMethod]
         public async Task TaskGetMathCourseNumbers() {
-            var bannerService = new BannerService();
-            await bannerService.GetCoursesInfo("MATH");
+            await SQLiteDriver.GetCoursesInfo("MATH");
         }
     }
 }
