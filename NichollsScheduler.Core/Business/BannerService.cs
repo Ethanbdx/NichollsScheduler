@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System.IO;
+using System.Net.NetworkInformation;
+using System.Runtime.Serialization;
 using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.XPath;
@@ -12,45 +14,69 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
+using NichollsScheduler.Core.Data;
+using System.Data.SQLite;
 
 namespace NichollsScheduler.Core.Business
 {
-    public class BannerScraper
+    public class BannerService
     {
-        private static readonly HttpClientHandler handler = new HttpClientHandler()
+        private static HttpClientHandler handler = new HttpClientHandler()
         {
             SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
         };
-        private readonly HttpClient client = new HttpClient(handler)
+        private static HttpClient client = new HttpClient(handler)
         {
             BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
         private MemoryCache CachedCourses = new MemoryCache(new MemoryCacheOptions());
 
+        public async Task<List<object>> GetCoursesInfo(string subject) {
 
-        public async Task<TermModel[]> GetTerms()
+            using var connection = new SQLiteConnection(SQLiteDriver.DB_PATH);
+            await connection.OpenAsync();
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT CourseNumber, CourseTitle FROM Courses WHERE Subject = $subject";
+            command.Parameters.AddWithValue("$subject", subject);
+
+            using var resultReader = await command.ExecuteReaderAsync();
+            var coursesInfo = new List<object>();
+            while(resultReader.Read()) {
+                coursesInfo.Add(new { courseNumber = resultReader.GetString(0), courseTitle = resultReader.GetString(1) });
+            }
+            await connection.CloseAsync();
+            return coursesInfo;
+        }
+        public async Task<List<object>> GetCourseSubjects() {
+            using var connection = new SQLiteConnection(SQLiteDriver.DB_PATH);
+            await connection.OpenAsync();
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT FullSubject, SubjectCode FROM Subjects";
+
+            using var resultReader = await command.ExecuteReaderAsync();
+            var courseSubjects = new List<object>();
+            while (resultReader.Read()) {
+                //anonymous object for subjects
+                var subject = new { fullSubject = resultReader.GetString(0), subjectCode = resultReader.GetString(1) };
+                courseSubjects.Add(subject);
+            }
+            await connection.CloseAsync();
+            return courseSubjects;
+        }
+        public async Task<List<TermModel>> GetTerms()
         {
-            try
-            {
-                HttpResponseMessage terms = await client.GetAsync("bwckschd.p_disp_dyn_sched");
-                string htmlDocument = await terms.Content.ReadAsStringAsync();
-                var document = await BrowsingContext.New(Configuration.Default).OpenAsync(req => req.Content(htmlDocument));
-                var termSelect = document.QuerySelectorAll("option").ToDictionary(t => t.TextContent, t => t.GetAttribute("value")).ToList();
-
-                //Removing the "Select Term Option"
-                termSelect.RemoveAt(0);
-                //Removing all other options except the 3 most recent.
-                termSelect.RemoveRange(3, termSelect.Count - 3);
-
-                var termResult = termSelect.Select(kvp => new TermModel { TermName = kvp.Key, TermId = int.Parse(kvp.Value)}).ToArray();
-                return termResult;
+            using var connection = new SQLiteConnection(SQLiteDriver.DB_PATH);
+            await connection.OpenAsync();
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT TermId, Name FROM Terms LIMIT 3";
+            using var resultReader = await command.ExecuteReaderAsync();
+            var terms = new List<TermModel>();
+            while(resultReader.Read()) {
+                var term = new TermModel{ TermId = resultReader.GetInt32(0), TermName = resultReader.GetString(1) };
+                terms.Add(term);
             }
-            catch
-            { 
-
-                throw new Exception("Error. There was an issue getting the available terms.");
-            }
-
+            await connection.CloseAsync();
+            return terms;
         }
         public List<List<CourseResultModel>> GetCourseResults(List<CourseModel> courses, string termId)
         {
