@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using System.Net.NetworkInformation;
 using System.Runtime.Serialization;
 using AngleSharp;
@@ -29,6 +30,7 @@ namespace NichollsScheduler.Core.Business
         {
             BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
+        private MemoryCache CachedTerms = new MemoryCache(new MemoryCacheOptions());
         private MemoryCache CachedCourses = new MemoryCache(new MemoryCacheOptions());
 
         public async Task<List<object>> GetCoursesInfo(string subject) {
@@ -65,18 +67,36 @@ namespace NichollsScheduler.Core.Business
         }
         public async Task<List<TermModel>> GetTerms()
         {
-            using var connection = new SQLiteConnection(SQLiteDriver.DB_PATH);
-            await connection.OpenAsync();
-            var command = connection.CreateCommand();
-            command.CommandText = "SELECT TermId, Name FROM Terms LIMIT 3";
-            using var resultReader = await command.ExecuteReaderAsync();
-            var terms = new List<TermModel>();
-            while(resultReader.Read()) {
-                var term = new TermModel{ TermId = resultReader.GetInt32(0), TermName = resultReader.GetString(1) };
-                terms.Add(term);
+            //Caching for terms
+            string cacheId = DateTime.Now.ToShortDateString();
+            var termResult = new List<TermModel>();
+            if(this.CachedTerms.TryGetValue<List<TermModel>>(cacheId, out _)) {
+                return this.CachedTerms.Get<List<TermModel>>(cacheId);
             }
-            await connection.CloseAsync();
-            return terms;
+
+            try
+            {
+                HttpResponseMessage terms = await client.GetAsync("bwckschd.p_disp_dyn_sched");
+                string htmlDocument = await terms.Content.ReadAsStringAsync();
+                var document = await BrowsingContext.New(Configuration.Default).OpenAsync(req => req.Content(htmlDocument));
+                var termSelect = document.QuerySelectorAll("option").ToDictionary(t => t.TextContent, t => t.GetAttribute("value")).ToList();
+
+                //Removing the "Select Term Option"
+                termSelect.RemoveAt(0);
+                //Removing all other options except the 3 most recent.
+                termSelect.RemoveRange(3, termSelect.Count - 3);
+
+                termResult.AddRange(termSelect.Select(kvp => new TermModel { TermName = kvp.Key, TermId = int.Parse(kvp.Value)}));
+                
+                this.CachedTerms.Set<List<TermModel>>(cacheId, termResult, TimeSpan.FromDays(1));
+
+                return termResult;
+            }
+            catch
+            { 
+
+                throw new Exception("Error. There was an issue getting the available terms.");
+            }
         }
         public List<List<CourseResultModel>> GetCourseResults(List<CourseModel> courses, string termId)
         {

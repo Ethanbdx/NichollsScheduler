@@ -21,15 +21,31 @@ namespace NichollsScheduler.Tests {
             var bannerService = new BannerService();
             var courseQuery = new List<CourseModel> {
                 new CourseModel {
-                    SubjectCode = "ART",
-                    CourseNumber = "110"
+                    SubjectCode = "SPCH",
+                    CourseNumber = "101"
                 },
                 new CourseModel {
                     SubjectCode = "ACCT",
                     CourseNumber = "205"
+                },
+                new CourseModel {
+                    SubjectCode = "BIOL",
+                    CourseNumber = "155"
+                },
+                new CourseModel {
+                    SubjectCode = "ENGL",
+                    CourseNumber = "101"
+                },
+                new CourseModel {
+                    SubjectCode = "MATH",
+                    CourseNumber = "101"
                 }
             };
+            var sw = new Stopwatch();
+            sw.Start();
             var courseResults = bannerService.GetCourseResults(courseQuery, "202080");
+            sw.Stop();
+            System.Console.WriteLine(sw.Elapsed);
             string json = JsonConvert.SerializeObject(courseResults);
             System.IO.File.WriteAllText(@"E:\source\repos\NichollsScheduler\NichollsScheduler.Tests\test.json", json);
         }
