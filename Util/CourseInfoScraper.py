@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import requests
 import csv
 with open("C:\\Users\\Ethanbdx\\Desktop\\coursescatalog.html", 'r', encoding='UTF8') as f:
     contents = f.read()

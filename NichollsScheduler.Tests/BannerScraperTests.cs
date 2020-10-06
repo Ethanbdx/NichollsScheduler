@@ -13,36 +13,51 @@ namespace NichollsScheduler.Tests {
     public class BannerScraperTests {
         [TestMethod]
         public async Task GetTerms() {
-            var bannerScraper = new BannerScraper();
+            var bannerScraper = new BannerService();
             var terms = await bannerScraper.GetTerms();
         }
         [TestMethod]
         public void GetCourseResults() {
-            var bannerScraper = new BannerScraper();
+            var bannerService = new BannerService();
             var courseQuery = new List<CourseModel> {
                 new CourseModel {
-                    SubjectCode = "ART",
-                    CourseNumber = "110"
+                    SubjectCode = "SPCH",
+                    CourseNumber = "101"
                 },
                 new CourseModel {
                     SubjectCode = "ACCT",
                     CourseNumber = "205"
+                },
+                new CourseModel {
+                    SubjectCode = "BIOL",
+                    CourseNumber = "155"
+                },
+                new CourseModel {
+                    SubjectCode = "ENGL",
+                    CourseNumber = "101"
+                },
+                new CourseModel {
+                    SubjectCode = "MATH",
+                    CourseNumber = "101"
                 }
             };
-            var courseResults = bannerScraper.GetCourseResults(courseQuery, "202080");
+            var sw = new Stopwatch();
+            sw.Start();
+            var courseResults = bannerService.GetCourseResults(courseQuery, "202080");
+            sw.Stop();
+            System.Console.WriteLine(sw.Elapsed);
             string json = JsonConvert.SerializeObject(courseResults);
             System.IO.File.WriteAllText(@"E:\source\repos\NichollsScheduler\NichollsScheduler.Tests\test.json", json);
         }
-    }
-    [TestClass]
-    public class SqliteDriverTests {
         [TestMethod]
         public async Task GetEnglishCourseNumbers() {
-            await SQLiteDriver.GetCoursesInfo("ENGL");
+            var bannerService = new BannerService();
+            await bannerService.GetCoursesInfo("ENGL");
         }
         [TestMethod]
         public async Task TaskGetMathCourseNumbers() {
-            await SQLiteDriver.GetCoursesInfo("MATH");
+            var bannerService = new BannerService();
+            await bannerService.GetCoursesInfo("MATH");
         }
     }
 }

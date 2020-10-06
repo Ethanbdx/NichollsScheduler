@@ -1,4 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.IO;
+using System.Net.NetworkInformation;
+using System.Runtime.Serialization;
 using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.XPath;
@@ -12,24 +15,65 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
+using NichollsScheduler.Core.Data;
+using System.Data.SQLite;
 
 namespace NichollsScheduler.Core.Business
 {
-    public class BannerScraper
+    public class BannerService
     {
-        private static readonly HttpClientHandler handler = new HttpClientHandler()
+        private static HttpClientHandler handler = new HttpClientHandler()
         {
             SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
         };
-        private readonly HttpClient client = new HttpClient(handler)
+        private static HttpClient client = new HttpClient(handler)
         {
             BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
+        private MemoryCache CachedTerms = new MemoryCache(new MemoryCacheOptions());
         private MemoryCache CachedCourses = new MemoryCache(new MemoryCacheOptions());
 
+        public async Task<List<object>> GetCoursesInfo(string subject) {
 
-        public async Task<TermModel[]> GetTerms()
+            using var connection = new SQLiteConnection(SQLiteDriver.DB_PATH);
+            await connection.OpenAsync();
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT CourseNumber, CourseTitle FROM Courses WHERE Subject = $subject";
+            command.Parameters.AddWithValue("$subject", subject);
+
+            using var resultReader = await command.ExecuteReaderAsync();
+            var coursesInfo = new List<object>();
+            while(resultReader.Read()) {
+                coursesInfo.Add(new { courseNumber = resultReader.GetString(0), courseTitle = resultReader.GetString(1) });
+            }
+            await connection.CloseAsync();
+            return coursesInfo;
+        }
+        public async Task<List<object>> GetCourseSubjects() {
+            using var connection = new SQLiteConnection(SQLiteDriver.DB_PATH);
+            await connection.OpenAsync();
+            var command = connection.CreateCommand();
+            command.CommandText = "SELECT FullSubject, SubjectCode FROM Subjects";
+
+            using var resultReader = await command.ExecuteReaderAsync();
+            var courseSubjects = new List<object>();
+            while (resultReader.Read()) {
+                //anonymous object for subjects
+                var subject = new { fullSubject = resultReader.GetString(0), subjectCode = resultReader.GetString(1) };
+                courseSubjects.Add(subject);
+            }
+            await connection.CloseAsync();
+            return courseSubjects;
+        }
+        public async Task<List<TermModel>> GetTerms()
         {
+            //Caching for terms
+            string cacheId = DateTime.Now.ToShortDateString();
+            var termResult = new List<TermModel>();
+            if(this.CachedTerms.TryGetValue<List<TermModel>>(cacheId, out _)) {
+                return this.CachedTerms.Get<List<TermModel>>(cacheId);
+            }
+
             try
             {
                 HttpResponseMessage terms = await client.GetAsync("bwckschd.p_disp_dyn_sched");
@@ -42,7 +86,10 @@ namespace NichollsScheduler.Core.Business
                 //Removing all other options except the 3 most recent.
                 termSelect.RemoveRange(3, termSelect.Count - 3);
 
-                var termResult = termSelect.Select(kvp => new TermModel { TermName = kvp.Key, TermId = int.Parse(kvp.Value)}).ToArray();
+                termResult.AddRange(termSelect.Select(kvp => new TermModel { TermName = kvp.Key, TermId = int.Parse(kvp.Value)}));
+                
+                this.CachedTerms.Set<List<TermModel>>(cacheId, termResult, TimeSpan.FromDays(1));
+
                 return termResult;
             }
             catch
@@ -50,7 +97,6 @@ namespace NichollsScheduler.Core.Business
 
                 throw new Exception("Error. There was an issue getting the available terms.");
             }
-
         }
         public List<List<CourseResultModel>> GetCourseResults(List<CourseModel> courses, string termId)
         {
