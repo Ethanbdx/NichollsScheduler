@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     termId: 0,
     selectedCourses: [],
-    selectedResults: {}
+    selectedResults: {},
+    availableTerms: []
   },
   getters: {
     termId: state => {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     selectedResults: state => {
       return state.selectedResults
+    },
+    availableTerms: state => {
+      return state.availableTerms;
     }
   },
   mutations: {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
     },
     resetSelectedResults(state) {
       state.selectedResults = {};
+    },
+    setAvailableTerms(state, terms) {
+      state.availableTerms = terms;
     }
   },
   actions: {

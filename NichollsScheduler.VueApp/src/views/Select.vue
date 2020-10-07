@@ -124,7 +124,6 @@ export default {
   name: "Select",
   data() {
     return {
-      terms: [],
       error: false,
       doneLoading: false,
       subjects: [],
@@ -137,6 +136,15 @@ export default {
   computed: {
     termSelected: function () {
       return this.termId != 0;
+    },
+    terms: {
+      get: function() {
+        return this.$store.getters.availableTerms;
+      },
+      set: function(value) {
+        return this.$store.commit("setAvailableTerms", value);
+      }
+      
     },
     termId: {
       get: function () {
@@ -218,7 +226,11 @@ export default {
   },
   created() {
     this.$store.commit('resetSelectedResults');
-    this.getTerms();
+    if(this.terms.length == 0) {
+      this.getTerms();
+    } else {
+      this.doneLoading = true;
+    }
     this.getSubjects();
   },
 };
