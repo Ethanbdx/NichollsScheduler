@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,9 +24,12 @@ namespace NichollsScheduler.Api {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
+            services.AddSingleton<HttpClient>();
             services.AddSingleton<BannerService>((container) => {
                 var logger = container.GetRequiredService<ILogger<BannerService>>();
-                return new BannerService() { Logger = logger };
+                var client = container.GetRequiredService<HttpClient>();
+                client.BaseAddress = new Uri("https://banner.nicholls.edu/prod/");
+                return new BannerService(client, logger);
             });
             services.AddCors();
         }

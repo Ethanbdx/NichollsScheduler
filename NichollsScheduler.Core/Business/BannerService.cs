@@ -23,17 +23,16 @@ namespace NichollsScheduler.Core.Business
 {
     public class BannerService
     {
-        private static HttpClientHandler handler = new HttpClientHandler()
-        {
-            SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
-        };
-        private static HttpClient client = new HttpClient(handler)
-        {
-            BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
-        };
+        private HttpClient Client;
+        private ILogger Logger;
         private MemoryCache CachedTerms = new MemoryCache(new MemoryCacheOptions());
         private MemoryCache CachedCourses = new MemoryCache(new MemoryCacheOptions());
-        public ILogger Logger;
+        
+        public BannerService(HttpClient client, ILogger logger)
+        {
+            this.Client = client;
+            this.Logger = logger;
+        }
 
         public async Task<List<object>> GetCoursesInfo(string subject) {
 
@@ -80,7 +79,8 @@ namespace NichollsScheduler.Core.Business
 
             try
             {
-                HttpResponseMessage terms = await client.GetAsync("bwckschd.p_disp_dyn_sched");
+                
+                HttpResponseMessage terms = await this.Client.GetAsync("bwckschd.p_disp_dyn_sched");
                 string htmlDocument = await terms.Content.ReadAsStringAsync();
                 var document = await BrowsingContext.New(Configuration.Default).OpenAsync(req => req.Content(htmlDocument));
                 var termSelect = document.QuerySelectorAll("option").ToDictionary(t => t.TextContent, t => t.GetAttribute("value")).ToList();
@@ -115,7 +115,6 @@ namespace NichollsScheduler.Core.Business
         private async Task<List<CourseResultModel>> GetCourses(CourseModel courseModel, string termId)
         {
             Logger.Log(LogLevel.Information, $"Searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
-
             List<CourseResultModel> courseRes = new List<CourseResultModel>();
 
             //Check for cache, it if exists...just get current seat count.
@@ -130,9 +129,8 @@ namespace NichollsScheduler.Core.Business
             }
 
             List<KeyValuePair<string, string>> values = BannerQueryValues.GetKeyValues(termId, courseModel.SubjectCode, courseModel.CourseNumber);
-
             HttpContent content = new FormUrlEncodedContent(values);
-            HttpResponseMessage result = await client.PostAsync("bwckschd.p_get_crse_unsec", content);
+            HttpResponseMessage result = await this.Client.PostAsync("bwckschd.p_get_crse_unsec", content);
             var html = await result.Content.ReadAsStringAsync();
             var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
             try
@@ -163,7 +161,7 @@ namespace NichollsScheduler.Core.Business
         }
         private async Task<CourseResultModel> GetSeatCapacities(CourseResultModel CourseModel, string termId)
         {
-            HttpResponseMessage httpmsg = await client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={CourseModel.CourseRegistrationNum}");
+            HttpResponseMessage httpmsg = await this.Client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={CourseModel.CourseRegistrationNum}");
             string html = await httpmsg.Content.ReadAsStringAsync();
             var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
             return CourseFactory.ParseSeatCapacitiesHtml(CourseModel, htmlDoc);

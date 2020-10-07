@@ -1,3 +1,6 @@
+using System.Net.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using NichollsScheduler.Core.Business;
@@ -11,14 +14,18 @@ using System.Threading.Tasks;
 namespace NichollsScheduler.Tests {
     [TestClass]
     public class BannerScraperTests {
+        public HttpClient client = new HttpClient() {
+            BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
+        };
+        public NullLogger<BannerService> logger = new NullLogger<BannerService>();
         [TestMethod]
         public async Task GetTerms() {
-            var bannerScraper = new BannerService();
+            var bannerScraper = new BannerService(client, logger);
             var terms = await bannerScraper.GetTerms();
         }
         [TestMethod]
         public void GetCourseResults() {
-            var bannerService = new BannerService();
+            var bannerService = new BannerService(client, logger);
             var courseQuery = new List<CourseModel> {
                 new CourseModel {
                     SubjectCode = "SPCH",
@@ -51,12 +58,12 @@ namespace NichollsScheduler.Tests {
         }
         [TestMethod]
         public async Task GetEnglishCourseNumbers() {
-            var bannerService = new BannerService();
+            var bannerService = new BannerService(client, logger);
             await bannerService.GetCoursesInfo("ENGL");
         }
         [TestMethod]
         public async Task TaskGetMathCourseNumbers() {
-            var bannerService = new BannerService();
+            var bannerService = new BannerService(client, logger);
             await bannerService.GetCoursesInfo("MATH");
         }
     }
