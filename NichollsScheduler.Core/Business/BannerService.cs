@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using NichollsScheduler.Core.Data;
 using System.Data.SQLite;
+using Microsoft.Extensions.Logging;
 
 namespace NichollsScheduler.Core.Business
 {
@@ -32,6 +33,7 @@ namespace NichollsScheduler.Core.Business
         };
         private MemoryCache CachedTerms = new MemoryCache(new MemoryCacheOptions());
         private MemoryCache CachedCourses = new MemoryCache(new MemoryCacheOptions());
+        public ILogger Logger;
 
         public async Task<List<object>> GetCoursesInfo(string subject) {
 
@@ -67,10 +69,12 @@ namespace NichollsScheduler.Core.Business
         }
         public async Task<List<TermModel>> GetTerms()
         {
+            Logger.Log(LogLevel.Information, "Term list requested.");
             //Caching for terms
             string cacheId = DateTime.Now.ToShortDateString();
             var termResult = new List<TermModel>();
             if(this.CachedTerms.TryGetValue<List<TermModel>>(cacheId, out _)) {
+                Logger.Log(LogLevel.Information, "Term list retrived from cache.");
                 return this.CachedTerms.Get<List<TermModel>>(cacheId);
             }
 
@@ -90,6 +94,7 @@ namespace NichollsScheduler.Core.Business
                 
                 this.CachedTerms.Set<List<TermModel>>(cacheId, termResult, TimeSpan.FromDays(1));
 
+                Logger.Log(LogLevel.Information, "Term list retrived from banner.");
                 return termResult;
             }
             catch
@@ -107,14 +112,16 @@ namespace NichollsScheduler.Core.Business
             }
             return courseResults.OrderBy(x => x.Count).ToList();
         }
-        private async Task<List<CourseResultModel>> GetCourses(CourseModel CourseModel, string termId)
+        private async Task<List<CourseResultModel>> GetCourses(CourseModel courseModel, string termId)
         {
+            Logger.Log(LogLevel.Information, $"Searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
 
             List<CourseResultModel> courseRes = new List<CourseResultModel>();
 
             //Check for cache, it if exists...just get current seat count.
-            string cacheId = $"{termId}.{CourseModel.SubjectCode}{CourseModel.CourseNumber}";
+            string cacheId = $"{termId}.{courseModel.SubjectCode}{courseModel.CourseNumber}";
             if(this.CachedCourses.TryGetValue<List<CourseResultModel>>(cacheId, out _)) {
+                Logger.Log(LogLevel.Information, $"Match found in cache for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
                 courseRes = this.CachedCourses.Get<List<CourseResultModel>>(cacheId);
                 for(int i = 0; i < courseRes.Count; i++) {
                     courseRes[i] = await GetSeatCapacities(courseRes[i], termId);
@@ -122,7 +129,7 @@ namespace NichollsScheduler.Core.Business
                 return courseRes;
             }
 
-            List<KeyValuePair<string, string>> values = BannerQueryValues.GetKeyValues(termId, CourseModel.SubjectCode, CourseModel.CourseNumber);
+            List<KeyValuePair<string, string>> values = BannerQueryValues.GetKeyValues(termId, courseModel.SubjectCode, courseModel.CourseNumber);
 
             HttpContent content = new FormUrlEncodedContent(values);
             HttpResponseMessage result = await client.PostAsync("bwckschd.p_get_crse_unsec", content);
@@ -134,17 +141,22 @@ namespace NichollsScheduler.Core.Business
                 for (int i = 0; i < trows.Count(); i++)
                 {
                     //Collecting and Parsing all the data required to make a CourseResult object
-                    CourseResultModel courseResult = CourseFactory.ParseCourseResultHtml(trows, i, CourseModel);
+                    CourseResultModel courseResult = CourseFactory.ParseCourseResultHtml(trows, i, courseModel);
                     courseResult = await GetSeatCapacities(courseResult, termId);
                     courseRes.Add(courseResult);
                     i++;
                 }
-                this.CachedCourses.Set<List<CourseResultModel>>(cacheId, courseRes, TimeSpan.FromDays(3));
+                Logger.Log(LogLevel.Information, $"Went to banner and found {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+                this.CachedCourses.Set<List<CourseResultModel>>(cacheId, courseRes, TimeSpan.FromDays(15));
             }
-            catch(Exception e) {
-                Console.WriteLine(e.Message); ;
+            catch {
+                if(result.StatusCode == HttpStatusCode.OK) {
+                    Logger.Log(LogLevel.Information, $"Match not found for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+                } else {
+                    Logger.Log(LogLevel.Information, $"Banner responded with a {result.StatusCode} while searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+                }
                 //Add default case if fail.
-                courseRes.Add(new CourseResultModel { SearchModel = CourseModel });
+                courseRes.Add(new CourseResultModel { SearchModel = courseModel });
             }
 
             return courseRes;
