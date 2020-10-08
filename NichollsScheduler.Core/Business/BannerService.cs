@@ -106,10 +106,12 @@ namespace NichollsScheduler.Core.Business
         public List<List<CourseResultModel>> GetCourseResults(List<CourseModel> courses, string termId)
         {
             List<List<CourseResultModel>> courseResults = new List<List<CourseResultModel>>();
-            foreach(var courseModel in courses) {
+
+            //Runs a search for each course on different threads.
+            Parallel.ForEach(courses, courseModel => {
                 var result = GetCourses(courseModel, termId);
                 courseResults.Add(result.Result.OrderByDescending(x => x.RemainingSeats).ThenBy(x => x.Section).ToList());
-            }
+            });
             return courseResults.OrderBy(x => x.Count).ToList();
         }
         private async Task<List<CourseResultModel>> GetCourses(CourseModel courseModel, string termId)
