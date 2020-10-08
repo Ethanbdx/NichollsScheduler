@@ -53,7 +53,8 @@
                               </template>
                               <template v-if="course.meetings === null">
                                 <tr>
-                                  <td>Online</td>
+                                  <td v-if="course.section.includes('WW')">Online</td>
+                                  <td v-else>TBA</td>
                                   <td>N/A</td>
                                   <td>N/A</td>
                                 </tr>
