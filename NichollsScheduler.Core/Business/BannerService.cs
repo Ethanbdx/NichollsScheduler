@@ -72,13 +72,13 @@ namespace NichollsScheduler.Core.Business
         }
         public async Task<List<TermModel>> GetTerms()
         {
-            Logger.Log(LogLevel.Information, "Term list requested.");
+            Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Term list requested.");
             //Caching for terms
             string cacheId = DateTime.Now.ToShortDateString();
             var termResult = new List<TermModel>();
             if (this.CachedTerms.TryGetValue<List<TermModel>>(cacheId, out _))
             {
-                Logger.Log(LogLevel.Information, "Term list retrived from cache.");
+                Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Term list retrived from cache.");
                 return this.CachedTerms.Get<List<TermModel>>(cacheId);
             }
 
@@ -99,7 +99,7 @@ namespace NichollsScheduler.Core.Business
 
                 this.CachedTerms.Set<List<TermModel>>(cacheId, termResult, TimeSpan.FromDays(1));
 
-                Logger.Log(LogLevel.Information, "Term list retrived from banner.");
+                Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Term list retrived from banner.");
                 return termResult;
             }
             catch
@@ -122,14 +122,14 @@ namespace NichollsScheduler.Core.Business
         }
         private async Task<CourseResultList> GetCourses(CourseModel courseModel, string termId)
         {
-            Logger.Log(LogLevel.Information, $"Searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+            Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
             CourseResultList courseRes = new CourseResultList(courseModel);
 
             //Check for cache, it if exists...just get current seat count.
             string cacheId = $"{termId}.{courseModel.SubjectCode}{courseModel.CourseNumber}";
             if (this.CachedCourses.TryGetValue<CourseResultList>(cacheId, out _))
             {
-                Logger.Log(LogLevel.Information, $"Match found in cache for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+                Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Match found in cache for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
                 courseRes = this.CachedCourses.Get<CourseResultList>(cacheId);
                 for (int i = 0; i < courseRes.Results.Count; i++)
                 {
@@ -156,7 +156,7 @@ namespace NichollsScheduler.Core.Business
                         courseRes.Results.Add(courseResult);
                         i++;
                     }
-                    Logger.Log(LogLevel.Information, $"Went to banner and found {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+                    Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Went to banner and found {courseModel.SubjectCode} {courseModel.CourseNumber}.");
                     courseRes.Results.OrderByDescending(x => x.RemainingSeats).ThenBy(x => x.Section).ToList();
                     this.CachedCourses.Set<CourseResultList>(cacheId, courseRes, TimeSpan.FromDays(15));
                 }
@@ -164,14 +164,14 @@ namespace NichollsScheduler.Core.Business
                 {
                     if (result.IsSuccessStatusCode)
                     {
-                        Logger.Log(LogLevel.Information, $"Match not found for {courseModel.SubjectCode} {courseModel.CourseNumber} from banner.");
+                        Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Match not found for {courseModel.SubjectCode} {courseModel.CourseNumber} from banner.");
                         this.CachedCourses.Set<CourseResultList>(cacheId, courseRes, TimeSpan.FromDays(15));
                     }
                 }
             }
             else
             {
-                Logger.Log(LogLevel.Information, $"Banner responded with a {result.StatusCode} while searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+                Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Banner responded with a {result.StatusCode} while searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
             }
             
             return courseRes;
