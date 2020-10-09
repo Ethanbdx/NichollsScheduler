@@ -19,13 +19,13 @@
                           </v-row>
                           <v-row no-gutters>
                           <v-col cols="12">
-                            <h4>{{course.searchModel.subjectCode}} {{course.searchModel.courseNumber}} - {{course.section}}</h4>
+                            <h4>{{course.subjectCode}} {{course.courseNumber}} - {{course.section}}</h4>
                             <template v-if="course.topic != null"> - {{course.topic}}</template>
                           </v-col>
                         </v-row>
                         <v-row no-gutters>
                           <v-col>
-                            <h4>{{course.searchModel.courseTitle}}</h4>
+                            <h4>{{course.courseTitle}}</h4>
                           </v-col>
                         </v-row>
                         </v-container>

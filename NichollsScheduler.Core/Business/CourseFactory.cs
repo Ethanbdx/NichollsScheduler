@@ -40,13 +40,12 @@ namespace NichollsScheduler.Core.Business
                 locations.Add(crseDetails[4]);
                 inst.Add(crseDetails[7].Replace("(P)", ""));
             }
-            var result = new CourseResultModel();
+            var result = new CourseResultModel(c);
             if (courseInfo[0].Contains(':'))
             {
                 var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
                 result.Topic = fulltitle[1].Trim();
             }
-            result.SearchModel = c;
             result.CourseRegistrationNum = courseInfo[1].Trim();
             result.Section = courseInfo[3].Trim('\n', ' ');
             result.Instructor = inst.Select(i => i.Trim()).FirstOrDefault();

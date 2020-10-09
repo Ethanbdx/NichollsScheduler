@@ -8,11 +8,11 @@
             <h1>Click/tap to select your desired sections.</h1>
           </v-col>
         </v-row>
-          <div v-for="courses in results" :key="courses[0].searchModel.subjectCode + courses[0].searchModel.courseNumber">
-            <div><h2 class="font-weight-regular">{{courses[0].searchModel.subjectCode}} {{courses[0].searchModel.courseNumber}} - {{courses[0].searchModel.courseTitle}}</h2></div>
-              <v-container v-if="courses[0].courseRegistrationNum != null" class="px-5">
+          <div v-for="courses in courseResults" :key="courses.searchModel.subjectCode + courses.searchModel.courseNumber">
+            <div><h2 class="font-weight-regular">{{courses.searchModel.subjectCode}} {{courses.searchModel.courseNumber}} - {{courses.searchModel.courseTitle}}</h2></div>
+              <v-container v-if="courses.results[0].courseRegistrationNum != null" class="px-5">
                 <v-row>
-                  <v-col cols="12" lg="6" xl="4" v-for="course in courses" :key="course.courseRegistrationNum" class="d-flex" style="flex-direction:column">
+                  <v-col cols="12" lg="6" xl="4" v-for="course in courses.results" :key="course.courseRegistrationNum" class="d-flex" style="flex-direction:column">
                       <v-card
                       :color="isCourseSelected(course) ? 'primary' : ''"
                       :dark="isCourseSelected(course)"
@@ -67,7 +67,7 @@
                   </v-col>
                 </v-row>
               </v-container>
-            <v-container v-if="courses[0].courseRegistrationNum == null">
+            <v-container v-if="courses.results[0].courseRegistrationNum == null">
               <h4 class="red--text text--accent-4">No matching courses found.</h4>
             </v-container>
             <v-divider inset class="my-3"></v-divider>
@@ -136,7 +136,7 @@ export default {
     return {
       error: false,
       loadingResults: true,
-      results: []
+      courseResults: []
     };
   },
   computed: {
@@ -160,10 +160,10 @@ export default {
         if(conflict) {
           return;
         }
-        this.$set(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`, course);
+        this.$set(this.selectedResults, `${course.subjectCode + course.courseNumber}`, course);
       }
       else {
-        this.$delete(this.selectedResults, `${course.searchModel.subjectCode + course.searchModel.courseNumber}`)
+        this.$delete(this.selectedResults, `${course.subjectCode + course.courseNumber}`)
       }
     },
     courseDisabled(course) {
@@ -179,7 +179,7 @@ export default {
     checkForScheduleConflict(course) {
       const currentSchedule = Object.values(this.selectedResults);
       for(let i = 0; i < currentSchedule.length; i++) {
-        if(!(course.searchModel.subjectCode == currentSchedule[i].searchModel.subjectCode && course.searchModel.courseNumber == currentSchedule[i].searchModel.courseNumber) && currentSchedule[i].meetings != null && course.meetings != null) {
+        if(!(course.subjectCode == currentSchedule[i].subjectCode && course.courseNumber == currentSchedule[i].courseNumber) && currentSchedule[i].meetings != null && course.meetings != null) {
           for(let k = 0; k < currentSchedule[i].meetings.length; k++) {
             for(let l = 0; l < course.meetings.length; l++) {
               const existingCourse = currentSchedule[i].meetings[k];
@@ -209,7 +209,7 @@ export default {
     this.$http
       .post(`/api/search-courses?termId=${this.selectedTerm}`, this.selectedCourses)
       .then((res) => {
-        this.results = res.data;
+        this.courseResults = res.data;
       })
       .catch((err) => {
         console.log(err);

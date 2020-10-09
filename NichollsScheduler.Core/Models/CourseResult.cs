@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace NichollsScheduler.Core.Models
 {
-    public class CourseResultModel
+    public class CourseResultModel : CourseModel
     {
-        public CourseModel SearchModel { get; set; }
         public string Topic { get; set; }
         public string CourseRegistrationNum { get; set; }
 
@@ -22,6 +21,13 @@ namespace NichollsScheduler.Core.Models
         public int RemainingSeats { get; set; }
 
         public int RemainingWaitlist { get; set; }
+
+        public CourseResultModel(CourseModel c)
+        {
+            base.SubjectCode = c.SubjectCode;
+            base.CourseNumber = c.CourseNumber;
+            base.CourseTitle = c.CourseTitle;
+        }
 
     }
 }
