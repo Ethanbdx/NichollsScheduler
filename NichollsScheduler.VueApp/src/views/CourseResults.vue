@@ -10,7 +10,7 @@
         </v-row>
           <div v-for="courses in courseResults" :key="courses.searchModel.subjectCode + courses.searchModel.courseNumber">
             <div><h2 class="font-weight-regular">{{courses.searchModel.subjectCode}} {{courses.searchModel.courseNumber}} - {{courses.searchModel.courseTitle}}</h2></div>
-              <v-container v-if="courses.results[0].courseRegistrationNum != null" class="px-5">
+              <v-container v-if="courses.results.length > 0" class="px-5">
                 <v-row>
                   <v-col cols="12" lg="6" xl="4" v-for="course in courses.results" :key="course.courseRegistrationNum" class="d-flex" style="flex-direction:column">
                       <v-card
@@ -67,7 +67,7 @@
                   </v-col>
                 </v-row>
               </v-container>
-            <v-container v-if="courses.results[0].courseRegistrationNum == null">
+            <v-container v-if="courses.results.length == 0">
               <h4 class="red--text text--accent-4">No matching courses found.</h4>
             </v-container>
             <v-divider inset class="my-3"></v-divider>

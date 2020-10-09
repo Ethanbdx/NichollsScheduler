@@ -35,10 +35,12 @@ namespace NichollsScheduler.Api {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
+
+            loggerFactory.AddFile($"Logs/nsuscheduler.txt");
 
             app.UseHttpsRedirection();
 
