@@ -110,15 +110,6 @@ namespace NichollsScheduler.Core.Business
             });
             return courseResults.OrderBy(x => x.Results.Count).ToList();
         }
-        public void SaveSchedule(List<int> selectedCourseCRNs) {
-
-        }
-        public void RetrieveSchedule(string scheduleId) {
-
-        }
-        private SaveCourseToDatabase() {
-            
-        }
         private async Task<CourseResultList> GetCourses(CourseModel courseModel, string termId)
         {
             Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");

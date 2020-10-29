@@ -18,12 +18,7 @@ Vue.use(VueRouter)
     path:'/confirm-schedule',
     name:'ConfirmSchedule',
     component: () => import('../views/ConfirmSchedule.vue')
-  },
-  // {
-  //   path:'/schedule/:id',
-  //   name:'SavedSchedule',
-  //   component: () => import('../views/SavedScheduler.vue')
-  // }
+  }
 ]
 
 const router = new VueRouter({
