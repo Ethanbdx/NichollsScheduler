@@ -29,7 +29,7 @@ namespace NichollsScheduler.Api {
                 var logger = container.GetRequiredService<ILogger<BannerService>>();
                 var client = container.GetRequiredService<HttpClient>();
                 client.BaseAddress = new Uri("https://banner.nicholls.edu/prod/");
-                return new BannerService(client, logger);
+                return new BannerService(client, logger, Configuration.GetConnectionString("BDX"));
             });
             services.AddCors();
         }

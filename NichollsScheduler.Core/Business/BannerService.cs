@@ -15,59 +15,49 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
-using NichollsScheduler.Core.Data;
 using System.Data.SQLite;
 using Microsoft.Extensions.Logging;
+
+using System.Data.SqlClient;
+using Dapper;
+using System.Data;
 
 namespace NichollsScheduler.Core.Business
 {
     public class BannerService
     {
-        private HttpClient Client;
-        private ILogger Logger;
+        private readonly HttpClient Client;
+        private readonly ILogger Logger;
+        private readonly string ConnectionString;
         private MemoryCache CachedTerms = new MemoryCache(new MemoryCacheOptions());
         private MemoryCache CachedCourses = new MemoryCache(new MemoryCacheOptions());
 
-        public BannerService(HttpClient client, ILogger logger)
+        public BannerService(HttpClient client, ILogger logger, string connectionString)
         {
+            this.ConnectionString = connectionString;
             this.Client = client;
             this.Logger = logger;
         }
 
-        public async Task<List<object>> GetCoursesInfo(string subject)
+        public async Task<List<CourseModel>> GetCoursesInfo(string subject)
         {
+            var coursesInfo = new List<CourseModel>();
 
-            using var connection = new SQLiteConnection(SQLiteDriver.DB_PATH);
-            await connection.OpenAsync();
-            var command = connection.CreateCommand();
-            command.CommandText = "SELECT CourseNumber, CourseTitle FROM Courses WHERE Subject = $subject";
-            command.Parameters.AddWithValue("$subject", subject);
-
-            using var resultReader = await command.ExecuteReaderAsync();
-            var coursesInfo = new List<object>();
-            while (resultReader.Read())
-            {
-                coursesInfo.Add(new { courseNumber = resultReader.GetString(0), courseTitle = resultReader.GetString(1) });
+            using (var connection = new SqlConnection(this.ConnectionString)) {
+                var task = await connection.QueryAsync<CourseModel>("dbo.sp_GetCourseInfo", new { subject = subject }, commandType: CommandType.StoredProcedure);
+                coursesInfo = task.ToList();
             }
-            await connection.CloseAsync();
             return coursesInfo;
         }
-        public async Task<List<object>> GetCourseSubjects()
+        public async Task<List<SubjectModel>> GetCourseSubjects()
         {
-            using var connection = new SQLiteConnection(SQLiteDriver.DB_PATH);
-            await connection.OpenAsync();
-            var command = connection.CreateCommand();
-            command.CommandText = "SELECT FullSubject, SubjectCode FROM Subjects";
+            var courseSubjects = new List<SubjectModel>();
 
-            using var resultReader = await command.ExecuteReaderAsync();
-            var courseSubjects = new List<object>();
-            while (resultReader.Read())
-            {
-                //anonymous object for subjects
-                var subject = new { fullSubject = resultReader.GetString(0), subjectCode = resultReader.GetString(1) };
-                courseSubjects.Add(subject);
+            using (var connection = new SqlConnection(this.ConnectionString)) {
+                var task = await connection.QueryAsync<SubjectModel>("dbo.sp_GetCourseSubjects", commandType: CommandType.StoredProcedure);
+                courseSubjects = task.ToList();
             }
-            await connection.CloseAsync();
+            
             return courseSubjects;
         }
         public async Task<List<TermModel>> GetTerms()
@@ -97,7 +87,7 @@ namespace NichollsScheduler.Core.Business
 
                 termResult.AddRange(termSelect.Select(kvp => new TermModel { TermName = kvp.Key, TermId = int.Parse(kvp.Value) }));
 
-                this.CachedTerms.Set<List<TermModel>>(cacheId, termResult, TimeSpan.FromDays(1));
+                this.CachedTerms.Set(cacheId, termResult, TimeSpan.FromDays(1));
 
                 Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Term list retrived from banner.");
                 return termResult;
@@ -119,6 +109,15 @@ namespace NichollsScheduler.Core.Business
                 courseResults.Add(resultList.Result);
             });
             return courseResults.OrderBy(x => x.Results.Count).ToList();
+        }
+        public void SaveSchedule(List<int> selectedCourseCRNs) {
+
+        }
+        public void RetrieveSchedule(string scheduleId) {
+
+        }
+        private SaveCourseToDatabase() {
+            
         }
         private async Task<CourseResultList> GetCourses(CourseModel courseModel, string termId)
         {
@@ -158,14 +157,14 @@ namespace NichollsScheduler.Core.Business
                     }
                     Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Went to banner and found {courseModel.SubjectCode} {courseModel.CourseNumber}.");
                     courseRes.Results.OrderByDescending(x => x.RemainingSeats).ThenBy(x => x.Section).ToList();
-                    this.CachedCourses.Set<CourseResultList>(cacheId, courseRes, TimeSpan.FromDays(15));
+                    this.CachedCourses.Set(cacheId, courseRes, TimeSpan.FromDays(15));
                 }
                 catch
                 {
                     if (result.IsSuccessStatusCode)
                     {
                         Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Match not found for {courseModel.SubjectCode} {courseModel.CourseNumber} from banner.");
-                        this.CachedCourses.Set<CourseResultList>(cacheId, courseRes, TimeSpan.FromDays(15));
+                        this.CachedCourses.Set(cacheId, courseRes, TimeSpan.FromDays(15));
                     }
                 }
             }
