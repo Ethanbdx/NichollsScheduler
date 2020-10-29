@@ -1,0 +1,100 @@
+2020-10-29T16:35:55.1745606-05:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-10-29T16:35:55.1991661-05:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-10-29T16:35:55.1993030-05:00  [INF] Content root path: "E:\source\repos\NichollsScheduler\NichollsScheduler.API" (b5d60022)
+2020-10-29T16:36:34.0035825-05:00  [INF] Now listening on: "https://localhost:5001" (d826f4b8)
+2020-10-29T16:36:34.0062454-05:00  [INF] Now listening on: "http://localhost:5000" (d826f4b8)
+2020-10-29T16:36:34.0063860-05:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-10-29T16:36:34.0064007-05:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-10-29T16:36:34.0064196-05:00  [INF] Content root path: "E:\source\repos\NichollsScheduler\NichollsScheduler.Api" (b5d60022)
+2020-10-29T16:39:02.9729264-05:00 0HM3SAC6RFOE6:00000001 [INF] [10/29/2020 4:39:02 PM] Term list requested. (af287e6c)
+2020-10-29T16:39:03.1598120-05:00 0HM3SAC6RFOE7:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NotSupportedException: Specified method is not supported.
+   at System.Data.SQLite.SQLiteCommand.set_CommandType(CommandType value)
+   at Dapper.CommandDefinition.SetupCommand(IDbConnection cnn, Action`2 paramReader) in /_/Dapper/CommandDefinition.cs:line 128
+   at Dapper.SqlMapper.TrySetupAsyncCommand(CommandDefinition command, IDbConnection cnn, Action`2 paramReader) in /_/Dapper/SqlMapper.Async.cs:line 396
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 413
+   at NichollsScheduler.Core.Business.BannerService.GetCourseSubjects() in E:\source\repos\NichollsScheduler\NichollsScheduler.Core\Business\BannerService.cs:line 57
+   at NichollsScheduler.Api.Controllers.ApiController.GetCourseSubjects() in E:\source\repos\NichollsScheduler\NichollsScheduler.Api\Controllers\ApiController.cs:line 32
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.<Invoke>g__AwaitMatcher|8_0(EndpointRoutingMiddleware middleware, HttpContext httpContext, Task`1 matcherTask)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-10-29T16:39:03.6162217-05:00 0HM3SAC6RFOE6:00000001 [INF] [10/29/2020 4:39:03 PM] Term list retrived from banner. (ff03e4aa)
+2020-10-29T16:40:10.4282014-05:00 0HM3SAC6RFOE8:00000001 [INF] [10/29/2020 4:40:10 PM] Term list requested. (7a666681)
+2020-10-29T16:40:10.4285270-05:00 0HM3SAC6RFOE8:00000001 [INF] [10/29/2020 4:40:10 PM] Term list retrived from cache. (90ff6acd)
+2020-10-29T16:40:21.0295012-05:00 0HM3SAC6RFOE9:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NotSupportedException: Specified method is not supported.
+   at System.Data.SQLite.SQLiteCommand.set_CommandType(CommandType value)
+   at Dapper.CommandDefinition.SetupCommand(IDbConnection cnn, Action`2 paramReader) in /_/Dapper/CommandDefinition.cs:line 128
+   at Dapper.SqlMapper.TrySetupAsyncCommand(CommandDefinition command, IDbConnection cnn, Action`2 paramReader) in /_/Dapper/SqlMapper.Async.cs:line 396
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 413
+   at NichollsScheduler.Core.Business.BannerService.GetCourseSubjects() in E:\source\repos\NichollsScheduler\NichollsScheduler.Core\Business\BannerService.cs:line 57
+   at NichollsScheduler.Api.Controllers.ApiController.GetCourseSubjects() in E:\source\repos\NichollsScheduler\NichollsScheduler.Api\Controllers\ApiController.cs:line 32
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-10-29T16:40:33.2847931-05:00 0HM3SAC6RFOEA:00000001 [INF] [10/29/2020 4:40:33 PM] Term list requested. (6cdc2870)
+2020-10-29T16:40:39.3142206-05:00 0HM3SAC6RFOEA:00000001 [INF] [10/29/2020 4:40:39 PM] Term list retrived from cache. (d9ed0b07)
+2020-10-29T16:40:54.8948406-05:00 0HM3SAC6RFOEB:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NotSupportedException: Specified method is not supported.
+   at System.Data.SQLite.SQLiteCommand.set_CommandType(CommandType value)
+   at Dapper.CommandDefinition.SetupCommand(IDbConnection cnn, Action`2 paramReader) in /_/Dapper/CommandDefinition.cs:line 128
+   at Dapper.SqlMapper.TrySetupAsyncCommand(CommandDefinition command, IDbConnection cnn, Action`2 paramReader) in /_/Dapper/SqlMapper.Async.cs:line 396
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 413
+   at NichollsScheduler.Core.Business.BannerService.GetCourseSubjects() in E:\source\repos\NichollsScheduler\NichollsScheduler.Core\Business\BannerService.cs:line 57
+   at NichollsScheduler.Api.Controllers.ApiController.GetCourseSubjects() in E:\source\repos\NichollsScheduler\NichollsScheduler.Api\Controllers\ApiController.cs:line 32
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-10-29T16:41:10.2587778-05:00  [INF] Application is shutting down... (90f52c38)
+2020-10-29T16:42:28.1376144-05:00  [INF] Now listening on: "https://localhost:5001" (d826f4b8)
+2020-10-29T16:42:28.1402087-05:00  [INF] Now listening on: "http://localhost:5000" (d826f4b8)
+2020-10-29T16:42:28.1403674-05:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-10-29T16:42:28.1403829-05:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-10-29T16:42:28.1403953-05:00  [INF] Content root path: "E:\source\repos\NichollsScheduler\NichollsScheduler.Api" (b5d60022)
+2020-10-29T16:42:31.7287879-05:00 0HM3SAE53ER23:00000001 [INF] [10/29/2020 4:42:31 PM] Term list requested. (fe0512d2)
+2020-10-29T16:42:32.3199311-05:00 0HM3SAE53ER23:00000001 [INF] [10/29/2020 4:42:32 PM] Term list retrived from banner. (dd179d41)
+2020-10-29T16:43:11.3041208-05:00 0HM3SAE53ER25:00000001 [INF] [10/29/2020 4:43:11 PM] Term list requested. (613fcd9c)
+2020-10-29T16:43:11.3043977-05:00 0HM3SAE53ER25:00000001 [INF] [10/29/2020 4:43:11 PM] Term list retrived from cache. (7d84f34e)
+2020-10-29T16:50:04.5630393-05:00  [INF] Application is shutting down... (90f52c38)
+2020-10-29T16:50:10.4292866-05:00  [INF] Now listening on: "https://localhost:5001" (d826f4b8)
+2020-10-29T16:50:10.4316104-05:00  [INF] Now listening on: "http://localhost:5000" (d826f4b8)
+2020-10-29T16:50:10.4317549-05:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-10-29T16:50:10.4317693-05:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-10-29T16:50:10.4317808-05:00  [INF] Content root path: "E:\source\repos\NichollsScheduler\NichollsScheduler.Api" (b5d60022)
+2020-10-29T16:50:19.3956838-05:00 0HM3SAIGFNEL6:00000001 [INF] [10/29/2020 4:50:19 PM] Term list requested. (a731f54e)
+2020-10-29T16:50:20.0451570-05:00 0HM3SAIGFNEL6:00000001 [INF] [10/29/2020 4:50:20 PM] Term list retrived from banner. (137d9f05)
+2020-10-29T16:50:26.0638027-05:00 0HM3SAIGFNEL9:00000001 [INF] [10/29/2020 4:50:26 PM] Searching for ACCT 205. (67844bef)
+2020-10-29T16:50:27.4483408-05:00 0HM3SAIGFNEL9:00000001 [INF] [10/29/2020 4:50:27 PM] Went to banner and found ACCT 205. (9714f1ae)
+2020-10-29T16:50:44.7792078-05:00 0HM3SAIGFNELC:00000001 [INF] [10/29/2020 4:50:44 PM] Searching for ACCT 205. (b617e3ad)
+2020-10-29T16:50:44.7792070-05:00 0HM3SAIGFNELC:00000001 [INF] [10/29/2020 4:50:44 PM] Searching for MNGT 301. (ed74d96b)
+2020-10-29T16:50:44.7795565-05:00 0HM3SAIGFNELC:00000001 [INF] [10/29/2020 4:50:44 PM] Match found in cache for ACCT 205. (25f8ff8e)
+2020-10-29T16:50:45.8493505-05:00 0HM3SAIGFNELC:00000001 [INF] [10/29/2020 4:50:45 PM] Went to banner and found MNGT 301. (05288191)
+2020-10-29T16:54:56.9340297-05:00  [INF] Application is shutting down... (90f52c38)

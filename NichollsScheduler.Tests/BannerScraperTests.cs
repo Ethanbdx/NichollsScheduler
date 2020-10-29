@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using NichollsScheduler.Core.Business;
-using NichollsScheduler.Core.Data;
 using NichollsScheduler.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -14,18 +13,19 @@ using System.Threading.Tasks;
 namespace NichollsScheduler.Tests {
     [TestClass]
     public class BannerScraperTests {
+        private readonly string ConnectionString = "Server=sql.ethanbdx.dev;Database=NSUScheduler;User Id=;Password=";
         public HttpClient client = new HttpClient() {
             BaseAddress = new Uri("https://banner.nicholls.edu/prod/")
         };
         public NullLogger<BannerService> logger = new NullLogger<BannerService>();
         [TestMethod]
         public async Task GetTerms() {
-            var bannerScraper = new BannerService(client, logger);
+            var bannerScraper = new BannerService(client, logger, ConnectionString);
             var terms = await bannerScraper.GetTerms();
         }
         [TestMethod]
         public void GetCourseResults() {
-            var bannerService = new BannerService(client, logger);
+            var bannerService = new BannerService(client, logger, ConnectionString);
             var courseQuery = new List<CourseModel> {
                 new CourseModel {
                     SubjectCode = "SPCH",
@@ -58,12 +58,12 @@ namespace NichollsScheduler.Tests {
         }
         [TestMethod]
         public async Task GetEnglishCourseNumbers() {
-            var bannerService = new BannerService(client, logger);
+            var bannerService = new BannerService(client, logger, ConnectionString);
             await bannerService.GetCoursesInfo("ENGL");
         }
         [TestMethod]
         public async Task TaskGetMathCourseNumbers() {
-            var bannerService = new BannerService(client, logger);
+            var bannerService = new BannerService(client, logger, ConnectionString);
             await bannerService.GetCoursesInfo("MATH");
         }
     }

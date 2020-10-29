@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NichollsScheduler.Core.Business;
-using NichollsScheduler.Core.Data;
 using NichollsScheduler.Core.Models;
 
 namespace NichollsScheduler.Api.Controllers
