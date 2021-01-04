@@ -8,63 +8,43 @@ using System.Threading.Tasks;
 
 namespace NichollsScheduler.Core.Business
 {
-    public class CourseFactory
+    public class CourseResultModelFactory
     {
-        public static CourseResultModel ParseCourseResultHtml(List<IElement> html, int i, CourseModel c)
-        {
-            var courseInfo = html.ElementAt(i).TextContent.Split('-').ToList();
-            if (courseInfo.Count > 4)
-            {
-                for (int p = 0; p < courseInfo.Count - 3; p++)
-                {
-                    courseInfo[0] = courseInfo[0] + "-" + courseInfo[1];
-                    courseInfo.RemoveAt(1);
-                }
-            }
-            var creditHoursHtml = html.ElementAt(i + 1).TextContent.Split('\n').Where(s => s.Contains("Credits")).ElementAt(0).Trim();
-            creditHoursHtml = creditHoursHtml.Remove(5);
-            var courseDetails = html.ElementAt(i + 1).GetElementsByTagName("tr").ToList();
+        public CourseResultModel CreateCourseFromHtml(IEnumerable<IElement> html, CourseModel c) {
+            string[] courseInfo = html.ElementAt(0).TextContent.Split(" - ");
+            string creditHours = html.ElementAt(1).TextContent.Split('\n').Where(s => s.Contains("Credits")).ElementAt(0).Trim().Remove(5);
+            IElement[] courseDetailsElements = html.ElementAt(1).GetElementsByTagName("tr").Skip(1).ToArray();
+
             List<string> times = new List<string>();
             List<string> inst = new List<string>();
             List<string> days = new List<string>();
             List<string> locations = new List<string>();
-            for (int x = 1; x < courseDetails.Count(); x++)
-            {
-                string[] crseDetails = courseDetails.ElementAt(x).TextContent.Split('\n');
+            for (int i = 0; i < courseDetailsElements.Length; i++) {
+                string[] crseDetails = courseDetailsElements.ElementAt(i).TextContent.Split('\n');
                 times.Add(crseDetails[2]);
-                if (crseDetails[3] == "&nbsp;")
-                {
-                    crseDetails[3] = "N/A";
+                if (crseDetails[2] == "&nbsp;") {
+                    crseDetails[2] = "N/A";
                 }
                 days.Add(crseDetails[3]);
                 locations.Add(crseDetails[4]);
                 inst.Add(crseDetails[7].Replace("(P)", ""));
             }
-            var result = new CourseResultModel(c);
-            if (courseInfo[0].Contains(':'))
-            {
-                var fulltitle = courseInfo[0].Trim('\n', ' ').Split(":");
-                result.Topic = fulltitle[1].Trim();
+
+            var courseResult = new CourseResultModel(c);
+            if(courseInfo[0].Contains(':')) {
+                var fullTitle = courseInfo[0].Trim('\n', ' ').Split(":");
+                courseResult.Topic = fullTitle[1].Trim();
             }
-            result.CourseRegistrationNum = courseInfo[1].Trim();
-            result.Section = courseInfo[3].Trim('\n', ' ');
-            result.Instructor = inst.Select(i => i.Trim()).FirstOrDefault();
-            result.CreditHours = creditHoursHtml;
-            result.Meetings = ParseCourseMeetingInformation(days, locations, times);
-            return result;
+
+            courseResult.CourseRegistrationNum = courseInfo[1].Trim();
+            courseResult.Section = courseInfo[3].Trim();
+            courseResult.Instructor = inst.Select(x => x.Trim()).FirstOrDefault();
+            courseResult.CreditHours = creditHours;
+            courseResult.Meetings = ParseCourseMeetingInformation(days, locations, times);
+            return courseResult;
         }
 
-        public static CourseResultModel ParseSeatCapacitiesHtml(CourseResultModel CourseModel, IDocument htmlDoc)
-        {
-            var seatCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[1]']").TextContent;
-            var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
-            var waitListCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[1]']").TextContent;
-            var waitListActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[2]']").TextContent;
-            CourseModel.RemainingSeats = Int32.Parse(seatCap) - Int32.Parse(seatActual);
-            CourseModel.RemainingWaitlist = Int32.Parse(waitListCap) - Int32.Parse(waitListActual);
-            return CourseModel;
-        }
-        public static List<Meeting> ParseCourseMeetingInformation(List<string> days, List<string> locations, List<string> times) {
+        private List<Meeting> ParseCourseMeetingInformation(List<string> days, List<string> locations, List<string> times) {
             var meetings = new List<Meeting>();
             for(int i = 0; i < days.Count; i++) {
                     if(times[0] == "TBA") {

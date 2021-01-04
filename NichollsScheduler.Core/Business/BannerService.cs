@@ -31,6 +31,7 @@ namespace NichollsScheduler.Core.Business
         private readonly string ConnectionString;
         private MemoryCache CachedTerms = new MemoryCache(new MemoryCacheOptions());
         private MemoryCache CachedCourses = new MemoryCache(new MemoryCacheOptions());
+        private CourseResultModelFactory CourseResultModelFactory = new CourseResultModelFactory();
 
         public BannerService(HttpClient client, ILogger logger, string connectionString)
         {
@@ -43,32 +44,40 @@ namespace NichollsScheduler.Core.Business
         {
             var coursesInfo = new List<CourseModel>();
 
-            using (var connection = new SqlConnection(this.ConnectionString)) {
-                var task = await connection.QueryAsync<CourseModel>("dbo.sp_GetCourseInfo", new { subject = subject }, commandType: CommandType.StoredProcedure);
-                coursesInfo = task.ToList();
+            try {
+                using (var connection = new SqlConnection(this.ConnectionString)) {
+                    var task = await connection.QueryAsync<CourseModel>("dbo.sp_GetCourseInfo", new { subject = subject }, commandType: CommandType.StoredProcedure);
+                    coursesInfo = task.ToList();
+                }
+            } catch(Exception e) {
+                this.Logger.LogError(e.Message);
             }
+            
             return coursesInfo;
         }
         public async Task<List<SubjectModel>> GetCourseSubjects()
         {
             var courseSubjects = new List<SubjectModel>();
 
-            using (var connection = new SqlConnection(this.ConnectionString)) {
-                var task = await connection.QueryAsync<SubjectModel>("dbo.sp_GetCourseSubjects", commandType: CommandType.StoredProcedure);
-                courseSubjects = task.ToList();
+            try {
+                using (var connection = new SqlConnection(this.ConnectionString)) {
+                    var task = await connection.QueryAsync<SubjectModel>("dbo.sp_GetCourseSubjects", commandType: CommandType.StoredProcedure);
+                    courseSubjects = task.ToList();
+                }
+            } catch (Exception e) {
+
+                this.Logger.LogError(e.Message);
             }
-            
+
             return courseSubjects;
         }
         public async Task<List<TermModel>> GetTerms()
         {
-            Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Term list requested.");
             //Caching for terms
             string cacheId = DateTime.Now.ToShortDateString();
             var termResult = new List<TermModel>();
             if (this.CachedTerms.TryGetValue<List<TermModel>>(cacheId, out _))
             {
-                Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Term list retrived from cache.");
                 return this.CachedTerms.Get<List<TermModel>>(cacheId);
             }
 
@@ -88,15 +97,13 @@ namespace NichollsScheduler.Core.Business
                 termResult.AddRange(termSelect.Select(kvp => new TermModel { TermName = kvp.Key, TermId = int.Parse(kvp.Value) }));
 
                 this.CachedTerms.Set(cacheId, termResult, TimeSpan.FromDays(1));
-
-                Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Term list retrived from banner.");
-                return termResult;
             }
-            catch
+            catch (Exception e)
             {
-
-                throw new Exception("Error. There was an issue getting the available terms.");
+                this.Logger.LogError( e.Message);
             }
+
+            return termResult;
         }
         public List<CourseResultList> GetCourseResults(List<CourseModel> courses, string termId)
         {
@@ -112,18 +119,18 @@ namespace NichollsScheduler.Core.Business
         }
         private async Task<CourseResultList> GetCourses(CourseModel courseModel, string termId)
         {
-            Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
             CourseResultList courseRes = new CourseResultList(courseModel);
 
             //Check for cache, it if exists...just get current seat count.
             string cacheId = $"{termId}.{courseModel.SubjectCode}{courseModel.CourseNumber}";
             if (this.CachedCourses.TryGetValue<CourseResultList>(cacheId, out _))
             {
-                Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Match found in cache for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
                 courseRes = this.CachedCourses.Get<CourseResultList>(cacheId);
                 for (int i = 0; i < courseRes.Results.Count; i++)
                 {
-                    courseRes.Results[i] = await GetSeatCapacities(courseRes.Results[i], termId);
+                    (int remainingSeats, int remainingWaitlist) seatData = await GetSeatCapacities(courseRes.Results[i].CourseRegistrationNum, termId);
+                    courseRes.Results[i].RemainingSeats = seatData.remainingSeats;
+                    courseRes.Results[i].RemainingWaitlist = seatData.remainingWaitlist;
                 }
                 return courseRes;
             }
@@ -138,40 +145,47 @@ namespace NichollsScheduler.Core.Business
                 try
                 {
                     var trows = htmlDoc.QuerySelectorAll("*[xpath>'/body/div[3]/table[1]/tbody/tr']").ToList();
-                    for (int i = 0; i < trows.Count(); i++)
+                    for (int i = 0; i < trows.Count(); i+= 2)
                     {
                         //Collecting and Parsing all the data required to make a CourseResult object
-                        CourseResultModel courseResult = CourseFactory.ParseCourseResultHtml(trows, i, courseModel);
-                        courseResult = await GetSeatCapacities(courseResult, termId);
+                        var courseRows = trows.Skip(i).Take(2);
+                        CourseResultModel courseResult = this.CourseResultModelFactory.CreateCourseFromHtml(courseRows, courseModel);
+
+                        (int remainingSeats, int remainingWaitlist) seatData = await GetSeatCapacities(courseResult.CourseRegistrationNum, termId);
+                        courseResult.RemainingSeats = seatData.remainingSeats;
+                        courseResult.RemainingWaitlist = seatData.remainingWaitlist;
+
                         courseRes.Results.Add(courseResult);
-                        i++;
                     }
-                    Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Went to banner and found {courseModel.SubjectCode} {courseModel.CourseNumber}.");
                     courseRes.Results.OrderByDescending(x => x.RemainingSeats).ThenBy(x => x.Section).ToList();
                     this.CachedCourses.Set(cacheId, courseRes, TimeSpan.FromDays(15));
                 }
                 catch
                 {
-                    if (result.IsSuccessStatusCode)
-                    {
-                        Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Match not found for {courseModel.SubjectCode} {courseModel.CourseNumber} from banner.");
-                        this.CachedCourses.Set(cacheId, courseRes, TimeSpan.FromDays(15));
-                    }
+                    Logger.LogInformation($"Match not found for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+                    this.CachedCourses.Set(cacheId, courseRes, TimeSpan.FromDays(15));
                 }
             }
             else
             {
-                Logger.Log(LogLevel.Information, $"[{DateTime.Now}] Banner responded with a {result.StatusCode} while searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
+                Logger.LogWarning($"Banner responded with a {result.StatusCode} while searching for {courseModel.SubjectCode} {courseModel.CourseNumber}.");
             }
             
             return courseRes;
         }
-        private async Task<CourseResultModel> GetSeatCapacities(CourseResultModel CourseModel, string termId)
+        private async Task<(int, int)> GetSeatCapacities(string courseRegistrationNum, string termId)
         {
-            HttpResponseMessage httpmsg = await this.Client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={CourseModel.CourseRegistrationNum}");
+            HttpResponseMessage httpmsg = await this.Client.GetAsync($"bwckschd.p_disp_detail_sched?term_in={termId}&crn_in={courseRegistrationNum}");
             string html = await httpmsg.Content.ReadAsStringAsync();
             var htmlDoc = await BrowsingContext.New(Configuration.Default.WithXPath()).OpenAsync(req => req.Content(html));
-            return CourseFactory.ParseSeatCapacitiesHtml(CourseModel, htmlDoc);
+            var seatCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[1]']").TextContent;
+            var seatActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[2]/td[2]']").TextContent;
+            var waitListCap = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[1]']").TextContent;
+            var waitListActual = htmlDoc.QuerySelector("*[xpath>'/body/div[3]/table[1]/tbody/tr[2]/td/table/tbody/tr[3]/td[2]']").TextContent;
+
+            var remainingSeats = Int32.Parse(seatCap) - Int32.Parse(seatActual);
+            var remainingWaitlist = Int32.Parse(waitListCap) - Int32.Parse(waitListActual);
+            return (remainingSeats, remainingWaitlist);
         }
     }
     internal static class BannerQueryValues
