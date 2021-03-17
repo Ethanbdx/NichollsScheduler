@@ -50,7 +50,7 @@ namespace NichollsScheduler.Tests {
             };
             var sw = new Stopwatch();
             sw.Start();
-            var courseResults = bannerService.GetCourseResults(courseQuery, "202080");
+            var courseResults = bannerService.GetCourseResults(courseQuery, "202180");
             sw.Stop();
             System.Console.WriteLine(sw.Elapsed);
             string json = JsonConvert.SerializeObject(courseResults);
