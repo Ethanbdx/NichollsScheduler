@@ -3,7 +3,7 @@ Tool for Nicholls State University students to help with scheduling.
 
 The web application scrapes Nicholls' banner self service to provide students with a more user-friendly method of finding courses for registration purposes.
 
-*Once Nicholls State upgrades over to Banner 9, this project will no longer function. :(*
+*As of 4/15/2021, this project no longer functions to due Nicholls State Unviersity upgrading to Banner 9*
 # Technologies Used
 - C#
 - JavaScript
